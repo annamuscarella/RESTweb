@@ -28,7 +28,6 @@ public class UserServlet extends HttpServlet {
   @Inject UserDao userDao;
   @Inject Transaction transaction;
 
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     log.debug("UserServlet get");
