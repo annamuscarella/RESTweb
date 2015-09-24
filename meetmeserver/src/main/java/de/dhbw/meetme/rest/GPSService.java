@@ -23,7 +23,6 @@ public class GPSService {
     @Inject
     UserDao userDao;
 
-    @Path("/send")
     @POST
     public void sendGPS(){
         //class that sends GPS and user data to database
