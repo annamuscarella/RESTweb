@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -27,4 +28,10 @@ public class GPSService {
     public void sendGPS(){
         //class that sends GPS and user data to database
     }
+
+    @GET
+    public void getGPS(){
+        //class that returns latest sent GPS position
+    }
+
 }
