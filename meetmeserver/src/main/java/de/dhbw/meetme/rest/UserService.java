@@ -47,10 +47,11 @@ public class UserService {
   }
 
   @Path("/save")
-  @PUT
-  public void save(@PathParam("user") User user) {
-    userDao.persist(user);
-    log.debug("Save user " + user);
+  @POST
+  public void save(@FormParam("regEmail") String regEmail, @FormParam("userName") String userName, @FormParam("registerPassword") String registerPassword) {
+    //userDao.persist(regEmail, userName, registerPassword);
+    //userDao.persist(user);
+    //log.debug("Save user " + user);
   }
 
 }
