@@ -54,7 +54,7 @@ public class UserService {
     if ( registerPassword == "" | regEmail == "" | userName == "" ){
       log.debug(userName + "tried to register but not all forms were filled");
       // Meldung an Browser bzw. App das nicht alles ausgefüllt worden ist
-      // Registrierung abrechen
+      // Registrierung abbrechen
     }
 
     //userDao.persist(regEmail, userName, registerPassword);
