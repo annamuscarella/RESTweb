@@ -6,6 +6,7 @@ import de.dhbw.meetme.domain.UuidId;
 import groovy.lang.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.rmi.runtime.Log;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -49,6 +50,13 @@ public class UserService {
   @Path("/save")
   @POST
   public void save(@FormParam("regEmail") String regEmail, @FormParam("userName") String userName, @FormParam("registerPassword") String registerPassword) {
+
+    if ( registerPassword == "" | regEmail == "" | userName == "" ){
+      log.debug(userName + "tried to register but not all forms were filled");
+      // Meldung an Browser bzw. App das nicht alles ausgefüllt worden ist
+      // Registrierung abrechen
+    }
+
     //userDao.persist(regEmail, userName, registerPassword);
     //userDao.persist(user);
     //log.debug("Save user " + user);
