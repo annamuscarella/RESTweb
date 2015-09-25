@@ -49,7 +49,7 @@ public class UserService {
 
   @Path("/save")
   @POST
-  public void save(@FormParam("regEmail") String regEmail, @FormParam("userName") String userName, @FormParam("registerPassword") String registerPassword) {
+  public void save(@FormParam("regEmail") String regEmail, @FormParam("userName") String userName, @FormParam("registerPassword") String registerPassword, @PathParam("nationality") String nationality)
 
     if ( registerPassword == "" | regEmail == "" | userName == "" ){
       log.debug(userName + "tried to register but not all forms were filled");
