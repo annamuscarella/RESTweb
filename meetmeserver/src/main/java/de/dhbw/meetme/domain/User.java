@@ -13,7 +13,24 @@ public class User extends PersistentObject {
   private String name;
   private String email;
   private String password; //able to get and set passwort once the user is created??
+  private String nation;
 
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+
+
+  public User(String userName, String regEmail, String registerPassword, String nation) {
+      super();
+      name  = userName;
+      email = registerPassword;
+      this.nation = nation;
+  }
   public String getEmail() {
     return email;
   }
