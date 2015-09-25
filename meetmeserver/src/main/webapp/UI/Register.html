@@ -38,7 +38,7 @@
 
 <div class="col-sm-6"> <!-- Einloggen--> 
 <h4>Registrieren </h4>
-<form id="frmLogin">
+<form id="frmLogin" action="api/user/save" method="post">
 
 <div class="form-group">
 <label for="regEmail"> E-mail Adresse</label>
@@ -54,7 +54,7 @@
 <input type="password" class="form-control" id="registerPassword" placeholder="Passwort eintragen" name="password"/>
 </div>
 <div class="form-group">
-<label for="userName"> Nationalität</label>
+<label id="nationality"> Nationalität</label>
 <form>
   <select name="nation">
     <option value="german">Deutsch</option>
@@ -89,7 +89,7 @@ Erfolgreich angemeldet! <button id="logout" class="btn btn-default"> Abmelden </
 -->
 <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
 <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
-<script> var email = loginEmail.value; 
+<script>
 </script>
 
 </body>
