@@ -76,32 +76,6 @@ public class UserService {
     return  "Hallo " + userName +" du wurdest erfolgereich registriert! :) deine Mail: " +  regEmail;
   }
 
-  @Path("/GPS")
-  @PUT
-  // schickt die aktuelle GPS Position und speichert sie in der DB
-  public void updateGps (String userName, String gpsData)
-  {
-    if (userDao.existCheckName(userName)== true)
-    {
-      log.debug(userName + " hat seine GPS Daten aktualisiert");
-      userDao.updateGPS(userName, gpsData);
-      return;
-    }
-    log.debug("Jemand hat versucht seine GPS Daten aktualisiert aber userName war nicht in der DB");
-    return;
-  }
 
-  @Path("/GPS")
-  @GET
-  // Anfrage der eigenen GPS Koordianten...später werden die Koordinaten von allen Mitspielern geschickt
-  public String getGps (String userName)
-  {
-    if (userDao.existCheckName(userName)== true)
-    {
-      log.debug(userName + " hat seine GPS Daten angefragt");
-      return userDao.getGPS(userName);
-    }
-    log.debug("Jemand hat versucht seine GPS Daten anzufragen aber userName war nicht in der DB");
-    return "Leider bist du nicht angemeldet";
-  }
+
 }
