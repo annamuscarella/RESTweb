@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>User Accounts</title>
+        <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="Register.css"/>
+    </head>
+
+    <body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3" id="heading">
+                <p> True Colors.</p>
+            </div>
+
+        </div>
+    </div>
+    <div id="noAuth" >
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3" >
+                    <div class="well" style="background-color:#F5D0A9; border-radius:10px;">
+                        <div class="container-fluid">
+                            <div class="row">
+
+                                <div class="col-sm-6"><!-- Einloggen-->
+                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Einloggen </h4>
+                                    <form id="frmLogin" action="api/user/save" method="post">
+
+                                        <div class="form-group">
+                                            <label  for="loginEmail" style="color:#149185;"> E-MAIL ADRESSE</label>
+                                            <input type="email" required="required" class="form-control" id="loginEmail" placeholder="E-mail eintragen" name="email"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="loginPassword" style="color:#FA483C;">PASSWORT</label>
+                                            <input type="password" required="required" class="form-control" id="loginPassword" placeholder="Passwort eintragen" name="password"/>
+                                        </div>
+
+
+                                        <div class="btn-group-fluid">
+
+                                            <button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;"class="btn btn-default">Einloggen</button>
+
+                                            <button type="button" style=" color:white; font-family: HP Simplified; background:#149185;" onClick="window.location.href='Register.html'" class="btn btn-default"> Neu Hier? </button>
+                                        </div>
+
+                                    </form>
+
+                                </div><!-- ende Formularblock -->
+                                <div class="col-sm-6">
+                                    <img src="http://www.stiftung-froschkoenig.de/Kontakt/Pix/Weltkugel.gif" width="200px;" height="200px;" style="margin-top:10px;" class= "img-responisve">
+                                    <!-- img/bunter-cube-gross.gif-->
+                                    <span id="einblenden" style="display:none; background-color:#85E13A; padding:5%; border-radius:7px; color:white;"> Wähle deine Teamzugehörigkeit, damit dir eine Farbe zugewiesen wird und du Mitlgieder des anderen Teams treffen kannst. Los geht die Punkte Jagd!</span>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Logout  <div id="withAuth">
+    Erfolgreich angemeldet! <button id="logout" class="btn btn-default"> Abmelden </button>
+    </div>
+    -->
+    <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
+    <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
+    <script>
+
+</script>
+
+    </body>
+    </html>

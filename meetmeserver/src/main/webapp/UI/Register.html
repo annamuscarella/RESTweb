@@ -9,75 +9,79 @@
 <title>User Accounts</title>
 <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
-<link rel="stylesheet" href="Login.css"/> 
+<link rel="stylesheet" href="Register.css"/>
 </head>
 
 <body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3" id="heading">
+            <p> True Colors.</p>
+            </div>
+
+        </div>
+    </div>
+<div id="noAuth" >
 <div class="container">
 <div class="row">
-<div class="col-xs-4 col-md-4 col-lg-4 col-sm-4">
-<div class="logo text-center"> <a class="bild" href="#"> <img  class="text-center img-responsive"  style=" position:relative; margin-top:30px; margin-left:10px;"alt="App Logo" src="img/bunter-cube-gross.gif"
-   class= "img-responisve"> </a> </div>
-</div>
-<div class="col-xs-8 col-md-8 col-lg-8 col-sm-8">
-<h1 style="font-family:'HP Simplified'; font-size:30px; font-weight:300; margin-top: 60px; margin-left:-10px;"> True Colors. </h1>
-
-</div>
-
-</div> <!-- end row--> 
-   
-   </div> <!-- end of container -->
-<div id="noAuth">
-<div class="container">
-<div class="row">
-<div class="col-sm-6 col-sm-offset-3">
-<div class="well">
+<div class="col-sm-6 col-sm-offset-3" >
+<div class="well" style="background-color:#F5D0A9; border-radius:10px;">
 <div class="container-fluid">
 <div class="row">
 
-
-<div class="col-sm-6"> <!-- Einloggen--> 
-<h4>Registrieren </h4>
+<div class="col-sm-6"><!-- Einloggen-->
+    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Registrieren </h4>
 <form id="frmLogin" action="api/user/save" method="post">
 
 <div class="form-group">
-<label for="regEmail"> E-mail Adresse</label>
-<input type="email" class="form-control" id="regEmail" placeholder="E-mail eintragen" name="email"/>
+<label  for="regEmail" style="color:#149185;"> E-MAIL ADRESSE</label>
+<input type="email" required="required" class="form-control" id="regEmail" placeholder="E-mail eintragen" name="email"/>
 </div>
 <div class="form-group">
-<label for="userName"> Benutzername</label>
-<input type="text" class="form-control" id="userName" placeholder="Benutzername festlegen" name="username"/>
+<label for="userName" style="color:#149185;"> BENUTZERNAME</label>
+<input type="text" required="required" class="form-control" id="userName" placeholder="Benutzername festlegen" name="username"/>
 </div>
 
 <div class="form-group">
-    <label for="registerPassword">Passwort</label>
-    <input type="password" class="form-control" id="registerPassword" placeholder="Passwort eintragen" name="password"/>
+    <label for="registerPassword" style="color:#FA483C;">PASSWORT</label>
+    <input type="password" required="required" class="form-control" id="registerPassword" placeholder="Passwort eintragen" name="password"/>
 </div>
     <div class="form-group">
-        <label for="validPassword">Passwort wiederholen</label>
-        <input type="password" class="form-control" id="validPassword" placeholder="Passwort eintragen" name="password"/>
+        <label for="validPassword" style="color:#FA483C;">PASSWORT</label>
+        <input type="password" required="required" class="form-control" id="validPassword" placeholder="Passwort wiederholen" name="password"/>
     </div>
 <div class="form-group">
-<label id="nationality"> Nationalität</label>
-<form>
-  <select name="nation">
+    <label id="nationality" style="color:#FA483C;"> TEAM &nbsp;</label><a href="javascript:toggleDiv('einblenden');"><span  style="color:#85E13A;" id="explanation"class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+<div class="form-group">
+  <select name="nation" required="required" style="font-family:HP Simplified;">
     <option value="german">Deutsch</option>
     <option value="notGerman">Nicht Deutsch</option>
     </select>
-</form>
+    </div>
+    <div class="form-group" style="margin-top:10px;">
+        <label id="description" style="color:#FA483C;"> ERZÄHL VON DIR...</label>
+    <textarea cols="30" rows="4"name="description" > </textarea>
+    </div >
 </div>
 <div class="btn-group-fluid">
 
-<button type="submit" class="btn btn-default">Registrieren</button>
+<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;"class="btn btn-default">Registrieren</button>
 
-<button type="button" onClick="window.location.href='#'" class="btn btn-default"> Hilfe? </button> 
+<button type="button" style=" color:white; font-family: HP Simplified; background:#149185;" onClick="window.location.href='Help.html'" class="btn btn-default"> Hilfe? </button>
 </div>
 
 </form>
 
-</div>
-</div> <!-- ende Einloggen --> 
+</div><!-- ende Formularblock -->
+    <div class="col-sm-6">
+        <img src="http://www.stiftung-froschkoenig.de/Kontakt/Pix/Weltkugel.gif" width="200px;" height="200px;" style="margin-top:10px;" class= "img-responisve">
+        <!-- img/bunter-cube-gross.gif-->
+        <span id="einblenden" style="display:none; background-color:#85E13A; padding:5%; border-radius:7px; color:white;"> Wähle deine Teamzugehörigkeit, damit dir eine Farbe zugewiesen wird und du Mitlgieder des anderen Teams treffen kannst. Los geht die Punkte Jagd!</span>
+    </div>
 
+
+</div>
 
 </div>
 </div>
@@ -94,6 +98,15 @@ Erfolgreich angemeldet! <button id="logout" class="btn btn-default"> Abmelden </
 <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
 <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
 <script>
+
+
+function toggleDiv(element){
+ if(document.getElementById(element).style.display == 'none')
+  document.getElementById(element).style.display = 'block';
+ else
+       document.getElementById(element).style.display = 'none';
+}
+
 </script>
 
 </body>
