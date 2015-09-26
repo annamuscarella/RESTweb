@@ -58,21 +58,50 @@ public class UserService {
       return "Bitte fülle alle Felder aus";
     }
     // prüfen ob der userName schon vergebe ist
-    if (userDao.existCeckName(userName) == true)
+    if (userDao.existCheckName(userName) == true)
     {
       log.debug(userName +"tried ro register but the userName is already in use");
       return "Leider existiert dein Username breits, suche dir bitte einen neuen aus";
     }
     //prüfen ob die Mail schon verwendent worden ist.
-    if (userDao.existCeckMail(regEmail) == true)
+    if (userDao.existCheckMail(regEmail) == true)
     {
       log.debug(userName +"tried ro register but the regMail is already in use");
       return "Du hast mit der Mail bereits einen Account erstellt";
     }
-    //userDao.persist(regEmail, userName, registerPassword);
-    //userDao.persist(user);
-    //log.debug("Save user " + user);
+    // User anlegen
+    userDao.persist(regEmail, userName, registerPassword, description);
+    userDao.persist(user);
+    log.debug("Save user " + user);
     return  "Hallo " + userName +" du wurdest erfolgereich registriert! :) deine Mail: " +  regEmail;
   }
 
+  @Path("/GPS")
+  @PUT
+  // schickt die aktuelle GPS Position und speichert sie in der DB
+  public void updateGps (String userName, String gpsData)
+  {
+    if (userDao.existCheckName(userName)== true)
+    {
+      log.debug(userName + " hat seine GPS Daten aktualisiert");
+      userDao.updateGPS(userName, gpsData);
+      return;
+    }
+    log.debug("Jemand hat versucht seine GPS Daten aktualisiert aber userName war nicht in der DB");
+    return;
+  }
+
+  @Path("/GPS")
+  @GET
+  // Anfrage der eigenen GPS Koordianten...später werden die Koordinaten von allen Mitspielern geschickt
+  public String getGps (String userName)
+  {
+    if (userDao.existCheckName(userName)== true)
+    {
+      log.debug(userName + " hat seine GPS Daten angefragt");
+      return userDao.getGPS(userName);
+    }
+    log.debug("Jemand hat versucht seine GPS Daten anzufragen aber userName war nicht in der DB");
+    return "Leider bist du nicht angemeldet";
+  }
 }
