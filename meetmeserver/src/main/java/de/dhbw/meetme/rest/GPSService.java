@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 /**
  * Created by mordelt on 24.09.2015.
@@ -24,14 +21,32 @@ public class GPSService {
     @Inject
     UserDao userDao;
 
-    @POST
-    public void sendGPS(){
-        //class that sends GPS and user data to database
+    @PUT
+    @Path("/{userName}/{gpsData}")
+    // schickt die aktuelle GPS Position und speichert sie in der DB
+    public void updateGps (@PathParam("userName") String userName,@PathParam("gpsData") String gpsData)
+    {
+        if (userDao.existCheckName(userName)== true)
+        {
+            log.debug(userName + " hat seine GPS Daten aktualisiert");
+            userDao.updateGPS(userName, gpsData);
+            return;
+        }
+        log.debug("Jemand hat versucht seine GPS Daten aktualisiert aber userName war nicht in der DB");
+        return;
     }
 
     @GET
-    public void getGPS(){
-        //class that returns latest sent GPS position
+    @Path("/{userName}")
+    // Anfrage der eigenen GPS Koordianten...später werden die Koordinaten von allen Mitspielern geschickt
+    public String getGps (@PathParam("userName")String userName)
+    {
+        if (userDao.existCheckName(userName)== true)
+        {
+            log.debug(userName + " hat seine GPS Daten angefragt");
+            return userDao.getGPS(userName);
+        }
+        log.debug("Jemand hat versucht seine GPS Daten anzufragen aber userName war nicht in der DB");
+        return "Leider bist du nicht angemeldet";
     }
-
 }
