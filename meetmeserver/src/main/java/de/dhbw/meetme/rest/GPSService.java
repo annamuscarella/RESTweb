@@ -21,7 +21,7 @@ public class GPSService {
     @Inject
     UserDao userDao;
 
-    @PUT
+    /*@PUT
     @Path("/{userName}/{gpsData}")
     // schickt die aktuelle GPS Position und speichert sie in der DB
     public void updateGps (@PathParam("userName") String userName,@PathParam("gpsData") String gpsData)
@@ -48,5 +48,5 @@ public class GPSService {
         }
         log.debug("Jemand hat versucht seine GPS Daten anzufragen aber userName war nicht in der DB");
         return "Leider bist du nicht angemeldet";
-    }
+    }*/
 }
