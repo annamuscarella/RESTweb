@@ -1,5 +1,6 @@
 package de.dhbw.meetme.rest;
 
+import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UuidId;
@@ -24,6 +25,7 @@ public class UserService {
 
   @Inject
   UserDao userDao;
+  Transaction transaction;
 
   @Path("/list")
   @GET
@@ -46,9 +48,12 @@ public class UserService {
     userDao.delete(UuidId.fromString(id));
   }
 
-  @Path("/save")
+  @Path("/save/{name}")
   @PUT
-  public void save(@PathParam("user") User user) {
+  public void save(@PathParam("name") String username) {
+    User user = new User();
+    user.setName(username);
+
     userDao.persist(user);
     log.debug("Save user " + user);
   }
