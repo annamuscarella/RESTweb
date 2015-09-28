@@ -19,27 +19,59 @@
  function val(){
     if (form.password.value =="")
     {
-        alert("Bitte Passwort eingeben.");
+        alert("Error: Bitte Passwort eingeben.");
         form.password.focus();
         return false;
     }
 
     if ((form.password.value).length < 10)
     {
-        alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
+        alert("Error: Das Passwort muss mindestens aus 10 Zeichen bestehen.");
         form.password.focus();
         reurn false;
     }
 
+    re = /^\w+$/;
+    if(!re.test(form.username.value)) {
+      alert("Error: Dein Nutzername kann nur Buchstaben, Nummern und Unterstriche enthalten.");
+      form.username.focus();
+      return false;
+    }
+
+    if(form.password.value == form.username.value) {
+        alert("Error: Das Passwort muss sich von deinem Nutzernamen unterscheiden!");
+        form.password.focus();
+        return false;
+    }
+
+     re = /[0-9]/;
+     if(!re.test(form.password.value)) {
+        alert("Error: Dein Passwort muss mindestens eins der Nummern 0-9 enthalten!");
+        form.password.focus();
+        return false;
+     }
+      re = /[a-z]/;
+      if(!re.test(form.password.value)) {
+        alert("Error: Dein Passwort muss mindestens ein Kleinbuchstabe enthalten von a-z!");
+        form.password.focus();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.password.value)) {
+        alert("Error: Dein Passwort muss mindestens ein Großbuchstabe enthalten von A-Z!");
+        form.password.focus();
+        return false;
+      }
+
     if (form.password2.value =="")
     {
-        alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
+        alert ("Error: Geben Sie bitte Ihr Passwort ein zweites Mal zur Validierung ein.");
         return false;
     }
 
     if (form.password2.value != form.password.value)
     {
-        alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
+        alert("Error: Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
         return false;
     }
     return true;
