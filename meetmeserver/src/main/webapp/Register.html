@@ -16,7 +16,7 @@
 
 <script type="text/javascript">
 
- function val(frmLogin){
+ function val(){
     if (form.password.value =="")
     {
         alert("Error: Bitte Passwort eingeben.");
@@ -28,7 +28,7 @@
     {
         alert("Error: Das Passwort muss mindestens aus 10 Zeichen bestehen.");
         form.password.focus();
-        reurn false;
+        return false;
     }
 
     re = /^\w+$/;
@@ -74,7 +74,9 @@
         alert("Error: Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
         return false;
     }
+    else{
     return true;
+    }
 }
 
 </script>
