@@ -17,30 +17,30 @@
 <script type="text/javascript">
 
  function val(){
-    if (form.password.value =="")
+    if (frmLogin.password.value =="")
     {
         alert("Error: Bitte Passwort eingeben.");
-        form.password.focus();
+        frmLogin.password.focus();
         return false;
     }
 
-    if ((form.password.value).length < 10)
+    if ((frmLogin.password.value).length < 10)
     {
         alert("Error: Das Passwort muss mindestens aus 10 Zeichen bestehen.");
-        form.password.focus();
+        frmLogin.password.focus();
         return false;
     }
 
     re = /^\w+$/;
-    if(!re.test(form.username.value)) {
+    if(!re.test(frmLogin.username.value)) {
       alert("Error: Dein Nutzername kann nur Buchstaben, Nummern und Unterstriche enthalten.");
-      form.username.focus();
+      frmLogin.username.focus();
       return false;
     }
 
-    if(form.registerPassword.value == form.username.value) {
+    if(frmLogin.password.value == frmLogin.username.value) {
         alert("Error: Das Passwort muss sich von deinem Nutzernamen unterscheiden!");
-        form.password.focus();
+        frmLogin.password.focus();
         return false;
     }
 
@@ -133,7 +133,7 @@
 </div>
 <div class="btn-group-fluid">
 
-<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" class="btn btn-default">Registrieren</button>
+<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" onclick="return val();" class="btn btn-default">Registrieren</button>
 
 <button type="button" style=" color:white; font-family: HP Simplified; background:#149185;" onClick="window.location.href='Help.html'" class="btn btn-default"> Hilfe? </button>
 </div>
