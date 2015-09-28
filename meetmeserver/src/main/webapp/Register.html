@@ -11,36 +11,7 @@
 <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="Register.css"/>
 </head>
-<script type = "text/javascript">
-function val(){
-    if (frm.password.value =="")
-    {
-        alert("Bitte Passwort eingeben.");
-        frm.password.focus();
-        return false;
-    }
 
-    if ((frm.password.value).length < 10)
-    {
-        alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
-        frm.password.focus();
-        reurn false;
-    }
-
-    if (frm.password2.value =="")
-    {
-        alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
-        return false;
-    }
-
-    if (frm.password2.value != frm.password.value)
-    {
-        alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
-        return false;
-    }
-    return true;
-}
-</script>
 <body>
 
 <div class="container">
@@ -61,7 +32,7 @@ function val(){
 
 <div class="col-sm-6"><!-- Einloggen-->
     <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Registrieren </h4>
-<form id="frmLogin" action="registrierung2" method="post">
+<form id="frmLogin" onsubmit = "return val(this);" action="registrierung2" method="post">
 
 <div class="form-group">
 <label  for="regEmail" style="color:#149185;"> E-MAIL ADRESSE</label>
@@ -95,7 +66,7 @@ function val(){
 </div>
 <div class="btn-group-fluid">
 
-<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" onClick= "return val();" class="btn btn-default">Registrieren</button>
+<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" onClick= " return val();" class="btn btn-default">Registrieren</button>
 
 <button type="button" style=" color:white; font-family: HP Simplified; background:#149185;" onClick="window.location.href='Help.html'" class="btn btn-default"> Hilfe? </button>
 </div>
@@ -136,6 +107,35 @@ function toggleDiv(element){
  else
        document.getElementById(element).style.display = 'none';
 
+}
+
+function val(){
+    if (form.password.value =="")
+    {
+        alert("Bitte Passwort eingeben.");
+        form.password.focus();
+        return false;
+    }
+
+    if ((form.password.value).length < 10)
+    {
+        alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
+        form.password.focus();
+        reurn false;
+    }
+
+    if (form.password2.value =="")
+    {
+        alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
+        return false;
+    }
+
+    if (form.password2.value != form.password.value)
+    {
+        alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
+        return false;
+    }
+    return true;
 }
 
 
