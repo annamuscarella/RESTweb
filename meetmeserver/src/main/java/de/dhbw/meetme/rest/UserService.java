@@ -48,14 +48,15 @@ public class UserService {
     userDao.delete(UuidId.fromString(id));
   }
 
-  @Path("/save/{name}")
-  @PUT
-  public void save(@PathParam("name") String username) {
+  @Path("/save")
+  @POST
+  public String save(@FormParam("regEmail") String email, @FormParam("userName") String username, @FormParam("password") String password, @FormParam("nation") String nation, @FormParam("description") String description) {
     User user = new User();
     user.setName(username);
 
     userDao.persist(user);
-    log.debug("Save user " + user);
+    //log.debug("Save user " + user);
+    return "TEST";
   }
 
 
