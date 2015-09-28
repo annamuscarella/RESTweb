@@ -14,6 +14,39 @@
 
 <body>
 
+<script type="text/javascript">
+
+ function val(){
+    if (form.password.value =="")
+    {
+        alert("Bitte Passwort eingeben.");
+        form.password.focus();
+        return false;
+    }
+
+    if ((form.password.value).length < 10)
+    {
+        alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
+        form.password.focus();
+        reurn false;
+    }
+
+    if (form.password2.value =="")
+    {
+        alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
+        return false;
+    }
+
+    if (form.password2.value != form.password.value)
+    {
+        alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
+        return false;
+    }
+    return true;
+}
+
+</script>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3" id="heading">
@@ -66,7 +99,7 @@
 </div>
 <div class="btn-group-fluid">
 
-<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" onClick= " return val();" class="btn btn-default">Registrieren</button>
+<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" class="btn btn-default">Registrieren</button>
 
 <button type="button" style=" color:white; font-family: HP Simplified; background:#149185;" onClick="window.location.href='Help.html'" class="btn btn-default"> Hilfe? </button>
 </div>
@@ -109,34 +142,7 @@ function toggleDiv(element){
 
 }
 
-function val(){
-    if (form.password.value =="")
-    {
-        alert("Bitte Passwort eingeben.");
-        form.password.focus();
-        return false;
-    }
 
-    if ((form.password.value).length < 10)
-    {
-        alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
-        form.password.focus();
-        reurn false;
-    }
-
-    if (form.password2.value =="")
-    {
-        alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
-        return false;
-    }
-
-    if (form.password2.value != form.password.value)
-    {
-        alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
-        return false;
-    }
-    return true;
-}
 
 
 </script>
