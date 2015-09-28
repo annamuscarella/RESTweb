@@ -16,7 +16,7 @@
 
 <script type="text/javascript">
 
- function val(form){
+ function val(frmLogin){
     if (form.password.value =="")
     {
         alert("Error: Bitte Passwort eingeben.");
@@ -38,7 +38,7 @@
       return false;
     }
 
-    if(form.password.value == form.username.value) {
+    if(form.registerPassword.value == form.username.value) {
         alert("Error: Das Passwort muss sich von deinem Nutzernamen unterscheiden!");
         form.password.focus();
         return false;
