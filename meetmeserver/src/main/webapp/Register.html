@@ -66,7 +66,7 @@
 </div>
 <div class="btn-group-fluid">
 
-<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;"class="btn btn-default">Registrieren</button>
+<button type="submit"  style=" color:white; font-family: HP Simplified; background:#85E13A;" onClick= "return val();" class="btn btn-default">Registrieren</button>
 
 <button type="button" style=" color:white; font-family: HP Simplified; background:#149185;" onClick="window.location.href='Help.html'" class="btn btn-default"> Hilfe? </button>
 </div>
@@ -97,6 +97,7 @@ Erfolgreich angemeldet! <button id="logout" class="btn btn-default"> Abmelden </
 -->
 <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
 <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
+
 <script>
 
 
@@ -105,8 +106,37 @@ function toggleDiv(element){
   document.getElementById(element).style.display = 'block';
  else
        document.getElementById(element).style.display = 'none';
+
 }
 
+function val(){
+if (frm.registerPassword.value =="")
+{
+    alert("Bitte Passwort eingeben.");
+    frm.registerPassword.focus();
+    return false;
+}
+
+if ((frm.registerPassword.value).length < 10)
+{
+    alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
+    frm.registerPassword.focus();
+    reurn false;
+}
+
+if (frm.validPassword.value =="")
+{
+    alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
+    return false;
+}
+
+if (frm.validPassword.value != frm.registerPassword.value)
+{
+    alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
+    return false;
+}
+return true;
+}
 </script>
 
 </body>
