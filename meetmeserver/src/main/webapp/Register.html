@@ -13,27 +13,27 @@
 </head>
 <script type = "text/javascript">
 function val(){
-    if (frm.registerPassword.value =="")
+    if (frm.password.value =="")
     {
         alert("Bitte Passwort eingeben.");
-        frm.registerPassword.focus();
+        frm.password.focus();
         return false;
     }
 
-    if ((frm.registerPassword.value).length < 10)
+    if ((frm.password.value).length < 10)
     {
         alert("Das Passwort muss mindestens aus 10 Zeichen bestehen.");
-        frm.registerPassword.focus();
+        frm.password.focus();
         reurn false;
     }
 
-    if (frm.validPassword.value =="")
+    if (frm.password2.value =="")
     {
         alert ("Geben Sie bitte das Passwort ein zweites Mal zur Validierung ein.");
         return false;
     }
 
-    if (frm.validPassword.value != frm.registerPassword.value)
+    if (frm.password2.value != frm.password.value)
     {
         alert("Die Passwörter stimmen nicht überein. Bitte geben Sie zwei gleiche Passwörter ein.");
         return false;
