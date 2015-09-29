@@ -1,5 +1,6 @@
 package de.dhbw.meetme.rest;
 
+import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UuidId;
@@ -10,8 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import de.dhbw.meetme.database.dao.UserDao;
 
 /**
  *
@@ -24,6 +24,7 @@ public class UserService {
 
   @Inject
   UserDao userDao;
+  Transaction transaction;
 
   @Path("/list")
   @GET
@@ -47,10 +48,14 @@ public class UserService {
   }
 
   @Path("/save")
-  @PUT
-  public void save(@PathParam("user") User user) {
+  @POST
+  public String save(@FormParam("regEmail") String email, @FormParam("userName") String username, @FormParam("password") String password, @FormParam("nation") String nation, @FormParam("description") String description) {
+    User user = new User();
+    user.setName(username);
+
     userDao.persist(user);
-    log.debug("Save user " + user);
+    //log.debug("Save user " + user);
+    return "TEST";
   }
 
 
