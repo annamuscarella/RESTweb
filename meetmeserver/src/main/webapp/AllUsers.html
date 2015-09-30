@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>Home</title>
+        <title>All Users</title>
         <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="Register.css"/>
@@ -16,7 +16,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 col-sm-offset-3" id="heading">
+            <div class="col-sm-12" id="heading">
                 <p> True Colors.</p>
             </div>
 
@@ -25,23 +25,20 @@
     <div id="noAuth" >
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-3" >
+                <div class="col-sm-12" >
                     <div class="well" style="background-color:#F5D0A9; border-radius:10px;">
                         <div class="container-fluid">
                             <div class="row">
 
-                                <div class="col-sm-6"><!-- Einloggen-->
-                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Erfolgreiche Anmeldung </h4>
+                                <div class="col-sm-8 "><!-- Einloggen-->
+                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Alle Benutzer   <button onclick="aktualisieren()"> Aktualisieren </button> </h4>
 
-                                        <h3 style="font-family:HP Simplified;"> Wilkommen!</h3>
-                                    <p style="font-family:HP Simplified;">
-                                    Vieken Dank für deine Anmeldung bei <b> True Colors</b>.</p>
-                                    <p style="font-family:HP Simplified;"> Auf die Punkte - Fertig - Los!
-                                    </p>
+<div id ='tabelle'>
+</div>
 
 
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-3 col-sm-offset-1">
                                     <img src="http://www.stiftung-froschkoenig.de/Kontakt/Pix/Weltkugel.gif" width="200px;" height="200px;" style="margin-top:10px;" class= "img-responisve">
                                     <!-- img/bunter-cube-gross.gif-->
 
@@ -61,7 +58,41 @@
         <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
         <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
         <script>
+            <!--request = new XMLHttpRequest();
+            request.open('get', '#', true);
+            request.send();
+            request.addEventListener('load', function(){
+            if (this.status <=200&& this.status <400) {
+            data = JSON.parse(this.response);
+            username = document.querySelector ('#username td');
+            username.innerHTML = data.items[0].obervariable.untervariable;
+<!-- volumeInfo.username
+            }
+            });-->
 
+var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Passwort </th> <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
+
+
+
+                function aktualisieren(){
+
+
+            $.ajax({
+            dataType:"json",
+            url: "/api/user/list",
+            success:function(arr){
+
+            arr.forEach(function(elem){
+            console.log('elem', elem);
+                table = table + '<tr> <td>' + 'elem.username +  '</td> <td>'+  'elem.email'+ '</td> <td>'+'elem.password'+  '</td> <td>' + 'elem.nation' +  '</td> <td>'+ 'elem.description'+</td></tr>'
+
+
+            });
+                table += '</table>'
+            $('#tabelle').append(table);
+            }
+            });
+            }
 
 
         </script>
