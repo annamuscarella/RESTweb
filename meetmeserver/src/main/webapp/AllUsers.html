@@ -31,26 +31,10 @@
                             <div class="row">
 
                                 <div class="col-sm-8 "><!-- Einloggen-->
-                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Alle Benutzer </h4>
-                                    <table style="font-family:HP Simplified;">
-                                        <tbody>
+                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Alle Benutzer   <button onclick="aktualisieren()"> Aktualisieren </button> </h4>
 
-                                        <tr id="username"> <th> User Name </th> <td></td></tr>
-                                        <tr id="email"> <th> E-Mail </th> <td></td></tr>
-                                        <tr id="passwort"> <th> Passwort </th> <td></td></tr>
-                                        <tr id="team"> <th> Teamzugehörigkeit </th> <td></td></tr>
-                                        <tr id="beschreibung"> <th> Beschreibung </th> <td></td></tr>
-
-                                        </tbody>
-
-
-
-
-
-
-
-                                    </table>
-
+<div id ='tabelle'>
+</div>
 
 
                                 </div>
@@ -74,7 +58,7 @@
         <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
         <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
         <script>
-            request = new XMLHttpRequest();
+            <!--request = new XMLHttpRequest();
             request.open('get', '#', true);
             request.send();
             request.addEventListener('load', function(){
@@ -82,9 +66,33 @@
             data = JSON.parse(this.response);
             username = document.querySelector ('#username td');
             username.innerHTML = data.items[0].obervariable.untervariable;
+<!-- volumeInfo.username
+            }
+            });-->
 
+var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Passwort </th> <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
+
+
+
+                function aktualisieren(){
+
+
+            $.ajax({
+            dataType:"json",
+            url: "/api/user/list",
+            success:function(arr){
+
+            arr.forEach(function(elem){
+            console.log('elem', elem);
+                table = table + '<tr> <td>' + 'elem.username +  '</td> <td>'+  'elem.email'+ '</td> <td>'+'elem.password'+  '</td> <td>' + 'elem.nation' +  '</td> <td>'+ 'elem.description'+</td></tr>'
+
+
+            });
+                table += '</table>'
+            $('#tabelle').append(table);
             }
             });
+            }
 
 
         </script>
