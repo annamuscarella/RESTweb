@@ -1,7 +1,6 @@
 package de.dhbw.meetme.servlet;
 
 import de.dhbw.meetme.database.Transaction;
-import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import de.dhbw.meetme.database.dao.UserDao;
 
 /**
  *
@@ -27,7 +27,6 @@ public class UserServlet extends HttpServlet {
 
   @Inject UserDao userDao;
   @Inject Transaction transaction;
-
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -114,3 +114,4 @@ class UserDaoTest extends Specification {
         !foundUser2
     }
 }
+
