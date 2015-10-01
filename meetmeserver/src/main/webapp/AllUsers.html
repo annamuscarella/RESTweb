@@ -10,6 +10,9 @@
         <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="Register.css"/>
+
+
+
     </head>
 
     <body>
@@ -31,7 +34,7 @@
                             <div class="row">
 
                                 <div class="col-sm-8 "><!-- Einloggen-->
-                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Alle Benutzer   <button onclick="aktualisieren()"> Aktualisieren </button> </h4>
+                                    <h4 style="background-color:#85E13A; padding:5%; border-radius:7px; color:white;">Alle Benutzer   <button  style="color:black;" onclick="aktualisieren()"> Aktualisieren </button> </h4>
 
                                     <div id ='tabelle'>
                                     </div>
@@ -65,14 +68,14 @@
 
             function aktualisieren(){
             $('#tabelle').empty();
-            var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
+            var table = '<table style="font-family:HP Simplified;>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp &nbsp Email </th>  <th> &nbsp &nbsp Nation </th>  <th> &nbsp &nbsp Beschreibung </th> </tr>';
 
                 $.ajax({
                     dataType:"json",
                     url: "/meetmeserver/api/user/list",
                     success:function(arr){
                        arr.user.forEach(function(elem){
-                                    table = table + '<tr> <td>' + elem.name +  '</td> <td>'+  elem.email+  '</td> <td>' + elem.nation +  '</td> <td>'+ elem.description+ '</td></tr>';
+                                    table = table + '<tr> <td>' + elem.name +  '</td> <td> &nbsp &nbsp'+ elem.email+  '</td> <td> &nbsp &nbsp' + elem.nation +  '</td> <td> &nbsp &nbsp'+ elem.description+ '</td></tr>';
                             });
 
                         table += '</table>'
