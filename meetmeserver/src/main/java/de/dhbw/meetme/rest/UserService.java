@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import de.dhbw.meetme.database.dao.UserDao;
 
