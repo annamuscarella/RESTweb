@@ -10,4 +10,8 @@
     <string name="stopp">Stopp</string>
     <string name="speichern">Speichern</string>
     <string name="ok">Ok</string>
+    <string name="schließen">zurück</string>
+    <string name="clear">Clear</string>
+    <string name="titel">Generieren des Standortes</string>
+    <string name="userlist">Userliste</string>
 </resources>

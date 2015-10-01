@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.apache.http.client.ClientProtocolException;
 import org.hello.R;
 
 import java.io.BufferedWriter;
@@ -35,6 +36,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import sun.security.krb5.internal.ccache.Tag;
 
 
 public class
@@ -45,7 +47,7 @@ public class
     private TextView anzeigeBreite;
     private TextView anzeigeHoehe;
     private static final String TAG = "HelloActivity";
-    private static final String HOSTNAME = "MAHANDRU1";
+    private static final String HOSTNAME = "10.0.2.2";
     private static final int PORT = 8087;
 
 
@@ -54,9 +56,10 @@ public class
     private Button startButton;
     private Button stoppButton;
     private Button speichernButton;
-    private Button showUserButton;
+    private Button userButton;
     private boolean datenSammeln;
     private List<Location> positionen;
+    private TextView textViewUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +110,9 @@ public class
         speichernButton.setOnClickListener(this);
         speichernButton.setEnabled(false);
 
+        userButton=(Button) this.findViewById(R.id.button4);
+        userButton.setOnClickListener(this);
+        userButton.setEnabled(false);
 
         datenSammeln = false;
         positionen   = new ArrayList<Location>();
@@ -115,7 +121,7 @@ public class
         anzeigeBreite  = (TextView) this.findViewById(R.id.textViewBreite);
         anzeigeLaenge  = (TextView) this.findViewById(R.id.textViewLaenge);
         anzeigeHoehe   = (TextView) this.findViewById(R.id.textViewHoehe);
-
+        textViewUser=(TextView) this.findViewById(R.id.textViewUserList);
         gpxZeitFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     }
 
@@ -137,28 +143,84 @@ public class
             startButton.setEnabled(false);
             stoppButton.setEnabled(true);
             speichernButton.setEnabled(false);
+            userButton.setEnabled(true);
             datenSammeln = true;
         }
         else if(v == stoppButton) {
             startButton.setEnabled(true);
             stoppButton.setEnabled(false);
             speichernButton.setEnabled(true);
+            userButton.setEnabled(true);
             datenSammeln = false;
         }
         else if(v == speichernButton){
             startButton.setEnabled(true);
             stoppButton.setEnabled(false);
             speichernButton.setEnabled(false);
+            userButton.setEnabled(true);
             datenSammeln = false;
 
             datenSpeichern();
 
 
         }
+        else if(v==userButton){
+            startButton.setEnabled(true);
+            stoppButton.setEnabled(true);
+            speichernButton.setEnabled(true);
+            userButton.setEnabled(false);
+            String test=getDaten();
+            textViewUser.setText(test);
+            datenSammeln=false;
+        }
 
     }
 
+    protected String getDaten(){
 
+        Log.e(TAG,"run client");
+        DefaultHttpClient httpClient=new DefaultHttpClient();
+
+        try {
+
+            HttpHost target=new HttpHost(HOSTNAME,PORT,"http");
+
+            HttpGet getRequest=new HttpGet("/meetmeserver/api/user/list");
+            HttpResponse httpResponse= httpClient.execute(target,getRequest);
+
+            httpResponse = httpClient.execute(target,getRequest);
+            HttpEntity entity=httpResponse.getEntity();
+            return  EntityUtils.toString(entity);
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+            return toString();
+        }
+
+//protected String getDaten(){
+//
+//    Log.e(TAG,"run client");
+//    DefaultHttpClient httpClient=new DefaultHttpClient();
+//
+//    try {
+//
+//        HttpHost target=new HttpHost(HOSTNAME,PORT,"http");
+//
+//        HttpGet getRequest=new HttpGet("/meetmeserver/api/user/list");
+//    HttpResponse httpResponse= httpClient.execute(target,getRequest);
+//
+//        httpResponse = httpClient.execute(target,getRequest);
+//        HttpEntity entity=httpResponse.getEntity();
+//        return  EntityUtils.toString(entity);
+//    } catch (IOException e) {
+//        e.printStackTrace(System.out);
+//        return toString();
+//    }
+
+
+
+
+
+}
 
 
 
