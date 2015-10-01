@@ -58,25 +58,14 @@
         <script type="text/javascript" src="bootstrap-3.3.4-dist/css/jquery-2.0.0.min.js"> </script>
         <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"> </script>
         <script>
-            /* <!--request = new XMLHttpRequest();
-             request.open('get', '#', true);
-             request.send();
-             request.addEventListener('load', function(){
-             if (this.status <=200&& this.status <400) {
-             data = JSON.parse(this.response);
-             username = document.querySelector ('#username td');
-             username.innerHTML = data.items[0].obervariable.untervariable;
-            <!-- volumeInfo.username
-                        }
-                       });-->
-            */
 
-            var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
+
 
 
 
             function aktualisieren(){
-
+            $('#tabelle').empty();
+            var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
 
                 $.ajax({
                     dataType:"json",
