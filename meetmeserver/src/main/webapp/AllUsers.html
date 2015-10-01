@@ -71,7 +71,7 @@
                        });-->
             */
 
-            var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Passwort </th> <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
+            var table = '<table>'+ '<tr id="header"> <th> Benutzername </th> <th> &nbsp Email </th>  <th> &nbsp Nation </th>  <th> &nbsp Beschreibung </th> </tr>';
 
 
 
@@ -82,13 +82,10 @@
                     dataType:"json",
                     url: "/meetmeserver/api/user/list",
                     success:function(arr){
+                       arr.user.forEach(function(elem){
+                                    table = table + '<tr> <td>' + elem.name +  '</td> <td>'+  elem.email+  '</td> <td>' + elem.nation +  '</td> <td>'+ elem.description+ '</td></tr>';
+                            });
 
-                        arr.forEach(function(elem){
-                            console.log('elem', elem);
-                            table = table + '<tr> <td>' + elem.username +  '</td> <td>'+  elem.email+ '</td> <td>'+elem.password+  '</td> <td>' + elem.nation +  '</td> <td>'+ elem.description+ '</td></tr>';
-
-
-                        });
                         table += '</table>'
                         $('#tabelle').append(table);
                     }
