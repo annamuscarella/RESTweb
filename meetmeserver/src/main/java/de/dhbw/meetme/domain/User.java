@@ -12,9 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class User extends PersistentObject {
   private String name;
   private String email;
-  private String password; //able to get and set passwort once the user is created??
+  private String password; //able to get and set passwordi once the user is created??
   private String nation;
   private String description;
+  //private static int idi = 10000;
+
+ // public void setIdi(){idi  = idi +1; }
 
   public String getNation() {
     return nation;
