@@ -36,7 +36,7 @@ public class GPSService {
             log.debug(username + " hat seine GPS Daten aktualisiert");
             userDao.updateGPS(username, breitenGrad, laengenGrad);
             //array liste von allen usern GPS daten
-            Array GPSdata = userDao.gpsDara
+           /* Array GPSdata = userDao.gpsDara
 
             for (int i = 0; i < GPSdata.length; i++)
             {
@@ -45,6 +45,7 @@ public class GPSService {
              }
             }
             return;
+            */
         }
         log.debug("Jemand hat versucht seine GPS Daten aktualisiert aber userName war nicht in der DB");
         return;
@@ -80,7 +81,7 @@ public class GPSService {
     public String checkDistance(double lat1, double lon1, double lat2, double lon2){
 
         if (distanceInMeter(lat1,lon1,lat2,lon2) <= 10){
-            return;
+            return "test";
         }
 
     }
