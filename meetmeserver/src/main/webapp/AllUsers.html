@@ -74,7 +74,9 @@
                     dataType:"json",
                     url: "/meetmeserver/api/user/list",
                     success:function(arr){
+
                        arr.user.forEach(function(elem){
+                           console.log(elem);
                                     table = table + '<tr> <td>' + elem.name +  '</td> <td> &nbsp &nbsp'+ elem.email+  '</td> <td> &nbsp &nbsp' + elem.nation +  '</td> <td> &nbsp &nbsp'+ elem.description+ '</td></tr>';
                             });
 

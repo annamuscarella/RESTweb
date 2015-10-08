@@ -78,6 +78,7 @@ public class Registrierung2 extends HttpServlet {
                 a.setPassword(MD5.getMD5(password));            //Verschlüsselung mit MD5 Hash des PW vor dem abspeichern
                 a.setNation(nation);
                 a.setDescription(description);
+                //a.setIdi();
                 userDao.persist(a);                             //in DB speichern
 
                     response.sendRedirect("LogIn2.html");
