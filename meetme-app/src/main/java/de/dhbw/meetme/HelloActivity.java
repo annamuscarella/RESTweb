@@ -18,7 +18,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.hello.R;
 
 import java.io.BufferedWriter;
@@ -144,6 +147,7 @@ public class
             stoppButton.setEnabled(true);
             speichernButton.setEnabled(false);
             userButton.setEnabled(true);
+            sendGPSDaten("20","22");
             datenSammeln = true;
         }
         else if(v == stoppButton) {
@@ -218,12 +222,25 @@ public class
 
 
 
-
-
 }
 
 
+    protected void sendGPSDaten(String laenge,String breite){
+        Log.e(TAG,"run client");
+        DefaultHttpClient httpClient=new DefaultHttpClient();
+        try{
+            HttpHost target=new HttpHost(HOSTNAME,PORT,"http");
+            HttpPut putResponse=new HttpPut("/meetmeserver/api/gps");
+            HttpResponse httpResponse=httpClient.execute(target,putResponse);
+            httpResponse.toString();
 
+        }
+        catch (Exception e){
+            Log.e(TAG,"Error: "+e);
+            e.printStackTrace(System.out);
+            Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     /**
@@ -269,6 +286,7 @@ public class
         }
 
     }
+
 
     /**
      * Schreibt die Daten auf SD-Karte oder internen Speicher im GPX Format
@@ -371,9 +389,10 @@ public class
 
        double laenge = loc.getLongitude();
         double breite = loc.getLatitude();
+        //int test1=20;
+        //int test2=22;
 
-String laenge2=String.valueOf(laenge);
-        String breite2=String.valueOf(breite);
+        //sendGPSDaten(Double.toString(test1),Double.toString(test2));
 
         anzeigeBreite.setText(Location.convert(breite, Location.FORMAT_SECONDS));
         anzeigeLaenge.setText(Location.convert(laenge, Location.FORMAT_SECONDS));
