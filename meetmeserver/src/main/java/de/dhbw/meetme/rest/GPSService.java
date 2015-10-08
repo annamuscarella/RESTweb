@@ -35,7 +35,15 @@ public class GPSService {
         {
             log.debug(username + " hat seine GPS Daten aktualisiert");
             userDao.updateGPS(username, breitenGrad, laengenGrad);
+            //array liste von allen usern GPS daten
+            Array GPSdata = userDao.gpsDara
 
+            for (int i = 0; i < GPSdata.length; i++)
+            {
+             if(distanceInMeter(laengenGrad,breitenGrad,GPSdata[i].leangenGrad, GPSdata[i].breitenGrad) <= 10) {
+
+             }
+            }
             return;
         }
         log.debug("Jemand hat versucht seine GPS Daten aktualisiert aber userName war nicht in der DB");
@@ -58,18 +66,24 @@ public class GPSService {
 
 
     public double distanceInMeter(double lat1, double lon1, double lat2, double lon2) {
-        int radius = 6371;
+        int radius = 6371000;
         double lat = Math.toRadians(lat2 - lat1);
         double lon = Math.toRadians(lon2- lon1);
 
         double a = Math.sin(lat / 2) * Math.sin(lat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(lon / 2) * Math.sin(lon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double d = radius * c;
-         d = d / 1000;
         return Math.abs(d);
 
     }
 
+    public String checkDistance(double lat1, double lon1, double lat2, double lon2){
+
+        if (distanceInMeter(lat1,lon1,lat2,lon2) <= 10){
+            return;
+        }
+
+    }
 
 
 
