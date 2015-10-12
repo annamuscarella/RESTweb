@@ -81,7 +81,7 @@ public class GPSService {
     public static String checkDistance(double lat1, double lon1, double lat2, double lon2){
 
         double dist = distanceInMeter(lat1,lon1,lat2,lon2);
-        if (dist <= 100){
+        if (dist <= 10000){
             return "test";
         }
         log.debug("the distance is > 10");
