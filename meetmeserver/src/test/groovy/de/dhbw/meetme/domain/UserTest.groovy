@@ -12,6 +12,6 @@ class UserTest extends Specification {
         User user = new User();
 
         then: // then validate
-        user.id != null
+        user.id != null;
     }
 }

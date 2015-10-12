@@ -34,7 +34,7 @@ public class GPSService {
         if (meineUsers.size() > 0)
         {
             log.debug(username + " hat seine GPS Daten aktualisiert");
-            userDao.updateGPS(username, breitenGrad, laengenGrad);
+            //userDao.updateGPS(username, breitenGrad, laengenGrad);
             //array liste von allen usern GPS daten
            /* Array GPSdata = userDao.gpsDara
 
@@ -54,7 +54,7 @@ public class GPSService {
     @GET
     @Path("/{userName}")
     // Anfrage der eigenen GPS Koordianten...später werden die Koordinaten von allen Mitspielern geschickt
-    public String getGps (@PathParam("userName")String userName)
+    /*public String getGps (@PathParam("userName")String userName)
     {
         if (userDao.existCheckName(userName)== true)
         {
@@ -63,26 +63,29 @@ public class GPSService {
         }
         log.debug("Jemand hat versucht seine GPS Daten anzufragen aber userName war nicht in der DB");
         return "Leider bist du nicht angemeldet";
-    }
+    }*/
 
 
-    public double distanceInMeter(double lat1, double lon1, double lat2, double lon2) {
-        int radius = 6371000;
+    public static double distanceInMeter(double lat1, double lon1, double lat2, double lon2) {
+        int earthRadius = 6371000; //meters
         double lat = Math.toRadians(lat2 - lat1);
         double lon = Math.toRadians(lon2- lon1);
 
         double a = Math.sin(lat / 2) * Math.sin(lat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(lon / 2) * Math.sin(lon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double d = radius * c;
-        return Math.abs(d);
+        double d = earthRadius * c;
+        return Math.abs(d); // in meter
 
     }
 
-    public String checkDistance(double lat1, double lon1, double lat2, double lon2){
+    public static String checkDistance(double lat1, double lon1, double lat2, double lon2){
 
-        if (distanceInMeter(lat1,lon1,lat2,lon2) <= 10){
+        double dist = distanceInMeter(lat1,lon1,lat2,lon2);
+        if (dist <= 100){
             return "test";
         }
+        log.debug("the distance is > 10");
+        return null;
 
     }
 
