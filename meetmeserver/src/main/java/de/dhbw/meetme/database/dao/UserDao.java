@@ -35,4 +35,10 @@ public class UserDao extends JpaDao<UuidId, User> {
         query.setParameter("email", email);
         return (Collection<User>) query.getResultList();
     }
+
+    public User findByUserName(String name) {
+        Query query = entityManager.createQuery("SELECT u from User u where u.name = :name"); //prev.: from User u where u.username = :username"
+        query.setParameter("name", name);
+        return (User) query.getResultList().get(0);
+    }
 }

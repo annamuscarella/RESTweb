@@ -1,5 +1,6 @@
 package de.dhbw.meetme.rest;
 
+import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
@@ -27,20 +28,23 @@ public class InteractionService {
 
     @Inject
     UserDao userDao;
+    @Inject
+    Transaction transaction;
 
     @GET
     @Path("/{username1}/{username2}/{verificationCode}")
     public boolean meetOtherUser(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("verificationCode") int verificationCode){
-        User user1 = userDao.findbyUserName(username1);
-        User user2 = userDao.findbyUserName(username2);
-        if (user2.getVerificationCode == verificationCode){
-            //add to database that users met
+        transaction.begin();
+        User user1 = userDao.findByUserName(username1);
+        User user2 = userDao.findByUserName(username2);
+        if (user2.getVerificationCode() == verificationCode){
+            //add to database that users met!!
             //score
-            int score = user1.getScore;
+            int score = user1.getScore();
             score++;
-            //user1.setScore(score);
-            userDao.updateScore(user1, score);
-
+            user1.setScore(score);
+            userDao.persist(user1);
+            transaction.commit();
             return true;
         }
         return false;

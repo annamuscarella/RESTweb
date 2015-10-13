@@ -19,6 +19,25 @@ public class User extends PersistentObject {
   private double longitude;
   private double latitude;
 
+  private int score;
+  private int verificationCode;
+
+  public int getVerificationCode() {
+    return verificationCode;
+  }
+
+  public void setVerificationCode(int verificationCode) {
+    this.verificationCode = verificationCode;
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
+
   public double getLongitude() {
     return longitude;
   }
