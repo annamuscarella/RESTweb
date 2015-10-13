@@ -1,5 +1,6 @@
 package de.dhbw.meetme.rest;
 
+import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
@@ -28,17 +29,24 @@ public class GPSService {
     @Inject
     UserDao userDao;
 
+    @Inject
+    Transaction transaction;
+
     @GET
     @Path("/{username}/{lat}/{lon}")
     // schickt die aktuelle GPS Position und speichert sie in der DB
     public ArrayList<UserPosition> updateGps (@PathParam("username") String username,@PathParam("lat") double lat ,@PathParam("lon") double lon)
     {
+        transaction.begin();
+
         ArrayList<UserPosition> nearbyUsers = new ArrayList<UserPosition>();
-        Collection<User> activeUsers = userDao.findByName(username);
-        if (activeUsers.size() > 0)
+        User activeUser = userDao.findByUserName(username);
+        if (activeUser != null)
         {
             //send GPS data to database
-            userDao.updateGPS(username, lat, lon);
+            activeUser.setLatitude(lat);
+            activeUser.setLongitude(lon);
+            userDao.persist(activeUser);
 
             //get Collection<User> from database, containing all users
             Collection<User> users = userDao.list();
@@ -46,13 +54,14 @@ public class GPSService {
                 //check that myUser is not activeUser
                 if (myUser.getName() != username) {
                     //check distance between active User and myUser and add to nearbyUsers
-                    if (checkDistance(lat, lon, myUser.lat, myUser.lon) < 10000){
-                        UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.lat, myUser.lon, "grey");
+                    if (checkDistance(lat, lon, myUser.getLatitude(), myUser.getLongitude()) < 10000){
+                        UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
                         nearbyUsers.add(myUserPosition);
                     }
                 }
 
             }
+            transaction.commit();
             log.debug(username + " hat seine GPS Daten aktualisiert");
             return nearbyUsers;
         }

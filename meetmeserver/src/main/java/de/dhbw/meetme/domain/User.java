@@ -15,6 +15,26 @@ public class User extends PersistentObject {
   private String password; //able to get and set passwordi once the user is created??
   private String nation;
   private String description;
+
+  private double longitude;
+  private double latitude;
+
+  public double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
+  }
+
+  public double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
+
   //private static int idi = 10000;
 
  // public void setIdi(){idi  = idi +1; }
