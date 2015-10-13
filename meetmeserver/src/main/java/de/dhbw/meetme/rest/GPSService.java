@@ -38,7 +38,7 @@ public class GPSService {
         if (activeUsers.size() > 0)
         {
             //send GPS data to database
-            //userDao.updateGPS(username, breitenGrad, laengenGrad);
+            userDao.updateGPS(username, lat, lon);
 
             //get Collection<User> from database, containing all users
             Collection<User> users = userDao.list();
