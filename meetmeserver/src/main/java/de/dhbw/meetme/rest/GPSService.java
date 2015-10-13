@@ -2,12 +2,15 @@ package de.dhbw.meetme.rest;
 
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
+import de.dhbw.meetme.domain.UserPosition;
 import groovy.lang.Singleton;
+import org.omg.CORBA.OBJECT_NOT_EXIST;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static java.lang.Math.*;
@@ -25,30 +28,36 @@ public class GPSService {
     @Inject
     UserDao userDao;
 
-    @PUT
-    @Path("/{username}/{laengenGrad}/{breitenGrad}")
+    @GET
+    @Path("/{username}/{lat}/{lon}")
     // schickt die aktuelle GPS Position und speichert sie in der DB
-    public void updateGps (@PathParam("username") String username,@PathParam("laengenGrad") double laengenGrad ,@PathParam("breitenGrad") double breitenGrad)
+    public ArrayList<UserPosition> updateGps (@PathParam("username") String username,@PathParam("lat") double lat ,@PathParam("lon") double lon)
     {
-        Collection<User> meineUsers = userDao.findByName(username);
-        if (meineUsers.size() > 0)
+        ArrayList<UserPosition> nearbyUsers = new ArrayList<UserPosition>();
+        Collection<User> activeUsers = userDao.findByName(username);
+        if (activeUsers.size() > 0)
         {
-            log.debug(username + " hat seine GPS Daten aktualisiert");
+            //send GPS data to database
             //userDao.updateGPS(username, breitenGrad, laengenGrad);
-            //array liste von allen usern GPS daten
-           /* Array GPSdata = userDao.gpsDara
 
-            for (int i = 0; i < GPSdata.length; i++)
-            {
-             if(distanceInMeter(laengenGrad,breitenGrad,GPSdata[i].leangenGrad, GPSdata[i].breitenGrad) <= 10) {
+            //get Collection<User> from database, containing all users
+            Collection<User> users = userDao.list();
+            for(User myUser: users){
+                //check that myUser is not activeUser
+                if (myUser.getName() != username) {
+                    //check distance between active User and myUser and add to nearbyUsers
+                    if (checkDistance(lat, lon, myUser.lat, myUser.lon) < 10000){
+                        UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.lat, myUser.lon, "grey");
+                        nearbyUsers.add(myUserPosition);
+                    }
+                }
 
-             }
             }
-            return;
-            */
+            log.debug(username + " hat seine GPS Daten aktualisiert");
+            return nearbyUsers;
         }
-        log.debug("Jemand hat versucht seine GPS Daten aktualisiert aber userName war nicht in der DB");
-        return;
+        log.debug("Jemand hat versucht seine GPS Daten zu aktualisieren, aber userName war nicht in der DB");
+        return nearbyUsers;
     }
 
     @GET
@@ -78,14 +87,10 @@ public class GPSService {
 
     }
 
-    public static String checkDistance(double lat1, double lon1, double lat2, double lon2){
+    public static double checkDistance(double lat1, double lon1, double lat2, double lon2){
 
         double dist = distanceInMeter(lat1,lon1,lat2,lon2);
-        if (dist <= 10000){
-            return "test";
-        }
-        log.debug("the distance is > 10");
-        return null;
+        return dist;
 
     }
 

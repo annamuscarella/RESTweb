@@ -6,7 +6,7 @@ import spock.lang.Specification
 /**
  *
  */
-class GPSTest extends Specification {
+/*class GPSTest extends Specification {
 
     def testGPSDistance() { // tests need to start with test....
         when:   // do something
@@ -15,4 +15,4 @@ class GPSTest extends Specification {
         then: // then validate
         test == "test";
     }
-}
+}*/
