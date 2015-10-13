@@ -52,14 +52,19 @@ public class GPSService {
             Collection<User> users = userDao.list();
             for(User myUser: users){
                 //check that myUser is not activeUser
-                if (myUser.getName() != username) {
+                if (!myUser.getName().equals(username)) {
                     //check distance between active User and myUser and add to nearbyUsers
                     if (checkDistance(lat, lon, myUser.getLatitude(), myUser.getLongitude()) < 10000){
-                        UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
+                        log.debug(myUser.getName()+" checkDistance " + username);
+                        UserPosition myUserPosition = new UserPosition("name", 100, 100, "grey");
+                        //UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
                         nearbyUsers.add(myUserPosition);
                     }
+                    for(UserPosition up: nearbyUsers){
+                        log.debug(up.toString());
+                    }
+                    //log.debug(nearbyUsers.toString());
                 }
-
             }
             transaction.commit();
             log.debug(username + " hat seine GPS Daten aktualisiert");

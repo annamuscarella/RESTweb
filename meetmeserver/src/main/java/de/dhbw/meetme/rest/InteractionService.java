@@ -37,15 +37,19 @@ public class InteractionService {
         transaction.begin();
         User user1 = userDao.findByUserName(username1);
         User user2 = userDao.findByUserName(username2);
-        if (user2.getVerificationCode() == verificationCode){
-            //add to database that users met!!
-            //score
-            int score = user1.getScore();
-            score++;
-            user1.setScore(score);
-            userDao.persist(user1);
-            transaction.commit();
-            return true;
+        if (!user1.equals(user2)) {
+            if (GPSService.checkDistance(user1.getLatitude(), user1.getLongitude(), user2.getLatitude(), user2.getLongitude())<2000) {
+                if (user2.getVerificationCode() == verificationCode) {
+                    //add to database that users met!!
+                    //score
+                    int score = user1.getScore();
+                    score++;
+                    user1.setScore(score);
+                    userDao.persist(user1);
+                    transaction.commit();
+                    return true;
+                }
+            }
         }
         return false;
     }
