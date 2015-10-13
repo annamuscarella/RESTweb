@@ -23,6 +23,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.hello.R;
+import com.google.android.gms.maps.MapFragment;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -230,7 +231,7 @@ public class
         DefaultHttpClient httpClient=new DefaultHttpClient();
         try{
             HttpHost target=new HttpHost(HOSTNAME,PORT,"http");
-            HttpPut putResponse=new HttpPut("/meetmeserver/api/gps");
+            HttpPut putResponse=new HttpPut("/meetmeserver/api/gps/username/55/54");
             HttpResponse httpResponse=httpClient.execute(target,putResponse);
             httpResponse.toString();
 
