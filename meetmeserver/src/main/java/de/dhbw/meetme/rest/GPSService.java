@@ -51,9 +51,9 @@ public class GPSService {
             activeUser.setLongitude(lon);
 
             long currentMillis = System.currentTimeMillis();
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
-            Date currentDate = new Date(currentMillis);
-            activeUser.setLastUpdated(currentDate);
+            //SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+            //Date currentDate = new Date(currentMillis);
+            activeUser.setTimeStamp(currentMillis);
 
             userDao.persist(activeUser);
 
@@ -62,10 +62,13 @@ public class GPSService {
             for(User myUser: users){
                 //check that myUser is not activeUser
                 if (!myUser.getName().equals(username)) {
-                    //check distance between active User and myUser and add to nearbyUsers
-                    if (checkDistance(lat, lon, myUser.getLatitude(), myUser.getLongitude()) < 10000){
-                        UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
-                        nearbyUsers.add(myUserPosition);
+                    //check when user last updated his/her position (2 hrs ago)
+                    if ((activeUser.getTimeStamp() - myUser.getTimeStamp() < 7200000)) {
+                        //check distance between active User and myUser and add to nearbyUsers
+                        if (checkDistance(lat, lon, myUser.getLatitude(), myUser.getLongitude()) < 10000) {
+                            UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
+                            nearbyUsers.add(myUserPosition);
+                        }
                     }
                 }
             }
