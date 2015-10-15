@@ -50,10 +50,10 @@ public class GPSService {
             activeUser.setLatitude(lat);
             activeUser.setLongitude(lon);
 
-            long currentMillis = System.currentTimeMillis();
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
-            Date currentDate = new Date(currentMillis);
-            activeUser.setLastUpdated(currentDate);
+            double currentMillis = System.currentTimeMillis();
+            //SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+            //Date currentDate = new Date(currentMillis);
+            activeUser.setLastUpdated(currentMillis);
 
             userDao.persist(activeUser);
 

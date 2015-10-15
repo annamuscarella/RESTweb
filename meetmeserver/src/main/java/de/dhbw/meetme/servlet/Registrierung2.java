@@ -56,6 +56,7 @@ public class Registrierung2 extends HttpServlet {
             String description = request.getParameter("description");
 
 
+
             log.debug("New Registration: " + username + ", " + password + ", " + email + ", " + nation + ", " + description);
             log.debug(username);
             log.debug(password);
