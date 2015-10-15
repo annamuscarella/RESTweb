@@ -59,10 +59,6 @@ public class GPSService {
                         UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
                         nearbyUsers.add(myUserPosition);
                     }
-                    for(UserPosition up: nearbyUsers){
-                        log.debug(up.toString());
-                    }
-                    //log.debug(nearbyUsers.toString());
                 }
             }
             transaction.commit();
