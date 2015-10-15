@@ -21,16 +21,16 @@ public class User extends PersistentObject {
   private double longitude;
   private double latitude;
 
-  private long timeStamp;
+  private double timeStamp;
 
   private int score;
   private int verificationCode;
 
-    public long getTimeStamp() {
+    public double getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
+    public void setTimeStamp(double timeStamp) {
         this.timeStamp = timeStamp;
     }
 
