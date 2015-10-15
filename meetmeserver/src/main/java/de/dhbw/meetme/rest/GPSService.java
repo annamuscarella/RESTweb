@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.lang.Math.*;
 
@@ -35,11 +36,11 @@ public class GPSService {
     @GET
     @Path("/{username}/{lat}/{lon}")
     // schickt die aktuelle GPS Position und speichert sie in der DB
-    public ArrayList<UserPosition> updateGps (@PathParam("username") String username,@PathParam("lat") double lat ,@PathParam("lon") double lon)
+    public List<UserPosition> updateGps (@PathParam("username") String username,@PathParam("lat") double lat ,@PathParam("lon") double lon)
     {
         transaction.begin();
 
-        ArrayList<UserPosition> nearbyUsers = new ArrayList<UserPosition>();
+        List<UserPosition> nearbyUsers = new ArrayList<UserPosition>();
         User activeUser = userDao.findByUserName(username);
         if (activeUser != null)
         {
@@ -55,9 +56,7 @@ public class GPSService {
                 if (!myUser.getName().equals(username)) {
                     //check distance between active User and myUser and add to nearbyUsers
                     if (checkDistance(lat, lon, myUser.getLatitude(), myUser.getLongitude()) < 10000){
-                        log.debug(myUser.getName()+" checkDistance " + username);
-                        UserPosition myUserPosition = new UserPosition("name", 100, 100, "grey");
-                        //UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
+                        UserPosition myUserPosition = new UserPosition(myUser.getName(), myUser.getLatitude(), myUser.getLongitude(), "grey");
                         nearbyUsers.add(myUserPosition);
                     }
                     for(UserPosition up: nearbyUsers){
@@ -67,10 +66,10 @@ public class GPSService {
                 }
             }
             transaction.commit();
-            log.debug(username + " hat seine GPS Daten aktualisiert");
+            log.debug(username + " hat seine GPS Daten aktualisiert.");
             return nearbyUsers;
         }
-        log.debug("Jemand hat versucht seine GPS Daten zu aktualisieren, aber userName war nicht in der DB");
+        log.debug("Jemand hat versucht seine GPS Daten zu aktualisieren, aber userName " + username + " war nicht in der DB");
         return nearbyUsers;
     }
 

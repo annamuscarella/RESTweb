@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity // also add to persistence.xml !!
 @XmlRootElement // needed for REST JSON marshalling
-public class UserPosition {
+public class UserPosition{
 
   private String name;
   private double lat, lon;
@@ -52,6 +52,11 @@ public class UserPosition {
 
   public void setColor(String color) {
     this.color = color;
+  }
+
+  public String toString(){
+      String s = "UserPosition from " + name + " is: " + lat + ", " + lon + "; " + color;
+      return s;
   }
 
 
