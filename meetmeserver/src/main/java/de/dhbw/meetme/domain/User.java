@@ -18,6 +18,8 @@ public class User extends PersistentObject {
 
   private double longitude;
   private double latitude;
+  //private java.sql.Timestamp lastUpdated;
+  //private java.util.Date timestamp;
 
   private int score;
   private int verificationCode;
