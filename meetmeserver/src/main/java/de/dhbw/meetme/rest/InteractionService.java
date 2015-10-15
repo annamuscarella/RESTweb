@@ -33,7 +33,7 @@ public class InteractionService {
 
     @GET
     @Path("/{username1}/{username2}/{verificationCode}")
-    public boolean meetOtherUser(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("verificationCode") int verificationCode){
+    public String meetOtherUser(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("verificationCode") int verificationCode){
         transaction.begin();
         User user1 = userDao.findByUserName(username1);
         User user2 = userDao.findByUserName(username2);
@@ -46,12 +46,13 @@ public class InteractionService {
                     score++;
                     user1.setScore(score);
                     userDao.persist(user1);
+                    user1.getScore();
                     transaction.commit();
-                    return true;
+                    return "true;"+user1.getScore();
                 }
             }
         }
-        return false;
+        return "false;"+user1.getScore();
     }
 
 
