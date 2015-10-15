@@ -21,18 +21,18 @@ public class User extends PersistentObject {
   private double longitude;
   private double latitude;
 
-    //private java.util.Date lastUpdated;
-  private double lastUpdated;
+  private java.util.Date lastUpdated;
+
   //private java.util.Date timestamp;
 
   private int score;
   private int verificationCode;
 
-    public double getLastUpdated() {
+    public java.util.Date getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(double lastUpdated) {
+    public void setLastUpdated(java.util.Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
