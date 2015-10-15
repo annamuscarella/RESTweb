@@ -3,6 +3,8 @@ package de.dhbw.meetme.domain;
 
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -18,13 +20,22 @@ public class User extends PersistentObject {
 
   private double longitude;
   private double latitude;
-  //private java.sql.Timestamp lastUpdated;
+
+    private java.util.Date lastUpdated;
   //private java.util.Date timestamp;
 
   private int score;
   private int verificationCode;
 
-  public int getVerificationCode() {
+    public java.util.Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(java.util.Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public int getVerificationCode() {
     return verificationCode;
   }
 

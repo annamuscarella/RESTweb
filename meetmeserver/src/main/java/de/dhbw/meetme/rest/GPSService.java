@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.Math.*;
@@ -47,6 +49,12 @@ public class GPSService {
             //send GPS data to database
             activeUser.setLatitude(lat);
             activeUser.setLongitude(lon);
+
+            long currentMillis = System.currentTimeMillis();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+            Date currentDate = new Date(currentMillis);
+            activeUser.setLastUpdated(currentDate);
+
             userDao.persist(activeUser);
 
             //get Collection<User> from database, containing all users
