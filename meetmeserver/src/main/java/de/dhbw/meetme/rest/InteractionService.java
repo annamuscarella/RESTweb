@@ -78,7 +78,6 @@ public class InteractionService {
     @Path("/{username}")
     public Collection<Friendship> list(@PathParam("username") String username){
         return friendshipDao.findByName(username);
-
     }
 
 

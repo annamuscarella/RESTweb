@@ -1,10 +1,13 @@
 package de.dhbw.meetme.rest;
 
 import de.dhbw.meetme.database.Transaction;
+import de.dhbw.meetme.database.dao.GPSDao;
 import de.dhbw.meetme.database.dao.UserDao;
+import de.dhbw.meetme.domain.GPSLocation;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
 import groovy.lang.Singleton;
+import groovy.util.logging.Log;
 import org.omg.CORBA.OBJECT_NOT_EXIST;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +34,19 @@ public class GPSService {
 
     @Inject
     UserDao userDao;
+    @Inject
+    GPSDao gpsDao;
 
     @Inject
     Transaction transaction;
+
+    @GET
+    @Path("/list")
+    //returns list of all GPS Locations saved in the database
+    public Collection<GPSLocation> listGPSLocations(){
+        log.debug("list GPS locations");
+        return gpsDao.list();
+    }
 
     @GET
     @Path("/{username}/{lat}/{lon}")
@@ -47,15 +60,13 @@ public class GPSService {
         if (activeUser != null)
         {
             //send GPS data to database
-            activeUser.setLatitude(lat);
-            activeUser.setLongitude(lon);
+            GPSLocation myLocation = new GPSLocation(username, lat, lon, System.currentTimeMillis());
+            gpsDao.persist(myLocation);
+            //activeUser.setLatitude(lat);
+            //activeUser.setLongitude(lon);
 
-            double currentMillis = System.currentTimeMillis();
-            //SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
-            //Date currentDate = new Date(currentMillis);
-            activeUser.setTimeStamp(currentMillis);
 
-            userDao.persist(activeUser);
+            //userDao.persist(activeUser);
 
             //get Collection<User> from database, containing all users
             Collection<User> users = userDao.list();

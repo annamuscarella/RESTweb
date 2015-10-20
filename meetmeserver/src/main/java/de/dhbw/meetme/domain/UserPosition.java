@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  */
-@Entity // also add to persistence.xml !!
+@Entity// also add to persistence.xml !!
 @XmlRootElement // needed for REST JSON marshalling
 public class UserPosition{
 

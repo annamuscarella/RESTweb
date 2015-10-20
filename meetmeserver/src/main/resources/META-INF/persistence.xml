@@ -12,6 +12,7 @@
     <class>de.dhbw.meetme.domain.PersistentObject</class>
     <class>de.dhbw.meetme.domain.UserPosition</class>
     <class>de.dhbw.meetme.domain.Friendship</class>
+    <class>de.dhbw.meetme.domain.GPSLocation</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>
