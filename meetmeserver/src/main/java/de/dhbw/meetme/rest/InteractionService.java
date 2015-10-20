@@ -1,7 +1,9 @@
 package de.dhbw.meetme.rest;
 
 import de.dhbw.meetme.database.Transaction;
+import de.dhbw.meetme.database.dao.FriendshipDao;
 import de.dhbw.meetme.database.dao.UserDao;
+import de.dhbw.meetme.domain.Friendship;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
 import groovy.lang.Singleton;
@@ -29,6 +31,8 @@ public class InteractionService {
     @Inject
     UserDao userDao;
     @Inject
+    FriendshipDao friendshipDao;
+    @Inject
     Transaction transaction;
 
     @GET
@@ -37,11 +41,24 @@ public class InteractionService {
         transaction.begin();
         User user1 = userDao.findByUserName(username1);
         User user2 = userDao.findByUserName(username2);
-        if (user2 != null) {
+        if ( user2 != null) {
             if (!user1.equals(user2)) {
                 if (GPSService.checkDistance(user1.getLatitude(), user1.getLongitude(), user2.getLatitude(), user2.getLongitude()) < 2000) {
                     if (user2.getVerificationCode() == verificationCode) {
+                        //list all friendships and check whether already friends
+                        Collection<Friendship> myFriendships = friendshipDao.findByName(username1);
+                        //log.debug(myFriendships);
+                        for(Friendship f:myFriendships){
+                            if (f.getUsername2().equals(username2)){
+                                return "false" + user1.getScore();
+                            }
+                        }
+
                         //add to database that users met!!
+                        Friendship myFriendship = new Friendship(username1, username2);
+                        friendshipDao.persist(myFriendship);
+
+
                         //score
                         int score = user1.getScore();
                         score++;
@@ -55,6 +72,13 @@ public class InteractionService {
             }
         }
         return "false;"+user1.getScore();
+    }
+
+    @GET
+    @Path("/{username}")
+    public Collection<Friendship> list(@PathParam("username") String username){
+        return friendshipDao.findByName(username);
+
     }
 
 

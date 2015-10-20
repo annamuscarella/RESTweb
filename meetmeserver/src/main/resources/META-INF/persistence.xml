@@ -11,6 +11,7 @@
     <class>de.dhbw.meetme.domain.UuidId</class>
     <class>de.dhbw.meetme.domain.PersistentObject</class>
     <class>de.dhbw.meetme.domain.UserPosition</class>
+    <class>de.dhbw.meetme.domain.Friendship</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>
