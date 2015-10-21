@@ -45,7 +45,16 @@ public class GPSService {
     //returns list of all GPS Locations saved in the database
     public Collection<GPSLocation> listGPSLocations(){
         log.debug("list GPS locations");
+        log.debug(gpsDao.list().toString());
         return gpsDao.list();
+    }
+
+    @GET
+    @Path("/list2")
+    public Collection<GPSLocation> listUniqueGPSLocations(){
+        log.debug("list unique GPS locations");
+        //log.debug(gpsDao.listUniqueLatestGPS().toString());
+        return gpsDao.listUniqueLatestGPS();
     }
 
     @GET
@@ -70,7 +79,22 @@ public class GPSService {
 
             //get Collection<User> from database, containing all users
             Collection<User> users = userDao.list();
-            for(User myUser: users){
+            Collection<GPSLocation> userPositions = gpsDao.listUniqueLatestGPS();
+            for (GPSLocation myGPSLocation: userPositions){
+                //check that myUser is not active User
+                if (!myGPSLocation.getUsername().equals(username)){
+                    //check when use rlast updated his/her position (2 hrs ago)
+                    if ((activeUser.getTimeStamp() - myGPSLocation.getTimeStamp() < 7200000)){
+                        //check distance between active user and myUser and add to nearbyUsers
+                        if (checkDistance(lat, lon, myGPSLocation.getLatitude(), myGPSLocation.getLongitude()) < 10000){
+                            UserPosition myUserPosition = new UserPosition(myGPSLocation.getUsername(), myGPSLocation.getLatitude(), myGPSLocation.getLongitude(), "grey");
+                            nearbyUsers.add(myUserPosition);
+
+                        }
+                    }
+                }
+            }
+            /*for(User myUser: users){
                 //check that myUser is not activeUser
                 if (!myUser.getName().equals(username)) {
                     //check when user last updated his/her position (2 hrs ago)
@@ -82,7 +106,7 @@ public class GPSService {
                         }
                     }
                 }
-            }
+            }*/
             transaction.commit();
             log.debug(username + " hat seine GPS Daten aktualisiert.");
             return nearbyUsers;

@@ -3,6 +3,7 @@ package de.dhbw.meetme.domain;
 
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  *
@@ -31,11 +32,11 @@ public class GPSLocation extends PersistentObject {
     this.longitude = longitude;
   }
 
-  public double getLatidude() {
+  public double getLatitude() {
     return latitude;
   }
 
-  public void setLatidude(double latidude) {
+  public void setLatitude(double latidude) {
     this.latitude = latidude;
   }
 
