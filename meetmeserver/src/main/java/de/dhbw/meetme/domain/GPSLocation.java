@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GPSLocation extends PersistentObject {
 
   private String username;
-  private double longitude, latidude;
+  private double longitude, latitude;
   private double timeStamp;
 
   public String getUsername() {
@@ -32,11 +32,11 @@ public class GPSLocation extends PersistentObject {
   }
 
   public double getLatidude() {
-    return latidude;
+    return latitude;
   }
 
   public void setLatidude(double latidude) {
-    this.latidude = latidude;
+    this.latitude = latidude;
   }
 
   public double getTimeStamp() {
@@ -50,7 +50,7 @@ public class GPSLocation extends PersistentObject {
   public GPSLocation(String username, double latidude, double longitude, double timeStamp){
     this.username=username;
     this.longitude=longitude;
-    this.latidude=latidude;
+    this.latitude=latidude;
     this.timeStamp=timeStamp;
   }
 
