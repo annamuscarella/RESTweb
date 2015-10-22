@@ -59,7 +59,7 @@ public class InteractionService {
                         //log.debug(myFriendships);
                         for(Friendship f:myFriendships){
                             if (f.getUsername2().equals(username2)){
-                                log.debug(username1 + " and " + username2 + " could not meet because already friends");
+                                log.debug(username1 + " and " + username2 + " could not meet because already friends.");
                                 return "false;" + user1.getScore();
                             }
                         }
@@ -76,12 +76,13 @@ public class InteractionService {
                         userDao.persist(user1);
                         user1.getScore();
                         transaction.commit();
+                        log.debug(username1 + " and " + username2 + " met.");
                         return "true;" + user1.getScore();
                     }
                 }
             }
         }
-        log.debug(username1 + " and " + username2 + "could not meet");
+        log.debug(username1 + " and " + username2 + "could not meet.");
         return "false;"+user1.getScore();
     }
 

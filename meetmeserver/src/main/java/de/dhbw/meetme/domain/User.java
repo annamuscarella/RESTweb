@@ -117,4 +117,14 @@ public class User extends PersistentObject {
         ", name='" + name + '\'' +
         '}';
   }
+
+  public String getColor(){
+    if (nation.equals("german")){
+      return "blue";
+    }
+    if (nation.equals("notGerman")){
+      return "red";
+    }
+    return "grey";
+  }
 }

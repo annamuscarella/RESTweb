@@ -1,8 +1,10 @@
 package de.dhbw.meetme.rest;
 
 import de.dhbw.meetme.database.Transaction;
+import de.dhbw.meetme.database.dao.FriendshipDao;
 import de.dhbw.meetme.database.dao.GPSDao;
 import de.dhbw.meetme.database.dao.UserDao;
+import de.dhbw.meetme.domain.Friendship;
 import de.dhbw.meetme.domain.GPSLocation;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
@@ -36,6 +38,8 @@ public class GPSService {
     UserDao userDao;
     @Inject
     GPSDao gpsDao;
+    @Inject
+    FriendshipDao friendshipDao;
 
     @Inject
     Transaction transaction;
@@ -87,7 +91,8 @@ public class GPSService {
                     if ((activeUser.getTimeStamp() - myGPSLocation.getTimeStamp() < 7200000)){
                         //check distance between active user and myUser and add to nearbyUsers
                         if (checkDistance(lat, lon, myGPSLocation.getLatitude(), myGPSLocation.getLongitude()) < 10000){
-                            UserPosition myUserPosition = new UserPosition(myGPSLocation.getUsername(), myGPSLocation.getLatitude(), myGPSLocation.getLongitude(), "grey");
+                            String color = checkColor(username, myGPSLocation.getUsername());
+                            UserPosition myUserPosition = new UserPosition(myGPSLocation.getUsername(), myGPSLocation.getLatitude(), myGPSLocation.getLongitude(), color);
                             nearbyUsers.add(myUserPosition);
 
                         }
@@ -149,6 +154,19 @@ public class GPSService {
 
     }
 
-
+    public String checkColor(String username1, String username2){
+        //list all friendships in database
+        String color;
+        Collection<Friendship> myFriendships = friendshipDao.findByName(username1);
+        for(Friendship f:myFriendships){
+            if (f.getUsername2().equals(username2)){
+                User myUser = userDao.findByUserName(username2);
+                color = myUser.getColor();
+                return color;
+            }
+        }
+        color = "grey";
+        return color;
+    }
 
 }
