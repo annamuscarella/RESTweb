@@ -44,18 +44,14 @@ public class InteractionService {
     @Path("/{username1}/{username2}/{verificationCode}")
     public String meetOtherUser(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("verificationCode") int verificationCode){
         transaction.begin();
-        log.debug("testtest");
         User user1 = userDao.findByUserName(username1);
         GPSLocation user1GPS = gpsDao.listLatestGPSByUserSingle(username1);
         User user2 = userDao.findByUserName(username2);
         GPSLocation user2GPS = gpsDao.listLatestGPSByUserSingle(username2);
-        log.debug("Test");
 
         if ( user2GPS != null) {
             //check that one cannot meet him/herself
-            log.debug(username2 + " is not null");
             if (!user1GPS.equals(user2GPS)) {
-                log.debug(username1 + "and" + username2 + " are not the same person");
                 if (GPSService.checkDistance(user1GPS.getLatitude(), user1GPS.getLongitude(), user2GPS.getLatitude(), user2GPS.getLongitude()) < 2000) {
                     if (user2.getVerificationCode() == verificationCode) {
                         //list all friendships and check whether already friends
@@ -63,7 +59,7 @@ public class InteractionService {
                         //log.debug(myFriendships);
                         for(Friendship f:myFriendships){
                             if (f.getUsername2().equals(username2)){
-                                log.debug(username1 + " and " + username2 + "could not meet because already friends");
+                                log.debug(username1 + " and " + username2 + " could not meet because already friends");
                                 return "false;" + user1.getScore();
                             }
                         }

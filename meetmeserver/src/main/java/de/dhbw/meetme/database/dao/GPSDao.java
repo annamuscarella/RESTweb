@@ -66,7 +66,7 @@ public class GPSDao extends JpaDao<UuidId, GPSLocation> {
     public GPSLocation listLatestGPSByUserSingle(String name){
         Query query = entityManager.createQuery("select gps from GPSLocation gps where gps.username=:name order by gps.timeStamp desc");
         query.setParameter("name", name);
-        return (GPSLocation) query.setMaxResults(1).getResultList();
+        return (GPSLocation) query.getResultList().get(0);
     }
 
     /*public Collection<User> findByEmail(String email) {
