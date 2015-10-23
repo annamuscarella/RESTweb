@@ -13,6 +13,9 @@
     <class>de.dhbw.meetme.domain.UserPosition</class>
     <class>de.dhbw.meetme.domain.Friendship</class>
     <class>de.dhbw.meetme.domain.GPSLocation</class>
+      <class>de.dhbw.meetme.domain.Score</class>
+      <class>de.dhbw.meetme.domain.TopPlayer</class>
+      <class>de.dhbw.meetme.domain.Friends</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>

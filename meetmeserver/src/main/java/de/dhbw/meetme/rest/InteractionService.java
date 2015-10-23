@@ -3,11 +3,9 @@ package de.dhbw.meetme.rest;
 import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.FriendshipDao;
 import de.dhbw.meetme.database.dao.GPSDao;
+import de.dhbw.meetme.database.dao.ScoreDao;
 import de.dhbw.meetme.database.dao.UserDao;
-import de.dhbw.meetme.domain.Friendship;
-import de.dhbw.meetme.domain.GPSLocation;
-import de.dhbw.meetme.domain.User;
-import de.dhbw.meetme.domain.UserPosition;
+import de.dhbw.meetme.domain.*;
 import groovy.lang.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +36,8 @@ public class InteractionService {
     @Inject
     FriendshipDao friendshipDao;
     @Inject
+    ScoreDao scoreDao;
+    @Inject
     Transaction transaction;
 
     @GET
@@ -60,7 +60,8 @@ public class InteractionService {
                         for(Friendship f:myFriendships){
                             if (f.getUsername2().equals(username2)){
                                 log.debug(username1 + " and " + username2 + " could not meet because already friends.");
-                                return "false;" + user1.getScore();
+                                Score s = scoreDao.getScore(username1);
+                                return "false;" + s.getScore();
                             }
                         }
 
@@ -70,20 +71,22 @@ public class InteractionService {
 
 
                         //score
-                        int score = user1.getScore();
+                        Score s = scoreDao.getScore(username1);
+                        int score = s.getScore();
                         score++;
-                        user1.setScore(score);
-                        userDao.persist(user1);
-                        user1.getScore();
+                        s.setScore(score);
+                        scoreDao.persist(s);
+
                         transaction.commit();
                         log.debug(username1 + " and " + username2 + " met.");
-                        return "true;" + user1.getScore();
+                        return "true;" + s.getScore();
                     }
                 }
             }
         }
         log.debug(username1 + " and " + username2 + "could not meet.");
-        return "false;"+user1.getScore();
+        Score s = scoreDao.getScore(username1);
+        return "false;"+s.getScore();
     }
 
     @GET

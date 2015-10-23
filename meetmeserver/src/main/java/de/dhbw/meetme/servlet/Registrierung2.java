@@ -1,7 +1,9 @@
 package de.dhbw.meetme.servlet;
 
 import de.dhbw.meetme.database.Transaction;
+import de.dhbw.meetme.database.dao.ScoreDao;
 import de.dhbw.meetme.domain.MD5;
+import de.dhbw.meetme.domain.Score;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.rest.UserService;
 import org.slf4j.Logger;
@@ -37,6 +39,8 @@ public class Registrierung2 extends HttpServlet {
 
     @Inject
     UserDao userDao;
+    @Inject
+    ScoreDao scoreDao;
     @Inject
     Transaction transaction;
 
@@ -79,7 +83,9 @@ public class Registrierung2 extends HttpServlet {
                 a.setPassword(MD5.getMD5(password));            //Verschlüsselung mit MD5 Hash des PW vor dem abspeichern
                 a.setNation(nation);
                 a.setDescription(description);
+                Score s = new Score(username, 0);
                 //a.setIdi();
+                scoreDao.persist(s);
                 userDao.persist(a);                             //in DB speichern
 
                     response.sendRedirect("LogIn2.html");
