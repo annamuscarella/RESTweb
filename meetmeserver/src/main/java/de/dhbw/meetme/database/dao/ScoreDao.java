@@ -30,21 +30,6 @@ public class ScoreDao extends JpaDao<UuidId, Score> {
     }
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-
-
-
-  /* public ArrayList<Score> listUniqueLatestGPS(){
-        //this method returns a collection of the latest GPS location, for each user only once location
-        Collection<String> myUsers = listUsersinGPS();
-        ArrayList<GPSLocation> myGPSLocations = new ArrayList<>();
-        for(String username:myUsers){
-            //for each user in myUsers, get the latest GPSData and append
-            myGPSLocations.addAll(listLatestGPSByUser(username));
-        }
-        return Score;
-    }*/
-
-
     public Collection<Score> scoreList(){
         Query query = entityManager.createQuery("select score from Score score group by score.username order by score.scoreNb desc");
 
@@ -65,15 +50,4 @@ public class ScoreDao extends JpaDao<UuidId, Score> {
         return (Score) query.getResultList().get(0);
     }
 
-    /*public Collection<User> findByEmail(String email) {
-        Query query = entityManager.createQuery("select u from User u where u.email = :email");
-        query.setParameter("email", email);
-        return (Collection<User>) query.getResultList();
-    }
-
-    public User findByUserName(String name) {
-        Query query = entityManager.createQuery("SELECT u from User u where u.name = :name"); //prev.: from User u where u.username = :username"
-        query.setParameter("name", name);
-        return (User) query.getResultList().get(0);
-    }*/
 }
