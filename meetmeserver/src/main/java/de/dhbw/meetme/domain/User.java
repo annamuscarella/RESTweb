@@ -23,7 +23,7 @@ public class User extends PersistentObject {
 
   private double timeStamp;
 
-  private int score;
+
   private int verificationCode;
 
     public double getTimeStamp() {
@@ -42,13 +42,7 @@ public class User extends PersistentObject {
     this.verificationCode = verificationCode;
   }
 
-  public int getScore() {
-    return score;
-  }
 
-  public void setScore(int score) {
-    this.score = score;
-  }
 
   public double getLongitude() {
     return longitude;
