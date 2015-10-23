@@ -11,17 +11,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement // needed for REST JSON marshalling
 public class Score extends PersistentObject {
   private String username;
-  private int score;
+  private int scoreNb;
 
   public UuidId getid(){
     return id;
   }
-  public int getScore() {
-    return score;
+  public int getScoreNb() {
+    return scoreNb;
   }
 
-  public void setScore(int score) {
-    this.score = score;
+  public void setScoreNb(int scoreNb) {
+    this.scoreNb = scoreNb;
   }
 
   public String getUsername() {
@@ -32,9 +32,9 @@ public class Score extends PersistentObject {
     this.username = username;
   }
 
-public Score(String username, int score){
+public Score(String username, int scoreNb){
   this.username = username;
-  this.score = score;
+  this.scoreNb = scoreNb;
 }
 
 

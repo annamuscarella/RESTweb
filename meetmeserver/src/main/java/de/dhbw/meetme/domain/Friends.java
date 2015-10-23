@@ -18,7 +18,7 @@ public class Friends {
 
 
 
-  public Friends(String name, int score){
+  public Friends(String username, int score){
     this.username=username;
     this.score=score;
 

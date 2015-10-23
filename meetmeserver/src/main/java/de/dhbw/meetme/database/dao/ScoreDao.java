@@ -46,13 +46,13 @@ public class ScoreDao extends JpaDao<UuidId, Score> {
 
 
     public Collection<Score> scoreList(){
-        Query query = entityManager.createQuery("select score from Score score group by score.username order by score.score desc");
+        Query query = entityManager.createQuery("select score from Score score group by score.username order by score.scoreNb desc");
 
         return (Collection<Score>) query.getResultList();
     }
 
     public Collection<Score> listgetScore(String name){
-        Query query = entityManager.createQuery("select score from Score score where score.username=:name order by score.score desc");
+        Query query = entityManager.createQuery("select score from Score score where score.username=:name order by score.scoreNb desc");
         query.setParameter("name", name);
 
         return (Collection<Score>) query.setMaxResults(1).getResultList();
@@ -60,7 +60,7 @@ public class ScoreDao extends JpaDao<UuidId, Score> {
 
 
     public Score getScore(String name){
-        Query query = entityManager.createQuery("select score from Score score where score.username=:name order by score.score desc");
+        Query query = entityManager.createQuery("select score from Score score where score.username=:name order by score.scoreNb desc");
         query.setParameter("name", name);
         return (Score) query.getResultList().get(0);
     }

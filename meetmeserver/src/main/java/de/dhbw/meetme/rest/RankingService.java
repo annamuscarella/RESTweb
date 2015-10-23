@@ -18,7 +18,7 @@ import java.util.List;
 
 import de.dhbw.meetme.database.dao.UserDao;
 
-@Path("/api/ranking")
+@Path("api/ranking")
 @Produces({"application/json"}) // mime type
 @Singleton
 public class RankingService {
@@ -34,7 +34,7 @@ public class RankingService {
     @Inject
     Transaction transaction;
 @GET
-@Path("/topplayer)")
+@Path("/topplayer")
 //bullshit methode!
     public List<TopPlayer> topPlayerList() {
 
@@ -48,7 +48,7 @@ public class RankingService {
                     break;
                 }
                 else {
-                    TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScore());
+                    TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScoreNb());
                     myTopPlayerList.add(t);
                 }
             }
@@ -58,28 +58,33 @@ public class RankingService {
     }
 
 @GET
-@Path("/topplayer1)")
+@Path("/topplayer1")
     public Collection<Score> topPlayerList1(){
 
     return scoreDao.scoreList();
+
 }
 
 @GET
 @Path("/friendlist/{username}")
     public List<Friends> friendlist (@PathParam("username")String username){
 
-    ArrayList<Friends> myfriendslist = new ArrayList<>();
+    List<Friends> myfriendslist = new ArrayList<Friends>();
     Collection<Friendship> userfriendship = friendshipDao.findByName(username);
+    String fusername;
+    int scoreDigit;
+    Score s;
+   for(Friendship myfriendship:userfriendship){
 
-    for(Friendship myfriendship:userfriendship){
 
-        String fusername = myfriendship.getUsername2();
-        Score s = scoreDao.getScore(fusername);
-        int scoreDigtit = s.getScore();
-        Friends f = new Friends(fusername,scoreDigtit);
+       fusername = myfriendship.getUsername2();
+       s = scoreDao.getScore(fusername);
+       scoreDigit = s.getScoreNb();
+       Friends f = new Friends(fusername,scoreDigit);
         myfriendslist.add(f);
     }
     return myfriendslist;
+
 }
 }
 

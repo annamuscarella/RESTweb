@@ -61,7 +61,7 @@ public class InteractionService {
                             if (f.getUsername2().equals(username2)){
                                 log.debug(username1 + " and " + username2 + " could not meet because already friends.");
                                 Score s = scoreDao.getScore(username1);
-                                return "false;" + s.getScore();
+                                return "false;" + s.getScoreNb();
                             }
                         }
 
@@ -72,21 +72,21 @@ public class InteractionService {
 
                         //score
                         Score s = scoreDao.getScore(username1);
-                        int score = s.getScore();
+                        int score = s.getScoreNb();
                         score++;
-                        s.setScore(score);
+                        s.setScoreNb(score);
                         scoreDao.persist(s);
 
                         transaction.commit();
                         log.debug(username1 + " and " + username2 + " met.");
-                        return "true;" + s.getScore();
+                        return "true;" + s.getScoreNb();
                     }
                 }
             }
         }
         log.debug(username1 + " and " + username2 + "could not meet.");
         Score s = scoreDao.getScore(username1);
-        return "false;"+s.getScore();
+        return "false;"+s.getScoreNb();
     }
 
     @GET
