@@ -1,10 +1,7 @@
 package de.dhbw.meetme.rest;
 
 import de.dhbw.meetme.database.Transaction;
-import de.dhbw.meetme.database.dao.FriendshipDao;
-import de.dhbw.meetme.database.dao.GPSDao;
-import de.dhbw.meetme.database.dao.ScoreDao;
-import de.dhbw.meetme.database.dao.UserDao;
+import de.dhbw.meetme.database.dao.*;
 import de.dhbw.meetme.domain.*;
 import groovy.lang.Singleton;
 import org.slf4j.Logger;
@@ -37,6 +34,8 @@ public class InteractionService {
     FriendshipDao friendshipDao;
     @Inject
     ScoreDao scoreDao;
+    @Inject
+    TeamBoardDao teamBoardDao;
     @Inject
     Transaction transaction;
 
@@ -76,7 +75,10 @@ public class InteractionService {
                         score++;
                         s.setScoreNb(score);
                         scoreDao.persist(s);
-
+                        //score in TeamBoard updaten
+                        TeamBoard t = teamBoardDao.getTeamBoard(user1.getNation());
+                        t.updateTeamScore(score);
+                        teamBoardDao.persist(t);
                         transaction.commit();
                         log.debug(username1 + " and " + username2 + " met.");
                         return "true;" + s.getScoreNb();

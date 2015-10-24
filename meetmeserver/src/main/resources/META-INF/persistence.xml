@@ -16,6 +16,7 @@
       <class>de.dhbw.meetme.domain.Score</class>
       <class>de.dhbw.meetme.domain.TopPlayer</class>
       <class>de.dhbw.meetme.domain.Friends</class>
+      <class>de.dhbw.meetme.domain.TeamBoard</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>

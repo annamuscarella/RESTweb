@@ -1,9 +1,12 @@
 package de.dhbw.meetme.servlet;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.ScoreDao;
+import de.dhbw.meetme.database.dao.TeamBoardDao;
 import de.dhbw.meetme.domain.MD5;
 import de.dhbw.meetme.domain.Score;
+import de.dhbw.meetme.domain.TeamBoard;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.rest.UserService;
 import org.slf4j.Logger;
@@ -41,6 +44,8 @@ public class Registrierung2 extends HttpServlet {
     UserDao userDao;
     @Inject
     ScoreDao scoreDao;
+    @Inject
+    TeamBoardDao teamBoardDao;
     @Inject
     Transaction transaction;
 
@@ -85,6 +90,15 @@ public class Registrierung2 extends HttpServlet {
                 a.setDescription(description);
                 Score s = new Score(username, 0);
                 //a.setIdi();
+                //  Abfrage ob Nation schon vorhanden ist, wenn nicht dann neue Nation in DB anlegen
+                if(teamBoardDao.getTeamBoardCollection(nation).isEmpty()){
+                    TeamBoard t = new TeamBoard(nation);
+                    teamBoardDao.persist(t);
+                }
+                log.debug("nation ist "+nation);
+                TeamBoard t = teamBoardDao.getTeamBoard(nation);
+                t.updatePlayerCounter();
+                teamBoardDao.persist(t);
                 scoreDao.persist(s);
                 userDao.persist(a);                             //in DB speichern
 
