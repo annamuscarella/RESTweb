@@ -24,6 +24,7 @@ import java.util.List;
 @Produces({"application/json"}) // mime type
 @Singleton
 public class YoloAdmin {
+    //bullshit class
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
