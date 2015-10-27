@@ -91,6 +91,7 @@ public class Registrierung2 extends HttpServlet {
                 Score s = new Score(username, 0);
                 //a.setIdi();
                 //  Abfrage ob Nation schon vorhanden ist, wenn nicht dann neue Nation in DB anlegen
+                log.debug("test1");
                 if(teamBoardDao.getTeamBoardCollection(nation).isEmpty()){
                     TeamBoard t = new TeamBoard(nation);
                     teamBoardDao.persist(t);

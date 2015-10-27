@@ -45,7 +45,7 @@ public class RankingService {
         {
 
 
-                    TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScoreNb());
+                    TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScoreNb(),userDao.findByUserName(myScore.getUsername()).getNation());
                     myTopPlayerList.add(t);
 
 
@@ -72,16 +72,18 @@ public class RankingService {
     log.debug("test2 :"+ userfriendship.toString());
     String fusername;
 
-    int scoreDigit;
-    Score s;
+    String nation;
+    User s;
    for(Friendship myfriendship:userfriendship){
 
 
        fusername = myfriendship.getUsername2();
        log.debug("test3: "+fusername);
-       s = scoreDao.getScore(fusername);
-       scoreDigit = s.getScoreNb();
-       Friends f = new Friends(fusername,scoreDigit);
+       s = userDao.findByUserName(username);
+       log.debug("test4: "+s.toString());
+       nation = s.getNation();
+       log.debug("test5: "+nation);
+       Friends f = new Friends(fusername,nation);
         myfriendslist.add(f);
     }
     return myfriendslist;
@@ -91,8 +93,25 @@ public class RankingService {
 @GET
 @Path("/teamleaderboard")
 //return the TeamLeaderBoard with String nation, int scoreTeam, int playerCounter
-    public Collection<TeamBoard> getTeamleaderBoard(){
-    return teamBoardDao.leaderTeamBoard();
+    public List<TopTeamList> getTeamleaderBoard(){
+
+    List<TopTeamList> myTopTeamList = new ArrayList<TopTeamList>();
+    Collection<TeamBoard> teamBoardlist =teamBoardDao.leaderTeamBoard();
+    String nation;
+    int score;
+    for(TeamBoard myteamboardlist:teamBoardlist){
+
+
+        nation = myteamboardlist.getNation();
+
+        score = myteamboardlist.getScoreTeam();
+
+        TopTeamList f = new TopTeamList(nation,score);
+        myTopTeamList.add(f);
+    }
+
+
+    return myTopTeamList;
 }
 }
 

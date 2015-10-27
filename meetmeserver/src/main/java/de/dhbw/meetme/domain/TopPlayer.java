@@ -13,13 +13,17 @@ public class TopPlayer {
 
   private String name;
   private int score;
+  private String nation;
 
 
-  public TopPlayer(String name, int score){
+  public TopPlayer(String name, int score, String nation){
     this.name=name;
     this.score = score;
+    this.nation=nation;
   }
 
+  public String getNation(){return nation;}
+  public void setNation(String nation){this.nation = nation;}
   public String getName() {
     return name;
   }

@@ -12,26 +12,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Friends {
 
   private String username;
-  private int score;
+ // private int score;
+  private String nation;
 
 
 
 
-
-  public Friends(String username, int score){
+  public Friends(String username, String nation){
     this.username=username;
-    this.score=score;
+    this.nation=nation;
 
   }
 
-  public int getScore() {
+ /* public int getScore() {
     return score;
   }
 
   public void setScore(int score) {
     this.score = score;
   }
-
+*/
   public String getUsername() {
     return username;
   }
@@ -40,7 +40,9 @@ public class Friends {
     this.username = username;
   }
 
-
+public String getNation (){return nation;
+}
+  public void setNation(String nation){this.nation=nation;}
 
   public String toString(){
       String s = username;
