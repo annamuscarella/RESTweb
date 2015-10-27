@@ -35,7 +35,7 @@ public class RankingService {
     Transaction transaction;
 @GET
 @Path("/topplayer")
-//bullshit methode!
+//doch keine ....die brauchen wir bullshit methode!
     public List<TopPlayer> topPlayerList() {
 
         ArrayList<TopPlayer> myTopPlayerList = new ArrayList<TopPlayer>();
@@ -43,15 +43,12 @@ public class RankingService {
 
         for(Score myScore:myScoreList)
         {
-            for(TopPlayer myTopPlayer:myTopPlayerList){
-                if(myScore.getUsername().equals(myTopPlayer.getName())){
-                    break;
-                }
-                else {
+
+
                     TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScoreNb());
                     myTopPlayerList.add(t);
-                }
-            }
+
+
         }
 
     return myTopPlayerList;
@@ -70,14 +67,18 @@ public class RankingService {
     public List<Friends> friendlist (@PathParam("username")String username){
 
     List<Friends> myfriendslist = new ArrayList<Friends>();
+    log.debug("test1 "+ myfriendslist.toString());
     Collection<Friendship> userfriendship = friendshipDao.findByName(username);
+    log.debug("test2 :"+ userfriendship.toString());
     String fusername;
+
     int scoreDigit;
     Score s;
    for(Friendship myfriendship:userfriendship){
 
 
        fusername = myfriendship.getUsername2();
+       log.debug("test3: "+fusername);
        s = scoreDao.getScore(fusername);
        scoreDigit = s.getScoreNb();
        Friends f = new Friends(fusername,scoreDigit);

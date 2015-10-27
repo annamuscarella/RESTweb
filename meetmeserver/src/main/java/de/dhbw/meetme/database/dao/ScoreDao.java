@@ -24,7 +24,7 @@ import java.util.Collection;
  * You may even mix both approaches.
  */
 @ApplicationScoped
-public class ScoreDao extends JpaDao<UuidId, Score> {
+public class ScoreDao extends JpaDao<UuidId,Score> {
     public ScoreDao() {
         super(Score.class);
     }
