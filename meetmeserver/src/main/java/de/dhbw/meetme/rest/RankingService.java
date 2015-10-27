@@ -88,7 +88,7 @@ public class RankingService {
 }
 
 @GET
-@Path("/teamleaderborad")
+@Path("/teamleaderboard")
 //return the TeamLeaderBoard with String nation, int scoreTeam, int playerCounter
     public Collection<TeamBoard> getTeamleaderBoard(){
     return teamBoardDao.leaderTeamBoard();
