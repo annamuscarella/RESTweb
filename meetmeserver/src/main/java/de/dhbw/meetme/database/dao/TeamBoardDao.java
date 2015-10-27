@@ -56,7 +56,7 @@ public class TeamBoardDao extends JpaDao<UuidId, TeamBoard> {
         Query query = entityManager.createQuery("select t from TeamBoard t where t.nation=:nation order by t.scoreTeam desc");
         query.setParameter("nation", nation);
 
-        return (Collection<TeamBoard>) query.getResultList().get(0);
+        return (Collection<TeamBoard>) query.getResultList();
     }
 
 }
