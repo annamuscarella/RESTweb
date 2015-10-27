@@ -68,20 +68,22 @@ public class InteractionService {
                         Friendship myFriendship = new Friendship(username1, username2);
                         friendshipDao.persist(myFriendship);
 
-
-                        //score
                         Score s = scoreDao.getScore(username1);
-                        int score = s.getScoreNb();
-                        score++;
-                        s.setScoreNb(score);
-                        scoreDao.persist(s);
-                        //score in TeamBoard updaten
-                        TeamBoard t = teamBoardDao.getTeamBoard(user1.getNation());
-                        t.updateTeamScore(score);
-                        teamBoardDao.persist(t);
-                        transaction.commit();
-                        log.debug(username1 + " and " + username2 + " met.");
-                        return "true;" + s.getScoreNb();
+                        //score only when users are in different teams
+                        if (!user1.getNation().equals(user2.getNation())) {
+                            int score = s.getScoreNb();
+                            score++;
+                            s.setScoreNb(score);
+                            scoreDao.persist(s);
+                            //score in TeamBoard updaten
+                            TeamBoard t = teamBoardDao.getTeamBoard(user1.getNation());
+                            t.updateTeamScore(score);
+                            teamBoardDao.persist(t);
+                            transaction.commit();
+                            log.debug(username1 + " and " + username2 + " met.");
+                            return "true;" + s.getScoreNb() + ";" + user2.getColor() + ";score:true";
+                        }
+                        return "true;" + s.getScoreNb() + ";" + user2.getColor() + ";score:false";
                     }
                 }
             }
