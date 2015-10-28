@@ -35,7 +35,7 @@ public class RankingService {
     Transaction transaction;
 @GET
 @Path("/topplayer")
-//bullshit methode!
+//doch keine ....die brauchen wir bullshit methode!
     public List<TopPlayer> topPlayerList() {
 
         ArrayList<TopPlayer> myTopPlayerList = new ArrayList<TopPlayer>();
@@ -43,15 +43,12 @@ public class RankingService {
 
         for(Score myScore:myScoreList)
         {
-            for(TopPlayer myTopPlayer:myTopPlayerList){
-                if(myScore.getUsername().equals(myTopPlayer.getName())){
-                    break;
-                }
-                else {
-                    TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScoreNb());
+
+
+                    TopPlayer t = new TopPlayer(myScore.getUsername(),myScore.getScoreNb(),userDao.findByUserName(myScore.getUsername()).getNation());
                     myTopPlayerList.add(t);
-                }
-            }
+
+
         }
 
     return myTopPlayerList;
@@ -70,17 +67,23 @@ public class RankingService {
     public List<Friends> friendlist (@PathParam("username")String username){
 
     List<Friends> myfriendslist = new ArrayList<Friends>();
+    log.debug("test1 "+ myfriendslist.toString());
     Collection<Friendship> userfriendship = friendshipDao.findByName(username);
+    log.debug("test2 :"+ userfriendship.toString());
     String fusername;
-    int scoreDigit;
-    Score s;
+
+    String nation;
+    User s;
    for(Friendship myfriendship:userfriendship){
 
 
        fusername = myfriendship.getUsername2();
-       s = scoreDao.getScore(fusername);
-       scoreDigit = s.getScoreNb();
-       Friends f = new Friends(fusername,scoreDigit);
+       log.debug("test3: "+fusername);
+       s = userDao.findByUserName(username);
+       log.debug("test4: "+s.toString());
+       nation = s.getNation();
+       log.debug("test5: "+nation);
+       Friends f = new Friends(fusername,nation);
         myfriendslist.add(f);
     }
     return myfriendslist;
@@ -90,8 +93,25 @@ public class RankingService {
 @GET
 @Path("/teamleaderboard")
 //return the TeamLeaderBoard with String nation, int scoreTeam, int playerCounter
-    public Collection<TeamBoard> getTeamleaderBoard(){
-    return teamBoardDao.leaderTeamBoard();
+    public List<TopTeamList> getTeamleaderBoard(){
+
+    List<TopTeamList> myTopTeamList = new ArrayList<TopTeamList>();
+    Collection<TeamBoard> teamBoardlist =teamBoardDao.leaderTeamBoard();
+    String nation;
+    int score;
+    for(TeamBoard myteamboardlist:teamBoardlist){
+
+
+        nation = myteamboardlist.getNation();
+
+        score = myteamboardlist.getScoreTeam();
+
+        TopTeamList f = new TopTeamList(nation,score);
+        myTopTeamList.add(f);
+    }
+
+
+    return myTopTeamList;
 }
 }
 

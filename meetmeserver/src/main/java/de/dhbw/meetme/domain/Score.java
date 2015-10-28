@@ -13,9 +13,9 @@ public class Score extends PersistentObject {
   private String username;
   private int scoreNb;
 
-  public UuidId getid(){
+/*  public UuidId getid(){
     return id;
-  }
+  }*/
   public int getScoreNb() {
     return scoreNb;
   }
