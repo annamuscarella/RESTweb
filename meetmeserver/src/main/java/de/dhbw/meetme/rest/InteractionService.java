@@ -40,8 +40,16 @@ public class InteractionService {
     Transaction transaction;
 
     @GET
+    @Path("/{username1}/{username2}")
+    public String requestVerificationCode(@PathParam("username1") String username1, @PathParam("username2") String username2){
+        //this method returns a verification code
+        return null;
+    }
+
+    @GET
     @Path("/{username1}/{username2}/{verificationCode}")
     public String meetOtherUser(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("verificationCode") int verificationCode){
+        //this method handles the interaction between two users
         transaction.begin();
         User user1 = userDao.findByUserName(username1);
         GPSLocation user1GPS = gpsDao.listLatestGPSByUserSingle(username1);
@@ -60,6 +68,7 @@ public class InteractionService {
                             if (f.getUsername2().equals(username2)){
                                 log.debug(username1 + " and " + username2 + " could not meet because already friends.");
                                 Score s = scoreDao.getScore(username1);
+                                transaction.commit();
                                 return "false;" + s.getScoreNb();
                             }
                         }
@@ -83,11 +92,13 @@ public class InteractionService {
                             log.debug(username1 + " and " + username2 + " met.");
                             return "true;" + s.getScoreNb() + ";" + user2.getColor() + ";score:true";
                         }
+                        transaction.commit();
                         return "true;" + s.getScoreNb() + ";" + user2.getColor() + ";score:false";
                     }
                 }
             }
         }
+        transaction.commit();
         log.debug(username1 + " and " + username2 + "could not meet.");
         Score s = scoreDao.getScore(username1);
         return "false;"+s.getScoreNb();

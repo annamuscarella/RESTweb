@@ -116,6 +116,7 @@ public class GPSService {
             log.debug(username + " hat seine GPS Daten aktualisiert.");
             return nearbyUsers;
         }
+        transaction.commit();
         log.debug("Jemand hat versucht seine GPS Daten zu aktualisieren, aber userName " + username + " war nicht in der DB");
         return nearbyUsers;
     }

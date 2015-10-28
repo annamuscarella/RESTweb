@@ -50,10 +50,8 @@ public class ScoreDao extends JpaDao<UuidId, Score> {
 
 
     public Score getScore(String name){
-        log.debug("getString name : "+name);
         Query query = entityManager.createQuery("select score from Score score where score.username=:name order by score.scoreNb desc");
         query.setParameter("name", name);
-        log.debug("Score to String: "+ query.getResultList().get(0).toString());
         return (Score) query.getResultList().get(0);
     }
 
