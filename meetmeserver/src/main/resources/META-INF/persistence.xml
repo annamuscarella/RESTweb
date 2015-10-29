@@ -18,6 +18,7 @@
       <class>de.dhbw.meetme.domain.Friends</class>
       <class>de.dhbw.meetme.domain.TeamBoard</class>
     <class>de.dhbw.meetme.domain.TopTeamList</class>
+    <class>de.dhbw.meetme.domain.VerificationCode</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>
