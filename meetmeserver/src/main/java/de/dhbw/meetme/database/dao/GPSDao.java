@@ -35,7 +35,7 @@ public class GPSDao extends JpaDao<UuidId, GPSLocation> {
 
 
     public Collection<GPSLocation> findByName(String name) {
-        Query query = entityManager.createQuery("select gps from GPSLocation gps where gps.username = :name");
+        Query query = entityManager.createQuery("select gps from GPSLocation gps where gps.username = :name order by gps.latitude, gps.longitude");
         query.setParameter("name", name);
         return (Collection<GPSLocation>) query.getResultList();
     }

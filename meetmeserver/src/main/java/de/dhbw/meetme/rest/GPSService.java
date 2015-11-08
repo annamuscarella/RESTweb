@@ -17,6 +17,10 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -122,18 +126,21 @@ public class GPSService {
     }
 
     @GET
-    @Path("/{userName}")
-    // Anfrage der eigenen GPS Koordianten...später werden die Koordinaten von allen Mitspielern geschickt
-    /*public String getGps (@PathParam("userName")String userName)
-    {
-        if (userDao.existCheckName(userName)== true)
-        {
-            log.debug(userName + " hat seine GPS Daten angefragt");
-            return userDao.getGPS(userName);
+    @Path("/home/{username}")
+    public String getHomeLocationFromUser(@PathParam("username") String username){
+        Collection<GPSLocation> userLocations = gpsDao.findByName(username);
+        List<GPSLocation> userLocationsatNight = new ArrayList<>();
+
+        //check that GPS data was sent between 6pm and 6am
+        for(GPSLocation myLocation:userLocations){
+            log.debug("time is: " + getTimeHHmm((long)myLocation.getTimeStamp()));
+            String myTime = getTimeHHmm((long)myLocation.getTimeStamp());
+
+            //if (())
+
         }
-        log.debug("Jemand hat versucht seine GPS Daten anzufragen aber userName war nicht in der DB");
-        return "Leider bist du nicht angemeldet";
-    }*/
+    return null;
+    }
 
 
     public static double distanceInMeter(double lat1, double lon1, double lat2, double lon2) {
@@ -170,4 +177,13 @@ public class GPSService {
         return color;
     }
 
+    public String getTimeHHmm(long myTime){
+        Instant instant = Instant.ofEpochMilli(myTime);
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String output = formatter.format(zdt);
+
+        return output;
+    }
 }
