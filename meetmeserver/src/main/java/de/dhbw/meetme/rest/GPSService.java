@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -130,13 +133,19 @@ public class GPSService {
     public String getHomeLocationFromUser(@PathParam("username") String username){
         Collection<GPSLocation> userLocations = gpsDao.findByName(username);
         List<GPSLocation> userLocationsatNight = new ArrayList<>();
-
+        String time1 = "06:00";
+        String time2 = "18:00";
         //check that GPS data was sent between 6pm and 6am
         for(GPSLocation myLocation:userLocations){
             log.debug("time is: " + getTimeHHmm((long)myLocation.getTimeStamp()));
             String myTime = getTimeHHmm((long)myLocation.getTimeStamp());
-
-            //if (())
+            int timecheck1 = myTime.compareToIgnoreCase(time1);
+            int timecheck2 = myTime.compareToIgnoreCase(time2);
+            //if GPS date was sent in reqired time frame the GPS Data will be transfered into new array and longitude and latitude will be cut
+            if (timecheck1 >=0 && timecheck2 <=0){
+                GPSLocation r = new GPSLocation(username,cutDigit(myLocation.getLatitude()),cutDigit(myLocation.getLongitude()),myLocation.getTimeStamp());
+                userLocationsatNight.add(r);
+            }
 
         }
     return null;
@@ -185,5 +194,13 @@ public class GPSService {
         String output = formatter.format(zdt);
 
         return output;
+    }
+
+    public  double  cutDigit(double digit){
+        NumberFormat numberFormat = new DecimalFormat("0.00000");
+        numberFormat.setRoundingMode(RoundingMode.DOWN);
+        String StringDigit = numberFormat.format(digit);
+        StringDigit = StringDigit.replaceAll(",", ".");
+        return Double.parseDouble(StringDigit);
     }
 }
