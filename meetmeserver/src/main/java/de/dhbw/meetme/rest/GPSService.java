@@ -9,8 +9,6 @@ import de.dhbw.meetme.domain.GPSLocation;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
 import groovy.lang.Singleton;
-import groovy.util.logging.Log;
-import org.omg.CORBA.OBJECT_NOT_EXIST;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,17 +17,13 @@ import javax.ws.rs.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-
-import static java.lang.Math.*;
 
 /**
  * Created by mordelt on 24.09.2015.
@@ -147,6 +141,36 @@ public class GPSService {
                 userLocationsatNight.add(r);
             }
 
+        }
+        double finalLongitude= 0;
+        double finalLatitude= 0;
+        double searchLongitude=0;
+        double searchLatitude=0;
+        int finalCounter = 0;
+        int counter=0;
+        for(GPSLocation myCounter:userLocationsatNight){
+            if (counter == 0){
+                searchLatitude = myCounter.getLatitude();
+                searchLongitude= myCounter.getLongitude();
+                counter = ++counter;
+                continue;
+            }
+            if(myCounter.getLatitude()== searchLatitude && myCounter.getLongitude() == searchLongitude){
+                counter = ++counter;
+                continue;
+            }
+            else{
+                if (counter > finalCounter){
+                    finalLatitude = searchLatitude;
+                    finalLongitude = searchLongitude;
+                    finalCounter = counter;
+                }
+             counter = 1;
+             searchLatitude = myCounter.getLatitude();
+             searchLongitude = myCounter.getLongitude();
+            }
+
+            return finalLatitude +"; "+finalLongitude;
         }
     return null;
     }
