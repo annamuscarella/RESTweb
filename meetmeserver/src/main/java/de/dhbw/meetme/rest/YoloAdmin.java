@@ -24,7 +24,7 @@ import java.util.List;
 @Produces({"application/json"}) // mime type
 @Singleton
 public class YoloAdmin {
-    //bullshit class
+  /*  //bullshit class
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
@@ -64,7 +64,7 @@ public class YoloAdmin {
     public Collection<TeamBoard> getTeamboard(@PathParam("nation")String nation){
 
         return teamBoardDao.leaderTeamBoard();
-    }
+    }*/
 
 
 }

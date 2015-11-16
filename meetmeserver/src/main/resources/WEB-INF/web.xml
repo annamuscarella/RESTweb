@@ -7,4 +7,26 @@
 
   <display-name>MeetMe Viewer</display-name>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Test</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>tomcat</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
+
+    <security-role>
+        <role-name>tomcat</role-name>
+    </security-role>
+
 </web-app>
