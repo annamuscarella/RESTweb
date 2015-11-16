@@ -18,13 +18,24 @@ public class User extends PersistentObject {
   private String nation;
   private String description;
 
+
+  private int verificationCode;
+
+  private String role;
+
   private double longitude;
   private double latitude;
 
   private double timeStamp;
 
+  public String getRole() {
+    return role;
+  }
 
-  private int verificationCode;
+  public void setRole(String role) {
+    this.role = role;
+  }
+
 
     public double getTimeStamp() {
         return timeStamp;

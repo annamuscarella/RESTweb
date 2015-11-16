@@ -88,6 +88,7 @@ public class Registrierung2 extends HttpServlet {
                 a.setPassword(MD5.getMD5(password));            //Verschlüsselung mit MD5 Hash des PW vor dem abspeichern
                 a.setNation(nation);
                 a.setDescription(description);
+                a.setRole("tomcat");
                 Score s = new Score(username, 0);
                 //a.setIdi();
                 //  Abfrage ob Nation schon vorhanden ist, wenn nicht dann neue Nation in DB anlegen
