@@ -28,7 +28,10 @@ public class StartUpBean {
   public void init() {
     log.info("MeetMe Server started.");
     // inital code goes here
+
     startDbServer();
+    DomParser test = new DomParser();
+    test.createUserDoc();
   }
 
   @PreDestroy
