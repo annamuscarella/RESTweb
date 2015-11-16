@@ -21,9 +21,7 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mordelt on 24.09.2015.
@@ -48,15 +46,14 @@ public class GPSService {
     @GET
     @Path("/list")
     //returns list of all GPS Locations saved in the database
-    public Collection<GPSLocation> listGPSLocations(){
+    public Collection<GPSLocation> listGPSLocations() {
         log.debug("list GPS locations");
-        log.debug(gpsDao.list().toString());
         return gpsDao.list();
     }
 
     @GET
     @Path("/list2")
-    public Collection<GPSLocation> listUniqueGPSLocations(){
+    public Collection<GPSLocation> listUniqueGPSLocations() {
         log.debug("list unique GPS locations");
         //log.debug(gpsDao.listUniqueLatestGPS().toString());
         return gpsDao.listUniqueLatestGPS();
@@ -65,14 +62,12 @@ public class GPSService {
     @GET
     @Path("/{username}/{lat}/{lon}")
     // schickt die aktuelle GPS Position und speichert sie in der DB
-    public List<UserPosition> updateGps (@PathParam("username") String username,@PathParam("lat") double lat ,@PathParam("lon") double lon)
-    {
+    public List<UserPosition> updateGps(@PathParam("username") String username, @PathParam("lat") double lat, @PathParam("lon") double lon) {
         transaction.begin();
 
         List<UserPosition> nearbyUsers = new ArrayList<UserPosition>();
         User activeUser = userDao.findByUserName(username);
-        if (activeUser != null)
-        {
+        if (activeUser != null) {
             //send GPS data to database
             GPSLocation myLocation = new GPSLocation(username, lat, lon, System.currentTimeMillis());
             gpsDao.persist(myLocation);
@@ -85,13 +80,13 @@ public class GPSService {
             //get Collection<User> from database, containing all users
             Collection<User> users = userDao.list();
             Collection<GPSLocation> userPositions = gpsDao.listUniqueLatestGPS();
-            for (GPSLocation myGPSLocation: userPositions){
+            for (GPSLocation myGPSLocation : userPositions) {
                 //check that myUser is not active User
-                if (!myGPSLocation.getUsername().equals(username)){
+                if (!myGPSLocation.getUsername().equals(username)) {
                     //check when use rlast updated his/her position (2 hrs ago)
-                    if ((activeUser.getTimeStamp() - myGPSLocation.getTimeStamp() < 7200000)){
+                    if ((activeUser.getTimeStamp() - myGPSLocation.getTimeStamp() < 7200000)) {
                         //check distance between active user and myUser and add to nearbyUsers
-                        if (checkDistance(lat, lon, myGPSLocation.getLatitude(), myGPSLocation.getLongitude()) < 10000){
+                        if (checkDistance(lat, lon, myGPSLocation.getLatitude(), myGPSLocation.getLongitude()) < 10000) {
                             String color = checkColor(username, myGPSLocation.getUsername());
                             UserPosition myUserPosition = new UserPosition(myGPSLocation.getUsername(), myGPSLocation.getLatitude(), myGPSLocation.getLongitude(), color);
                             nearbyUsers.add(myUserPosition);
@@ -124,62 +119,107 @@ public class GPSService {
 
     @GET
     @Path("/home/{username}")
-    public String getHomeLocationFromUser(@PathParam("username") String username){
+    public String getHomeLocationFromUser(@PathParam("username") String username) {
         Collection<GPSLocation> userLocations = gpsDao.findByName(username);
         List<GPSLocation> userLocationsatNight = new ArrayList<>();
+
         String time1 = "06:00";
         String time2 = "18:00";
+
         //check that GPS data was sent between 6pm and 6am
-        for(GPSLocation myLocation:userLocations){
-            log.debug("time is: " + getTimeHHmm((long)myLocation.getTimeStamp()));
-            String myTime = getTimeHHmm((long)myLocation.getTimeStamp());
+
+        for (GPSLocation myLocation : userLocations) {
+            //log.debug("time is: " + getTimeHHmm((long)myLocation.getTimeStamp()));
+            String myTime = getTimeHHmm((long) myLocation.getTimeStamp());
             int timecheck1 = myTime.compareToIgnoreCase(time1);
             int timecheck2 = myTime.compareToIgnoreCase(time2);
+
             //if GPS date was sent in reqired time frame the GPS Data will be transfered into new array and longitude and latitude will be cut
-            if (timecheck1 >=0 && timecheck2 <=0){
-                GPSLocation r = new GPSLocation(username,cutDigit(myLocation.getLatitude()),cutDigit(myLocation.getLongitude()),myLocation.getTimeStamp());
+            if (timecheck1 >= 0 && timecheck2 <= 0) {
+                GPSLocation r = new GPSLocation(username, cutDigit(myLocation.getLatitude()), cutDigit(myLocation.getLongitude()), myLocation.getTimeStamp());
                 userLocationsatNight.add(r);
             }
 
         }
-        double finalLongitude= 0;
-        double finalLatitude= 0;
-        double searchLongitude=0;
-        double searchLatitude=0;
+
+        //sort gps collection
+        Collections.sort(userLocationsatNight, new Comparator<GPSLocation>() {
+            public int compare(GPSLocation gps1, GPSLocation gps2) {
+                double lat1 = gps1.getLatitude();
+                double lat2 = gps2.getLatitude();
+                if (lat1 < lat2) return -1;
+                if (lat1 > lat2) return 1;
+                else {
+                    double lon1 = gps1.getLongitude();
+                    double lon2 = gps2.getLongitude();
+                    if (lon1 < lon2) return -1;
+                    if (lon1 > lon2) return 1;
+                    return 0;
+                }
+
+            }
+        });
+
+        for(GPSLocation myLoc:userLocationsatNight){
+            log.debug(myLoc.getLatitude() + ", " + myLoc.getLongitude());
+        }
+
+        double finalLongitude = 0;
+        double finalLatitude = 0;
+        double searchLongitude = 0;
+        double searchLatitude = 0;
         int finalCounter = 0;
-        int counter=0;
-        for(GPSLocation myCounter:userLocationsatNight){
-            if (counter == 0){
+        int counter = 0;
+        int iteration =1;
+
+        for (GPSLocation myCounter : userLocationsatNight) {
+            log.debug("-------ITERATION " + iteration);
+            log.debug("Search values are " + searchLatitude + ", " + searchLongitude + ", current counter is " + counter);
+            log.debug("final values are " + finalLatitude + ", " + finalLongitude + ", final counter is " + finalCounter);
+            log.debug("current values are " + myCounter.getLatitude() + ", " + myCounter.getLongitude());
+            if (counter == 0) { //first iteration
                 searchLatitude = myCounter.getLatitude();
-                searchLongitude= myCounter.getLongitude();
+                searchLongitude = myCounter.getLongitude();
                 counter = ++counter;
-                continue;
+                iteration++; continue;
             }
-            if(myCounter.getLatitude()== searchLatitude && myCounter.getLongitude() == searchLongitude){
+            if (myCounter.getLatitude() == searchLatitude && myCounter.getLongitude() == searchLongitude) {
+                log.debug("gps similar: " + counter + ", " + searchLatitude + ", " + searchLongitude);
                 counter = ++counter;
-                continue;
-            }
-            else{
-                if (counter > finalCounter){
+                iteration++; continue;
+            } else {
+                if (counter > finalCounter) {
+                    log.debug("counter > final counter: " + counter + "> " + finalCounter + ", " + finalLatitude + ", " + finalLongitude);
                     finalLatitude = searchLatitude;
                     finalLongitude = searchLongitude;
                     finalCounter = counter;
+                    searchLatitude = myCounter.getLatitude();
+                    searchLongitude = myCounter.getLongitude();
+                    counter = 1;
+                    iteration++; continue;
                 }
-             counter = 1;
-             searchLatitude = myCounter.getLatitude();
-             searchLongitude = myCounter.getLongitude();
+                if (counter <= finalCounter) {
+                    log.debug("counter <= final counter: " + counter + "<=" + finalCounter + ", " + finalLatitude + ", " + finalLongitude);
+                    counter = 1;
+                    searchLatitude = myCounter.getLatitude();
+                    searchLongitude = myCounter.getLongitude();
+                    iteration++; continue;
+                }
             }
-
-            return finalLatitude +"; "+finalLongitude;
         }
-    return null;
+        if (counter > finalCounter) {
+            finalLatitude = searchLatitude;
+            finalLongitude = searchLongitude;
+        }
+        log.debug("home location of " + username + " is: " + finalLatitude + "; " + finalLongitude);
+        return finalLatitude + "; " + finalLongitude;
     }
 
 
     public static double distanceInMeter(double lat1, double lon1, double lat2, double lon2) {
         int earthRadius = 6371000; //meters
         double lat = Math.toRadians(lat2 - lat1);
-        double lon = Math.toRadians(lon2- lon1);
+        double lon = Math.toRadians(lon2 - lon1);
 
         double a = Math.sin(lat / 2) * Math.sin(lat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(lon / 2) * Math.sin(lon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -188,19 +228,19 @@ public class GPSService {
 
     }
 
-    public static double checkDistance(double lat1, double lon1, double lat2, double lon2){
+    public static double checkDistance(double lat1, double lon1, double lat2, double lon2) {
 
-        double dist = distanceInMeter(lat1,lon1,lat2,lon2);
+        double dist = distanceInMeter(lat1, lon1, lat2, lon2);
         return dist;
 
     }
 
-    public String checkColor(String username1, String username2){
+    public String checkColor(String username1, String username2) {
         //list all friendships in database
         String color;
         Collection<Friendship> myFriendships = friendshipDao.findByName(username1);
-        for(Friendship f:myFriendships){
-            if (f.getUsername2().equals(username2)){
+        for (Friendship f : myFriendships) {
+            if (f.getUsername2().equals(username2)) {
                 User myUser = userDao.findByUserName(username2);
                 color = myUser.getColor();
                 return color;
@@ -210,7 +250,8 @@ public class GPSService {
         return color;
     }
 
-    public String getTimeHHmm(long myTime){
+    public String getTimeHHmm(long myTime) {
+        //this method receives a number of seconds (since 1970) and converts it into the format HH:mm
         Instant instant = Instant.ofEpochMilli(myTime);
         ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
 
@@ -220,11 +261,12 @@ public class GPSService {
         return output;
     }
 
-    public  double  cutDigit(double digit){
-        NumberFormat numberFormat = new DecimalFormat("0.00000");
+    public double cutDigit(double digit) {
+        NumberFormat numberFormat = new DecimalFormat("0.0000");
         numberFormat.setRoundingMode(RoundingMode.DOWN);
         String StringDigit = numberFormat.format(digit);
         StringDigit = StringDigit.replaceAll(",", ".");
         return Double.parseDouble(StringDigit);
     }
+
 }

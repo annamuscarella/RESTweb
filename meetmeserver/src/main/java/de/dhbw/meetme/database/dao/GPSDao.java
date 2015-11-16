@@ -41,6 +41,7 @@ public class GPSDao extends JpaDao<UuidId, GPSLocation> {
     }
 
     public ArrayList<GPSLocation> listUniqueLatestGPS(){
+
         //this method returns a collection of the latest GPS location, for each user only once location
         Collection<String> myUsers = listUsersinGPS();
         ArrayList<GPSLocation> myGPSLocations = new ArrayList<>();
