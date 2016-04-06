@@ -1,7 +1,5 @@
 package de.dhbw.meetme.database.dao;
 
-import de.dhbw.meetme.domain.GPSLocation;
-import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UuidId;
 import de.dhbw.meetme.rest.UserService;
 import org.slf4j.Logger;
@@ -9,11 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Data Access Object for User

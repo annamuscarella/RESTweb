@@ -1,8 +1,6 @@
 package de.dhbw.meetme.servlet;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -16,7 +14,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import de.dhbw.meetme.database.dao.UserDao;
-import de.dhbw.meetme.domain.GPSLocation;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.rest.UserService;
 import org.slf4j.Logger;
@@ -24,9 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Created by macapple on 16.11.15.

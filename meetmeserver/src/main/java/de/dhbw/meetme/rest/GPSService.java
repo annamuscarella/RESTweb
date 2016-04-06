@@ -4,8 +4,6 @@ import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.FriendshipDao;
 import de.dhbw.meetme.database.dao.GPSDao;
 import de.dhbw.meetme.database.dao.UserDao;
-import de.dhbw.meetme.domain.Friendship;
-import de.dhbw.meetme.domain.GPSLocation;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UserPosition;
 import groovy.lang.Singleton;

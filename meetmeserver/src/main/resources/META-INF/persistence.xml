@@ -12,7 +12,7 @@
     <class>de.dhbw.meetme.domain.PersistentObject</class>
     <class>de.dhbw.meetme.domain.UserPosition</class>
     <class>de.dhbw.meetme.domain.Friendship</class>
-    <class>de.dhbw.meetme.domain.GPSLocation</class>
+    <class>de.dhbw.meetme.domain.Lecturers</class>
       <class>de.dhbw.meetme.domain.Score</class>
       <class>de.dhbw.meetme.domain.TopPlayer</class>
       <class>de.dhbw.meetme.domain.Friends</class>
