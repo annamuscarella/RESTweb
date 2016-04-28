@@ -11,7 +11,7 @@
     <class>de.dhbw.meetme.domain.UuidId</class>
     <class>de.dhbw.meetme.domain.PersistentObject</class>
     <class>de.dhbw.meetme.domain.UserPosition</class>
-    <class>de.dhbw.meetme.domain.Friendship</class>
+    <class>de.dhbw.meetme.domain.Appointment</class>
     <class>de.dhbw.meetme.domain.Lecturers</class>
       <class>de.dhbw.meetme.domain.Score</class>
       <class>de.dhbw.meetme.domain.TopPlayer</class>
