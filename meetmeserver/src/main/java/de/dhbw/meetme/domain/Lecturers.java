@@ -11,49 +11,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement // needed for REST JSON marshalling
 public class Lecturers extends PersistentObject {
 
-  private String LecturerFirstname;
-  private String LecturerLastname;
-  private String LecturerTopic;
-  private boolean LecturerAvailability;
+  private String lecturerFirstname;
+  private String lecturerLastname;
+  private String lecturerTopic;
+  private boolean lecturerAvailability;
 
   public String getLecturerFirstname() {
-    return LecturerFirstname;
+    return lecturerFirstname;
   }
 
   public void setLecturerFirstname(String lecturerFirstname) {
-    LecturerFirstname = lecturerFirstname;
+    lecturerFirstname = lecturerFirstname;
   }
 
   public String getLecturerLastname() {
-    return LecturerLastname;
+    return lecturerLastname;
   }
 
   public void setLecturerLastname(String lecturerLastname) {
-    LecturerLastname = lecturerLastname;
+    lecturerLastname = lecturerLastname;
   }
 
   public String getLecturerTopic() {
-    return LecturerTopic;
+    return lecturerTopic;
   }
 
   public void setLecturerTopic(String lecturerTopic) {
-    LecturerTopic = lecturerTopic;
+    lecturerTopic = lecturerTopic;
   }
 
   public boolean isLecturerAvailability() {
-    return LecturerAvailability;
+    return lecturerAvailability;
   }
 
   public void setLecturerAvailability(boolean lecturerAvailability) {
-    LecturerAvailability = lecturerAvailability;
+    lecturerAvailability = lecturerAvailability;
   }
 
 
 
-  public Lecturers(String LecturerFirstname, String LecturerLastname, String LecturerTopic){
-    this.LecturerFirstname=LecturerFirstname;
-    this.LecturerLastname=LecturerLastname;
-    this.LecturerTopic=LecturerTopic;
+  public Lecturers(String lecturerFirstname, String lecturerLastname, String lecturerTopic){
+    this.lecturerFirstname=lecturerFirstname;
+    this.lecturerLastname=lecturerLastname;
+    this.lecturerTopic=lecturerTopic;
   }
 
 }
