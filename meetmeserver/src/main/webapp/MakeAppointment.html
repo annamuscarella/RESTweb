@@ -26,6 +26,11 @@
     <![endif]-->
 </head>
 <body>
+<style>
+  .hidden{
+    visibility: hidden;
+  }
+</style>
 <nav class="navbar navbar-inverse">
   <div class="container"> 
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -61,44 +66,51 @@
     </div>
   </div>
   <hr>
+  <form role="form">
   <div class="row">
+
     <div class="col-sm-4 col-sm-offset-1">
-      <form role="form">
+
         <div class="form-group">
           <label for="name">Name:</label>
-          <input type="name" class="form-control" id="name">
+          <input type="name" class="form-control" id="name" name="name">
           <label for="surname">Surname:</label>
-          <input type="name" class="form-control" id="surname">
+          <input type="name" class="form-control" id="surname" name="surname">
           <label for="email">Email address:</label>
-          <input type="email" class="form-control" id="email">
+          <input type="email" class="form-control" id="email" name="email">
         </div>
         <div class="form-group">
           <label for="course">Course:</label>
-          <input type="name" class="form-control" id="course">
+          <input type="name" class="form-control" id="course" name="course">
         </div>
         <label for="name" id="topic">Topic:</label>
         <br>
         <button type="button" class="btn btn-default"
-        onClick="document.getElementById('topic').innerHTML = 'Topic: APA Referencing';">
+        onClick="document.getElementById('topic').innerHTML = 'Topic: APA Referencing'; document.getElementById('hiddenFieldTopic').value = 'APA Referencing';">
         <t class="text-center lead"><strong>APA Referencing</strong></t>
         </button>
         <button type="button" class="btn btn-default"
-        onClick="document.getElementById('topic').innerHTML = 'Topic: Statistics/Analysis';">
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Statistics/Analysis';document.getElementById('hiddenFieldTopic').value = 'Statistics/Analysis';">
         <t class="text-center lead"><strong>Statistics/Analysis</strong></t>
         </button>
         <button type="button" class="btn btn-default"
-        onClick="document.getElementById('topic').innerHTML = 'Topic: English language issues';">
+        onClick="document.getElementById('topic').innerHTML = 'Topic: English language issues';document.getElementById('hiddenFieldTopic').value = 'English language issues';">
         <t class="text-center lead"><strong>English language issues</strong></t>
         </button>
         <button type="button" class="btn btn-default"
-        onClick="document.getElementById('topic').innerHTML = 'Topic: Writing Skills';">
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Writing Skills';document.getElementById('hiddenFieldTopic').value = 'Writing Skills';">
         <t class="text-center lead"><strong>Writing Skills</strong></t>
         </button>
         <button type="button" class="btn btn-default"
-        onClick="document.getElementById('topic').innerHTML = 'Topic: Other';">
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Other';document.getElementById('hiddenFieldTopic').value = 'Other';">
         <t class="text-center lead"><strong>Other</strong></t>
         </button>
-      </form>
+      <div class="hidden">
+        <input type="text" class="form-control" id="hiddenFieldTopic" name="topic">
+        <input type="text" class="form-control" id="hiddenFieldDate" name="date">
+        <input type="text" class="form-control" id="hiddenFieldTime" name="time">
+      </div>
+
     </div>
     <div class="col-sm-4 col-sm-offset-1">
       <div class="row">
@@ -125,6 +137,7 @@
    </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -157,19 +170,11 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
       // Format the date and output it to a DOM
       // element.
       Y.one("#selecteddate").setHTML("Selected Date: " + dtdate.format(newDate));
+      document.getElementById("hiddenFieldDate").value = dtdate.format(newDate).toString();
     });
 
 
 });
-</script>
-<script>
-  function selectTime(var time)
-{
-	document.getElementById("selectedtime").innerHTML = "Selected Time: " + time;
-	}
-	
-
-
 </script>
 <script>
 
@@ -182,19 +187,19 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
       <div class="row">
         <div class="col-sm-4">
           <button type="button" class="btn btn-default center-block" 
-          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 9am - 12pm';">
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 9am - 12pm';document.getElementById('hiddenFieldTime').value = '9am - 12pm';">
           <t class="text-center lead"><strong>9am - 12pm</strong></t>
           </button>
         </div>
         <div class="col-sm-4">
           <button type="button" class="btn btn-default center-block"
-          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 12pm - 3pm';">
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 12pm - 3pm'; document.getElementById('hiddenFieldTime').value = '12pm - 3pm';">
           <t class="text-center lead"><strong>12pm - 3pm</strong></t>
           </button>
         </div>
         <div class="col-sm-4">
           <button type="button" class="btn btn-default center-block"
-          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 3pm - 6pm';">
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 3pm - 6pm';document.getElementById('hiddenFieldTime').value = '3pm - 6pm';">
           <t class="text-center lead"><strong>3pm - 6pm</strong></t>
           </button>
         </div>
@@ -207,6 +212,7 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
     <t class="text-center lead" ><strong>Submit</strong></t>
     </button>
   </div>
+  </form>
 </div>
 <hr>
 <footer class="text-center">
