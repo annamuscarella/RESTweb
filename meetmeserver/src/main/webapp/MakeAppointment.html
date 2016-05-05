@@ -10,6 +10,7 @@
 <script type="text/javascript" src="js/collapse.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
 <link href="responsive-calendar/0.9/css/responsive-calendar.css" rel="stylesheet">
 <link rel="icon" href="img/symbol.png">
 <title>Virtual Lobby</title>
@@ -75,21 +76,26 @@
           <label for="course">Course:</label>
           <input type="name" class="form-control" id="course">
         </div>
-        <label for="name">Topic:</label>
+        <label for="name" id="topic">Topic:</label>
         <br>
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: APA Referencing';">
         <t class="text-center lead"><strong>APA Referencing</strong></t>
         </button>
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Statistics/Analysis';">
         <t class="text-center lead"><strong>Statistics/Analysis</strong></t>
         </button>
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: English language issues';">
         <t class="text-center lead"><strong>English language issues</strong></t>
         </button>
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Writing Skills';">
         <t class="text-center lead"><strong>Writing Skills</strong></t>
         </button>
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Other';">
         <t class="text-center lead"><strong>Other</strong></t>
         </button>
       </form>
@@ -97,43 +103,98 @@
     <div class="col-sm-4 col-sm-offset-1">
       <div class="row">
         <div class="container"> 
-          <!-- Responsive calendar - START -->
-          <div class="responsive-calendar">
-            <div class="controls"> <a class="pull-left" data-go="prev">
-              <div class="btn btn-primary">Prev</div>
-              </a>
-              <h4><span data-head-year></span> <span data-head-month></span></h4>
-              <a class="pull-right" data-go="next">
-              <div class="btn btn-primary">Next</div>
-              </a> </div>
-            <hr/>
-            <div class="day-headers">
-              <div class="day header">Mon</div>
-              <div class="day header">Tue</div>
-              <div class="day header">Wed</div>
-              <div class="day header">Thu</div>
-              <div class="day header">Fri</div>
-              <div class="day header">Sat</div>
-              <div class="day header">Sun</div>
-            </div>
-            <div class="days" data-group="days"> </div>
-          </div>
-          <!-- Responsive calendar - END --> 
+          <!-- Add an additional blue button style -->
+<style>
+.yui3-button {
+    margin:10px 0px 10px 0px;
+    color: #fff;
+    background-color: #3476b7;
+}
+</style>
+
+<div id="demo" class="yui3-skin-sam yui3-g"> <!-- You need this skin class -->
+
+  <div id="leftcolumn" class="yui3-u">
+     <!-- Container for the calendar -->
+     <div id="mycalendar"></div>
+  </div>
+  <div id="rightcolumn" class="yui3-u">
+   <div id="links" style="padding-left:20px;">
+      <h3><span id="selecteddate"></span></h3>
+      <h3 id="selectedtime"></h3>
+   </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
+
+    // Create a new instance of calendar, placing it in
+    // #mycalendar container, setting its width to 340px,
+    // the flags for showing previous and next month's
+    // dates in available empty cells to true, and setting
+    // the date to today's date.
+    var calendar = new Y.Calendar({
+      contentBox: "#mycalendar",
+      width:'340px',
+      showPrevMonth: true,
+      showNextMonth: true,
+      date: new Date()}).render();
+
+    // Get a reference to Y.DataType.Date
+    var dtdate = Y.DataType.Date;
+
+    // Listen to calendar's selectionChange event.
+    calendar.on("selectionChange", function (ev) {
+
+      // Get the date from the list of selected
+      // dates returned with the event (since only
+      // single selection is enabled by default,
+      // we expect there to be only one date)
+      var newDate = ev.newSelection[0];
+
+      // Format the date and output it to a DOM
+      // element.
+      Y.one("#selecteddate").setHTML("Selected Date: " + dtdate.format(newDate));
+    });
+
+
+});
+</script>
+<script>
+  function selectTime(var time)
+{
+	document.getElementById("selectedtime").innerHTML = "Selected Time: " + time;
+	}
+	
+
+
+</script>
+<script>
+
+	function showWaitingPage() {
+    window.location.assign("Waiting.html");
+}
+</script>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <button type="button" class="btn btn-default center-block">
+          <button type="button" class="btn btn-default center-block" 
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 9am - 12pm';">
           <t class="text-center lead"><strong>9am - 12pm</strong></t>
           </button>
         </div>
         <div class="col-sm-4">
-          <button type="button" class="btn btn-default center-block">
+          <button type="button" class="btn btn-default center-block"
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 12pm - 3pm';">
           <t class="text-center lead"><strong>12pm - 3pm</strong></t>
           </button>
         </div>
         <div class="col-sm-4">
-          <button type="button" class="btn btn-default center-block">
+          <button type="button" class="btn btn-default center-block"
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 3pm - 6pm';">
           <t class="text-center lead"><strong>3pm - 6pm</strong></t>
           </button>
         </div>
@@ -142,8 +203,8 @@
   </div>
   <hr>
   <div class="row">
-    <button type="submit" class="btn btn-default center-block" style="padding-left:4em; padding-right:4em;">
-    <t class="text-center lead"><strong>Submit</strong></t>
+    <button class="btn btn-default center-block" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
+    <t class="text-center lead" ><strong>Submit</strong></t>
     </button>
   </div>
 </div>
@@ -176,6 +237,8 @@
             "2013-06-12": {}}
         });
       });
+	  
+	
     </script>
 </body>
 </html>

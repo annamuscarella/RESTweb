@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/jquery-1.11.2.min.js"></script>
+<title>Bootstrap - Prebuilt Layout</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<table>
+  <tr id ="r1">
+    <td ><button class="tictacbutton"><span id ="r1c1">blank1</span></button></td>
+    <td ><button class="tictacbutton"><span id ="r1c2">blank2</span></button></td>
+    <td ><button class="tictacbutton"><span id ="r1c3">blank3</span></button></td>
+  </tr>
+  <tr id ="r2">
+    <td ><button class="tictacbutton"><span id ="r2c1">blank4</span></button></td>
+    <td ><button class="tictacbutton"><span id ="r2c2">blank5</span></button></td>
+    <td ><button class="tictacbutton"><span id ="r2c3">blank6</span></button></td>
+  </tr>
+  <tr id ="r3">
+    <td ><button class="tictacbutton"><span id ="r3c1">blank7</span></button></td>
+    <td ><button class="tictacbutton"><span id ="r3c2">blank8</span></button></td>
+    <td ><button class="tictacbutton"><span id ="r3c3">blank9</span></button></td>
+  </tr>
+</table>
+<script>
+var tictacfields = ["r1c1", "r1c2", "r1c3", "r2c1", "r2c2", "r2c3", "r3c1", "r3c2", "r3c3"]
+$(document).ready(function() {
+    $("button").click(function(event) {
+		index = tictacfields.indexOf(event.target.id.toString());
+		
+		var id = "hi";
+		if (index > -1) {
+			document.getElementById(event.target.id).innerHTML = "X";
+    		tictacfields.splice(index, 1);
+			ran = Math.floor(Math.random() * tictacfields.length) + 0; 
+		document.getElementById(tictacfields[ran]).innerHTML = "O";
+		if (ran > -1) {
+    		tictacfields.splice(ran, 1);
+			
+		}
+		
+		if(document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r1c2").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r1c3").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!"); 
+		}
+		else if(document.getElementById("r2c1").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r2c2").innerHTML.toString() == document.getElementById("r2c3").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!");  
+		}
+		else if(document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r3c2").innerHTML.toString() && document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r3c3").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!"); 
+		}
+		else if(document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r2c1").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r3c1").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!"); 
+		}
+		else if(document.getElementById("r1c2").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r1c2").innerHTML.toString() == document.getElementById("r3c2").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!"); 
+		}
+		else if(document.getElementById("r1c3").innerHTML.toString() == document.getElementById("r2c3").innerHTML.toString() && document.getElementById("r1c3").innerHTML.toString() == document.getElementById("r3c3").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!"); 
+		}
+		else if(document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r3c3").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!");  
+		}
+		else if(document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r1c3").innerHTML.toString())
+		{
+			alert("Game finished! Player wins!"); 
+		}
+		}
+		
+		
+		
+    });
+});
+
+
+
+</script>
+<script>
+function finishGame(var id)
+{
+	alert("Game finished! Player " + id.toString() + "wins!"); 
+};
+</script>
+</body>
+</html>

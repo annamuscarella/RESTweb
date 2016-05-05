@@ -18,6 +18,12 @@
     <![endif]-->
 </head>
 <body>
+<script>
+
+	function showWaitingPage() {
+    window.location.assign("Waiting.html");
+}
+</script>
 <nav class="navbar navbar-inverse">
   <div class="container"> 
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,7 +53,7 @@
     <br>
     <div class="row">
     <div class="col-xs-5 col-xs-offset-1"> 
-    <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-circle-arrow-up btn-block"></span><br>
+    <button type="button" class="btn btn-default btn-block" onClick="window.location='Waiting.html';"><span class="glyphicon glyphicon-circle-arrow-up btn-block"></span><br>
         <t class="text-center lead"><strong>See Learning Advisor immediately</strong></t>
         </button>
     </div>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/js/moment.js"></script>
+<script type="text/javascript" src="js/transition.js"></script>
+<script type="text/javascript" src="js/collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<link href="responsive-calendar/0.9/css/responsive-calendar.css" rel="stylesheet">
+<link rel="icon" href="img/symbol.png">
+<title>Virtual Lobby</title>
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<style>
+	td{
+		height:2em;
+		width:2em;
+		text-align:center;
+		font-size:10vh;
+		background-color:white;
+		
+		}
+		.tictacbutton img {
+			font-size:inherit;
+			height:2em;
+			width: 2em;
+		}
+		
+		.menuface {
+			height:10em;
+			width:auto;
+			
+			}
+</style>
+<nav class="navbar navbar-inverse">
+  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myDefaultNavbar1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#"><img style="height:inherit; padding:0px; margin-top:-20px;" src="img/jcuslogo.png" /></a> </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="myDefaultNavbar1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="firstpage.html">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="https://www.jcu.edu.sg/student-life/student-support-services/learning-support">Learning Support</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <h2 class="text-left">Please wait until the Learning Support Advisor responds...</h2>
+    </div>
+  </div>
+</div>
+<br>
+<div class="jumbotron">
+<div class="row">
+<div class="col-sm-4 col-sm-offset-3">
+<h3 id="winmessage"></h3>
+  <table border="2">
+    <tr id ="r1">
+      <td id ="r1c1" class="tictacbutton"></td>
+      <td id ="r1c2" class="tictacbutton"></td>
+      <td id ="r1c3" class="tictacbutton"></td>
+    </tr>
+    <tr id ="r2">
+      <td id ="r2c1" class="tictacbutton"></td>
+      <td id ="r2c2" class="tictacbutton"></td>
+      <td id ="r2c3" class="tictacbutton"></td>
+    </tr>
+    <tr id ="r3">
+      <td id ="r3c1" class="tictacbutton"></td>
+      <td id ="r3c2" class="tictacbutton"></td>
+      <td id ="r3c3" class="tictacbutton"></td>
+    </tr>
+  </table>
+  <br>
+  <script>
+var continueGame = true;
+function gameFinished(src)
+{
+	continueGame = false;
+	if(src.substring(src.length-9)=="robot.png")
+	{
+	document.getElementById("winmessage").innerHTML = "Game finished! Computer won!";}
+	else{
+	
+	document.getElementById("winmessage").innerHTML = "Game finished! You won!";}
+};
+
+function gameEven()
+{
+	continueGame = false;
+	document.getElementById("winmessage").innerHTML = "Game finished! Tie!";
+	};
+	
+	
+</script> 
+  <script>
+var tictacfields = ["r1c1", "r1c2", "r1c3", "r2c1", "r2c2", "r2c3", "r3c1", "r3c2", "r3c3"];
+var curSelectedPlayer = "img/faces/george.png";
+var lastSelectedPlayer = "george";
+
+$(document).ready(function() {
+	
+
+	
+    $(".tictacbutton").click(function(event) {
+		
+		if (continueGame){
+		index = tictacfields.indexOf(event.target.id.toString());
+
+		
+				if (index > -1) {
+					pic = document.createElement("IMG");
+					pic.src = curSelectedPlayer;
+					document.getElementById(event.target.id).appendChild(pic);
+				
+		
+					tictacfields.splice(index, 1);
+					ran = Math.floor(Math.random() * tictacfields.length) + 0;
+					picAI = document.createElement("IMG");
+					picAI.src ="img/faces/robot.png";
+					document.getElementById(tictacfields[ran]).appendChild(picAI); 
+				if (ran > -1) {
+					tictacfields.splice(ran, 1);
+					
+				}
+				
+				if(document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r1c2").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r1c3").innerHTML.toString() && document.getElementById("r1c2").innerHTML.toString() != "" )
+				{
+					gameFinished(document.getElementById("r1c1").firstChild.src.toString());
+				}
+				else if(document.getElementById("r2c1").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r2c2").innerHTML.toString() == document.getElementById("r2c3").innerHTML.toString() && document.getElementById("r2c2").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r2c1").firstChild.src.toString());
+				}
+				else if(document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r3c2").innerHTML.toString() && document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r3c3").innerHTML.toString() && document.getElementById("r3c1").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r3c1").firstChild.src.toString());
+				}
+				else if(document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r2c1").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r3c1").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r1c1").firstChild.src.toString());
+				}
+				else if(document.getElementById("r1c2").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r1c2").innerHTML.toString() == document.getElementById("r3c2").innerHTML.toString() && document.getElementById("r1c2").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r1c2").firstChild.src.toString()); 
+				}
+				else if(document.getElementById("r1c3").innerHTML.toString() == document.getElementById("r2c3").innerHTML.toString() && document.getElementById("r1c3").innerHTML.toString() == document.getElementById("r3c3").innerHTML.toString() && document.getElementById("r1c3").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r1c3").firstChild.src.toString());
+				}
+				else if(document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() == document.getElementById("r3c3").innerHTML.toString() && document.getElementById("r1c1").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r1c1").firstChild.src.toString()); 
+				}
+				else if(document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r2c2").innerHTML.toString() && document.getElementById("r3c1").innerHTML.toString() == document.getElementById("r1c3").innerHTML.toString() && document.getElementById("r3c1").innerHTML.toString() != "")
+				{
+					gameFinished(document.getElementById("r3c1").firstChild.src.toString()); 
+				}
+				else{
+					
+					if (tictacfields.length <1)
+					{
+						gameEven();
+						}	
+					}
+					
+		}
+		
+		
+		
+		}
+		
+    });
+	
+	 $(".menuface").click(function(event) {
+		 	document.getElementById(event.target.id).style.border = '2px solid blue';
+			document.getElementById(lastSelectedPlayer).style.border = '0px';
+			curSelectedPlayer=document.getElementById(event.target.id).src.toString();
+			lastSelectedPlayer = event.target.id.toString();
+		 });
+});
+
+
+
+</script> 
+</div>
+<div class="col-sm-3">
+  <div class="row">
+    <h3>Please select a character:</h3>
+  </div>
+  <div class="row">
+  	<div class="col-sm-4"><img class="menuface" id="george" src="img/faces/george.png"/>George</div>
+    <div class="col-sm-4"><img class="menuface" id="hwee" src="img/faces/hwee.png"/>Hwee</div>
+    <div class="col-sm-4"><img class="menuface" id="nimrod" src="img/faces/nimrod.png"/>Nimrod</div>  
+  </div>
+    <div class="row">
+  	<div class="col-sm-4"><img class="menuface" id="tang" src="img/faces/tang.png"/>Tang</div>
+    <div class="col-sm-4"><img class="menuface" id="michael" src="img/faces/michael.png"/>Michael</div>
+    <div class="col-sm-4"><img class="menuface" id="nicolas" src="img/faces/nicolas.png"/>Nicolas</div>  
+  </div>
+  
+</div>
+<hr>
+<br>
+<br>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © DEB - Deutsche Entwicklerbude. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.2.min.js"></script> 
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script> 
+<script src="responsive-calendar/0.9/js/jquery.js"></script> 
+<script src="responsive-calendar/0.9/js/responsive-calendar.js"></script> 
+<script type="text/javascript">
+      $(document).ready(function () {
+        $(".responsive-calendar").responsiveCalendar({
+          time: '2013-05',
+          events: {
+            "2013-04-30": {"number": 5, "url": "http://w3widgets.com/responsive-slider"},
+            "2013-04-26": {"number": 1, "url": "http://w3widgets.com"}, 
+            "2013-05-03":{"number": 1}, 
+            "2013-06-12": {}}
+        });
+      });
+	  
+	
+    </script>
+</body>
+</html>
