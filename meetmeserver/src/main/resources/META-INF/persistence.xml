@@ -15,7 +15,7 @@
     <class>de.dhbw.meetme.domain.Lecturers</class>
       <class>de.dhbw.meetme.domain.Score</class>
       <class>de.dhbw.meetme.domain.TopPlayer</class>
-      <class>de.dhbw.meetme.domain.Friends</class>
+      <class>de.dhbw.meetme.domain.UrgentAppointment</class>
       <class>de.dhbw.meetme.domain.TeamBoard</class>
     <class>de.dhbw.meetme.domain.TopTeamList</class>
     <class>de.dhbw.meetme.domain.VerificationCode</class>

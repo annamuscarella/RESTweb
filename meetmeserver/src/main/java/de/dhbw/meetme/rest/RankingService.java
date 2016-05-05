@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 import de.dhbw.meetme.database.dao.UserDao;
-
+/**
 @Path("api/ranking")
 @Produces({"application/json"}) // mime type
 @Singleton
@@ -117,3 +117,4 @@ public class RankingService {
 
 
 
+*/

@@ -19,7 +19,7 @@ import java.util.Collection;
 /**
  * Created by mordelt on 24.09.2015.
  * This class handles all GPS-related interactions.
- */
+ *//**
 @Path("api/interact")
 @Produces({"application/json"}) // mime type
 @Singleton
@@ -31,7 +31,7 @@ public class InteractionService {
     @Inject
     GPSDao gpsDao;
     @Inject
-    FriendshipDao friendshipDao;
+   FriendshipDao friendshipDao;
     @Inject
     ScoreDao scoreDao;
     @Inject
@@ -112,3 +112,4 @@ public class InteractionService {
 
 
 }
+ */

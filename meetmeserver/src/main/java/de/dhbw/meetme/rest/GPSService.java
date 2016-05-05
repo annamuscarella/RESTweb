@@ -1,7 +1,6 @@
 package de.dhbw.meetme.rest;
-
+/**
 import de.dhbw.meetme.database.Transaction;
-import de.dhbw.meetme.database.dao.FriendshipDao;
 import de.dhbw.meetme.database.dao.GPSDao;
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
@@ -24,7 +23,7 @@ import java.util.*;
 /**
  * Created by mordelt on 24.09.2015.
  * This class handles all GPS-related interactions.
- */
+
 @Path("api/gps")
 @Produces({"application/json"}) // mime type
 @Singleton
@@ -105,7 +104,7 @@ public class GPSService {
                         }
                     }
                 }
-            }*/
+            }
             transaction.commit();
             log.debug(username + " hat seine GPS Daten aktualisiert.");
             return nearbyUsers;
@@ -268,3 +267,5 @@ public class GPSService {
     }
 
 }
+
+*/

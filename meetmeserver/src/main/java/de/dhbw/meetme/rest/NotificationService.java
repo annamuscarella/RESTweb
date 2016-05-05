@@ -3,29 +3,33 @@ package de.dhbw.meetme.rest;
 import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.AppointmentDao;
 import de.dhbw.meetme.database.dao.LecturerDao;
+import de.dhbw.meetme.database.dao.UrgentAppointmentDao;
 import de.dhbw.meetme.domain.Appointment;
 import de.dhbw.meetme.domain.Lecturers;
+import de.dhbw.meetme.domain.UrgentAppointment;
 import groovy.lang.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import java.util.*;
+import java.util.Collection;
 
 /**
  *
  */
-@Path("api/lecturer")
+@Path("api/notification")
 @Produces({"application/json"}) // mime type
 @Singleton
-public class LecturersService {
+public class NotificationService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
     LecturerDao lecturerDao;
     @Inject
     AppointmentDao appointmentDao;
+    @Inject
+    UrgentAppointmentDao urgentAppointmentDao;
 
     @Inject
     Transaction transaction;
@@ -50,18 +54,18 @@ public class LecturersService {
     }
 
     @POST
-    @Path("/save")
-        public String save(@FormParam("lecturerFirstname") String lecturerFirstname, @FormParam("lecturerLastname") String lecturerLastname, @FormParam("lecturerTopic") String lecturerTopic) {
-        Lecturers lecturer = new Lecturers(lecturerFirstname, lecturerLastname, lecturerTopic, true);
+    @Path("/urgentAppointment")
+        public void appReq(@FormParam("lecturerName") String lecturerName, @FormParam("studentFirstname") String studentFirstname,@FormParam("studentLastname") String studentLastname, @FormParam("topic") String topic, @FormParam("course") String course, @FormParam("studentMail") String studentMail) {
+        UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName, studentFirstname + " "+studentLastname, studentMail,course,topic,false);
 
-        lecturerDao.persist(lecturer);
-        log.debug("Save lecturer " + lecturer);
-        return "save lecturer";
+        urgentAppointmentDao.persist(urgentAppointment);
+        log.debug("Save urgentAppointment " + urgentAppointment);
+
     }
 
     @POST
     @Path("/appointment")
-        public String appointment(@FormParam("lecturerName") String lecturerName, @FormParam("studentName") String studentName, @FormParam("studentMail") String studentMail, @FormParam("tobic") String tobic, @FormParam("date") String date, @FormParam("proposedTime") String proposedTime){
+        public String appointment(@FormParam("lecturerName") String lecturerName, @FormParam("studentName") String studentName, @FormParam("studentMail") String studentMail, @FormParam("topic") String tobic, @FormParam("date") String date, @FormParam("proposedTime") String proposedTime,){
         Appointment appointment = new Appointment(lecturerName, date, proposedTime, studentName, studentMail);
         appointmentDao.persist(appointment);
         log.debug("Save appoinment " + appointment);

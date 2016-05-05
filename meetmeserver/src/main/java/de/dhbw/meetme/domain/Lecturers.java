@@ -50,10 +50,11 @@ public class Lecturers extends PersistentObject {
 
 
 
-  public Lecturers(String lecturerFirstname, String lecturerLastname, String lecturerTopic){
+  public Lecturers(String lecturerFirstname, String lecturerLastname, String lecturerTopic, boolean lecturerAvailability){
     this.lecturerFirstname=lecturerFirstname;
     this.lecturerLastname=lecturerLastname;
     this.lecturerTopic=lecturerTopic;
+    this.lecturerAvailability = lecturerAvailability;
   }
 
 }

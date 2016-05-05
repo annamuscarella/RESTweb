@@ -20,7 +20,7 @@ import java.util.Collection;
  * <p>
  * Decide yourself which one you want to use.
  * You may even mix both approaches.
- */
+ *//**
 @ApplicationScoped
 public class GPSDao extends JpaDao<UuidId, GPSLocation> {
     public GPSDao() {
@@ -75,5 +75,6 @@ public class GPSDao extends JpaDao<UuidId, GPSLocation> {
         Query query = entityManager.createQuery("SELECT u from User u where u.name = :name"); //prev.: from User u where u.username = :username"
         query.setParameter("name", name);
         return (User) query.getResultList().get(0);
-    }*/
+    }
 }
+*/

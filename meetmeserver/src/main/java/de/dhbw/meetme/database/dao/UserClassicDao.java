@@ -15,11 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * The same class the User Dao, but implemented in the traditional way.
- * You can use either this or the the other.
- * Decide yourself!
- */
+
 public class UserClassicDao implements Dao<UuidId, User> {
     @PersistenceContext
     protected EntityManager entityManager;
