@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/js/moment.js"></script>
+<script type="text/javascript" src="js/transition.js"></script>
+<script type="text/javascript" src="js/collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<link href="responsive-calendar/0.9/css/responsive-calendar.css" rel="stylesheet">
+<link rel="icon" href="img/symbol.png">
+<title>Virtual Lobby</title>
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<style>
+  .hidden{
+    visibility: hidden;
+  }
+  input[type=radio   ]:not(old) + label > span{
+      display          : inline-block;
+      width            : 0.875em;
+      height           : 0.875em;
+      margin           : 0.25em 0.5em 0.25em 0.25em;
+      border           : 0.0625em solid rgb(192,192,192);
+      border-radius    : 0.25em;
+      background       : rgb(224,224,224);
+      background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image :      -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image : -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image :         linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      vertical-align   : bottom;
+  }
+
+  .yui3-button {
+      margin:10px 0px 10px 0px;
+      color: #fff;
+      background-color: #3476b7;}
+
+      .btn{
+          padding:0px;
+          border-radius: 0px 10px 10px 0px;
+      }
+    .btn > h3 {
+        margin: 0px;
+        padding: 0px;
+    }
+
+</style>
+<nav class="navbar navbar-inverse">
+  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myDefaultNavbar1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#"><img style="height:inherit; padding:0px; margin-top:-20px;" src="img/jcuslogo.png" /></a> </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="myDefaultNavbar1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="https://www.jcu.edu.sg/student-life/student-support-services/learning-support">Learning Support</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <h2 class="text-left">A student would like to see you!</h2>
+    </div>
+  </div>
+</div>
+<br>
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-1">
+      <h3 class="text-left"><strong>Request Details:</strong></h3>
+    </div>
+    <div class="col-sm-6 col-sm-offset-1">
+      <h3 class="text-left"><strong>Reply Details:</strong></h3>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+
+    <div class="col-sm-2 col-sm-offset-1">
+
+        <label>Student Name: </label><span id ="studentName"></span>
+        <br>
+        <label>Course: </label><span id="course"> N/A</span>
+        <br>
+        <label>Issue Category: </label><span id="topic"></span>
+    </div>
+    <div class="col-sm-6 col-sm-offset-1">
+      <div class="row">
+        <div class="container">
+            <form role="form">
+                <div id="formgroup">
+                    <div class="col-sm-6"><input type="radio" name="reply" value="accept" checked><button class="btn btn-block btn-success"><h2><strong>Accept</strong></h2></button></div>
+
+               <div class="col-sm-6"><input type="radio" name="reply" value="decline"><button class="btn btn-block btn-danger"><h2><strong>Decline</strong></h2></button></div>
+                </div>
+                <br>
+            </form>
+
+          <!-- Add an additional blue button style -->
+
+<div id="demo" class="yui3-skin-sam yui3-g"> <!-- You need this skin class -->
+
+  <div id="leftcolumn" class="yui3-u">
+     <!-- Container for the calendar -->
+     <div id="mycalendar"></div>
+  </div>
+  <div id="rightcolumn" class="yui3-u">
+   <div id="links" style="padding-left:20px;">
+      <h3><span id="selecteddate"></span></h3>
+      <h3 id="selectedtime"></h3>
+   </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
+
+    // Create a new instance of calendar, placing it in
+    // #mycalendar container, setting its width to 340px,
+    // the flags for showing previous and next month's
+    // dates in available empty cells to true, and setting
+    // the date to today's date.
+    var calendar = new Y.Calendar({
+      contentBox: "#mycalendar",
+      width:'340px',
+      showPrevMonth: true,
+      showNextMonth: true,
+      date: new Date()}).render();
+
+    // Get a reference to Y.DataType.Date
+    var dtdate = Y.DataType.Date;
+
+    // Listen to calendar's selectionChange event.
+    calendar.on("selectionChange", function (ev) {
+
+      // Get the date from the list of selected
+      // dates returned with the event (since only
+      // single selection is enabled by default,
+      // we expect there to be only one date)
+      var newDate = ev.newSelection[0];
+
+      // Format the date and output it to a DOM
+      // element.
+      Y.one("#selecteddate").setHTML("Selected Date: " + dtdate.format(newDate));
+      document.getElementById("hiddenFieldDate").value = dtdate.format(newDate).toString();
+    });
+
+
+});
+</script>
+<script>
+
+	function showWaitingPage() {
+    window.location.assign("Waiting.html");
+}
+</script>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-default center-block" 
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 9am - 12pm';document.getElementById('hiddenFieldTime').value = '9am - 12pm';">
+          <t class="text-center lead"><strong>9am - 12pm</strong></t>
+          </button>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-default center-block"
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 12pm - 3pm'; document.getElementById('hiddenFieldTime').value = '12pm - 3pm';">
+          <t class="text-center lead"><strong>12pm - 3pm</strong></t>
+          </button>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-default center-block"
+          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 3pm - 6pm';document.getElementById('hiddenFieldTime').value = '3pm - 6pm';">
+          <t class="text-center lead"><strong>3pm - 6pm</strong></t>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <button class="btn btn-default center-block" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
+    <t class="text-center lead" ><strong>Submit</strong></t>
+    </button>
+  </div>
+</div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © DEB - Deutsche Entwicklerbude. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.2.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+<script src="responsive-calendar/0.9/js/jquery.js"></script>
+<script src="responsive-calendar/0.9/js/responsive-calendar.js"></script>
+<script type="text/javascript">
+      $(document).ready(function () {
+        $(".responsive-calendar").responsiveCalendar({
+          time: '2013-05',
+          events: {
+            "2013-04-30": {"number": 5, "url": "http://w3widgets.com/responsive-slider"},
+            "2013-04-26": {"number": 1, "url": "http://w3widgets.com"}, 
+            "2013-05-03":{"number": 1}, 
+            "2013-06-12": {}}
+        });
+      });
+	  
+	
+    </script>
+</body>
+</html>
