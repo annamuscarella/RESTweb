@@ -30,20 +30,20 @@
   .hidden{
     visibility: hidden;
   }
-  input[type=radio   ]:not(old) + label > span{
+  button > div >input[type=radio   ]{
       display          : inline-block;
-      width            : 0.875em;
-      height           : 0.875em;
-      margin           : 0.25em 0.5em 0.25em 0.25em;
-      border           : 0.0625em solid rgb(192,192,192);
-      border-radius    : 0.25em;
-      background       : rgb(224,224,224);
-      background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-      background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-      background-image :      -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-      background-image : -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-      background-image :         linear-gradient(rgb(240,240,240),rgb(224,224,224));
-      vertical-align   : bottom;
+      width            : 2.5em;
+      height           : 2.5em;
+      margin-top: 1em;
+      border           : 2em solid red;
+      border-radius    : 1em;
+      background       : white;
+      align-content: center;
+  }
+  .btn > .col-sm-10 > h2 {
+      margin: 0;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
   }
 
   .yui3-button {
@@ -80,7 +80,7 @@
 </nav>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-sm-10 col-sm-offset-1">
       <h2 class="text-left">A student would like to see you!</h2>
     </div>
   </div>
@@ -111,103 +111,43 @@
         <div class="container">
             <form role="form">
                 <div id="formgroup">
-                    <div class="col-sm-6"><input type="radio" name="reply" value="accept" checked><button class="btn btn-block btn-success"><h2><strong>Accept</strong></h2></button></div>
 
-               <div class="col-sm-6"><input type="radio" name="reply" value="decline"><button class="btn btn-block btn-danger"><h2><strong>Decline</strong></h2></button></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-block btn-success center-block" type="button" onclick="acceptClicked()">
+                            <div class="col-sm-2"><input type="radio" name="reply" value="accept" id="acceptRadio"></div>
+                            <div class="col-sm-10"><h2><strong>Accept</strong></h2></div>
+                        </button>
+                </div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-block btn-danger center-block" type="button" onclick="declineClicked()">
+                            <div class="col-sm-2"><input type="radio" name="reply" id="declineRadio" value="decline"></div>
+                            <div class="col-sm-10"><h2><strong>Decline</strong></h2></div>
+                        </button>
+                    </div>
+
                 </div>
                 <br>
+
             </form>
 
           <!-- Add an additional blue button style -->
 
-<div id="demo" class="yui3-skin-sam yui3-g"> <!-- You need this skin class -->
 
-  <div id="leftcolumn" class="yui3-u">
-     <!-- Container for the calendar -->
-     <div id="mycalendar"></div>
-  </div>
-  <div id="rightcolumn" class="yui3-u">
-   <div id="links" style="padding-left:20px;">
-      <h3><span id="selecteddate"></span></h3>
-      <h3 id="selectedtime"></h3>
-   </div>
-  </div>
-</div>
-
-
-<script type="text/javascript">
-
-YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
-
-    // Create a new instance of calendar, placing it in
-    // #mycalendar container, setting its width to 340px,
-    // the flags for showing previous and next month's
-    // dates in available empty cells to true, and setting
-    // the date to today's date.
-    var calendar = new Y.Calendar({
-      contentBox: "#mycalendar",
-      width:'340px',
-      showPrevMonth: true,
-      showNextMonth: true,
-      date: new Date()}).render();
-
-    // Get a reference to Y.DataType.Date
-    var dtdate = Y.DataType.Date;
-
-    // Listen to calendar's selectionChange event.
-    calendar.on("selectionChange", function (ev) {
-
-      // Get the date from the list of selected
-      // dates returned with the event (since only
-      // single selection is enabled by default,
-      // we expect there to be only one date)
-      var newDate = ev.newSelection[0];
-
-      // Format the date and output it to a DOM
-      // element.
-      Y.one("#selecteddate").setHTML("Selected Date: " + dtdate.format(newDate));
-      document.getElementById("hiddenFieldDate").value = dtdate.format(newDate).toString();
-    });
-
-
-});
-</script>
-<script>
-
-	function showWaitingPage() {
-    window.location.assign("Waiting.html");
-}
-</script>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <button type="button" class="btn btn-default center-block" 
-          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 9am - 12pm';document.getElementById('hiddenFieldTime').value = '9am - 12pm';">
-          <t class="text-center lead"><strong>9am - 12pm</strong></t>
-          </button>
+        <div id="declineForm" class="col-sm-11 col-sm-offset-1 row hidden">
+            <h3>Please select the time when you are able to see the student:</h3><br>
+            <div class="form-group">
+                <input type="radio" name="message" value="message1" id="message1"><label for="message1">&nbsp;In 10 minutes</label><br>
+                <input type="radio" name="message" value="message2" id="message2"><label for="message2">&nbsp;In 1h</label><br>
+                <input type="radio" name="message" value="message3" id="message3"><label for="message3">&nbsp;This afternoon</label><br>
+                <input type="radio" name="message" value="message4" id="message4"><label for="message4">&nbsp;The student should make an appointment</label><br>
+            </div>
         </div>
-        <div class="col-sm-4">
-          <button type="button" class="btn btn-default center-block"
-          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 12pm - 3pm'; document.getElementById('hiddenFieldTime').value = '12pm - 3pm';">
-          <t class="text-center lead"><strong>12pm - 3pm</strong></t>
-          </button>
-        </div>
-        <div class="col-sm-4">
-          <button type="button" class="btn btn-default center-block"
-          onClick="document.getElementById('selectedtime').innerHTML = 'Selected Time: 3pm - 6pm';document.getElementById('hiddenFieldTime').value = '3pm - 6pm';">
-          <t class="text-center lead"><strong>3pm - 6pm</strong></t>
-          </button>
-        </div>
-      </div>
+
     </div>
   </div>
   <hr>
-  <div class="row">
-    <button class="btn btn-default center-block" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
-    <t class="text-center lead" ><strong>Submit</strong></t>
-    </button>
-  </div>
 </div>
 <hr>
 <footer class="text-center">
@@ -238,7 +178,16 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
             "2013-06-12": {}}
         });
       });
-	  
+
+      function declineClicked() {
+      document.getElementById("declineRadio").checked = true;
+          $("#declineForm").removeClass('hidden');
+      };
+
+      function acceptClicked() {
+          $("#declineForm").addClass('hidden');
+          document.getElementById("acceptRadio").checked = true;
+      };
 	
     </script>
 </body>
