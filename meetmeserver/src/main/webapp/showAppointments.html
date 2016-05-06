@@ -86,7 +86,9 @@
   </div>
 </div>
 <br>
+<form>
 <div class="jumbotron">
+    <div role="form">
   <div class="row">
     <div class="col-sm-2 col-sm-offset-1">
       <h3 class="text-left"><strong>Request Details:</strong></h3>
@@ -109,7 +111,7 @@
     <div class="col-sm-6 col-sm-offset-1">
       <div class="row">
         <div class="container">
-            <form role="form">
+
                 <div id="formgroup">
 
                     <div class="col-sm-6">
@@ -128,7 +130,7 @@
                 </div>
                 <br>
 
-            </form>
+
 
           <!-- Add an additional blue button style -->
 
@@ -138,17 +140,29 @@
         <div id="declineForm" class="col-sm-11 col-sm-offset-1 row hidden">
             <h3>Please select the time when you are able to see the student:</h3><br>
             <div class="form-group">
-                <input type="radio" name="message" value="message1" id="message1"><label for="message1">&nbsp;In 10 minutes</label><br>
-                <input type="radio" name="message" value="message2" id="message2"><label for="message2">&nbsp;In 1h</label><br>
-                <input type="radio" name="message" value="message3" id="message3"><label for="message3">&nbsp;This afternoon</label><br>
-                <input type="radio" name="message" value="message4" id="message4"><label for="message4">&nbsp;The student should make an appointment</label><br>
+                <input type="radio" name="message" value="message1" id="message1" onclick="hidePersonalMessage();"><label onclick="hidePersonalMessage();" for="message1">&nbsp;In 10 minutes</label><br>
+                <input type="radio" name="message" value="message2" id="message2" onclick="hidePersonalMessage();"><label onclick="hidePersonalMessage();"for="message2">&nbsp;In 1h</label><br>
+                <input type="radio" name="message" value="message3" id="message3" onclick="hidePersonalMessage();"><label onclick="hidePersonalMessage();" for="message3">&nbsp;This afternoon</label><br>
+                <input type="radio" name="message" value="message4" id="message4" onclick="hidePersonalMessage();"><label onclick="hidePersonalMessage();"for="message4">&nbsp;The student should make an appointment</label><br>
+                <input type="radio" name="message" value="message5" id="message5" onclick="showPersonalMessage();"><label onclick="showPersonalMessage();" for="message5" >&nbsp;Personal message</label><br>
+                <textarea class="form-control hidden" name="personalMessage" rows="5" id="personalMessage" placeholder="Please enter your personal message"></textarea>
             </div>
         </div>
 
     </div>
   </div>
   <hr>
+        <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+        <button class="btn btn-default btn-block center-block" type="submit" value="Submit" style="padding-left:6em; padding-right:6em; padding-top:0.1em; padding-bottom:0.1em; border-radius: 10px;">
+            <h2 class="text-center lead"><strong>Submit</strong></h2>
+        </button>
+        </div>
+            </div>
+
 </div>
+    </div>
+    </form>
 <hr>
 <footer class="text-center">
   <div class="container">
@@ -187,6 +201,12 @@
       function acceptClicked() {
           $("#declineForm").addClass('hidden');
           document.getElementById("acceptRadio").checked = true;
+      };
+      function showPersonalMessage() {
+          $("#personalMessage").removeClass('hidden');
+      };
+      function hidePersonalMessage() {
+          $("#personalMessage").addClass('hidden');
       };
 	
     </script>
