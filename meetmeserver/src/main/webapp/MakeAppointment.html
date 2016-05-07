@@ -66,7 +66,7 @@
     </div>
   </div>
   <hr>
-  <form role="form">
+  <form role="form" action="meetmeserver/api/lecturer/appointment" method="post">
   <div class="row">
 
     <div class="col-sm-4 col-sm-offset-1">
@@ -209,7 +209,7 @@ document.getElementById("advisorName").value = localStorage.getItem("advisorName
   </div>
   <hr>
   <div class="row">
-    <button class="btn btn-default center-block" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
+    <button class="btn btn-default center-block" type="submit" value="Submit" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
     <t class="text-center lead" ><strong>Submit</strong></t>
     </button>
   </div>
