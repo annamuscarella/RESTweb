@@ -74,8 +74,6 @@
         <div class="form-group">
           <label for="name">Name:</label>
           <input type="name" class="form-control" id="name" name="name">
-          <label for="surname">Surname:</label>
-          <input type="name" class="form-control" id="surname" name="surname">
           <label for="email">Email address:</label>
           <input type="email" class="form-control" id="email" name="email">
         </div>
@@ -109,6 +107,7 @@
         <input type="text" class="form-control" id="hiddenFieldTopic" name="topic">
         <input type="text" class="form-control" id="hiddenFieldDate" name="date">
         <input type="text" class="form-control" id="hiddenFieldTime" name="time">
+          <input type="text" class="form-control" id="advisorName" name="advisor">
       </div>
 
     </div>
@@ -175,6 +174,8 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
 
 
 });
+
+document.getElementById("advisorName").value = localStorage.getItem("advisorName").toString();
 </script>
 <script>
 
