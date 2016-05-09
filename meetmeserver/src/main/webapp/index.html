@@ -98,6 +98,7 @@
 
 <script>
 function showAppointmentType(name) {
-    window.location.assign("makeAppointment_" + name + ".html");
+  localStorage.setItem("advisorName", name);
+    window.location.assign("appointmentType.html");
 }
 </script>

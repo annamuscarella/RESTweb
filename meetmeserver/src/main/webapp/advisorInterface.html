@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/js/moment.js"></script>
+<script type="text/javascript" src="js/transition.js"></script>
+<script type="text/javascript" src="js/collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<link href="responsive-calendar/0.9/css/responsive-calendar.css" rel="stylesheet">
+<link rel="icon" href="img/symbol.png">
+<title>Virtual Lobby</title>
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<style>
+    .hidden{
+        visibility: hidden;
+    }
+
+    .btn > h2 {
+        margin: 0;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    .yui3-button {
+        margin:10px 0px 10px 0px;
+        color: #fff;
+        background-color: #3476b7;}
+
+    .btn{
+        padding:0px;
+        border-radius: 10px;
+    }
+    .btn > h3 {
+        margin: 0px;
+        padding: 0px;
+    }
+    select {
+        width:5em !important;
+        display: inline !important;
+        font-weight: 600;
+    }
+
+</style>
+<nav class="navbar navbar-inverse">
+  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myDefaultNavbar1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#"><img style="height:inherit; padding:0px; margin-top:-20px;" src="img/jcuslogo.png" /></a> </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="myDefaultNavbar1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="https://www.jcu.edu.sg/student-life/student-support-services/learning-support">Learning Support</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-1">
+      <h3 class="text-left"><strong>Current Status:</strong></h3>
+    </div>
+
+      <div class="col-sm-6 col-sm-offset-1">
+          <h3 class="text-left"><strong>Plan Status:</strong></h3>
+      </div>
+  </div>
+  <hr>
+  <!--<form role="form" action="meetmeserver/api/lecturer/appointment" method="post">-->
+    <form role="form">
+  <div class="row">
+
+      <div class="col-sm-4 col-sm-offset-1 text-center">
+          <img class="img-responsive img-rounded center-block" id="advisorImage" style="max-height:200px;" /><br>
+          <h3 id="loggedInAs"><strong></strong></h3><br>
+          <button class="btn btn-block btn-success center-block" id="available" type="button" onclick="availableClicked()">
+
+             <h2><strong>Available</strong></h2>
+          </button>
+          <button class="btn btn-block btn-danger center-block hidden" id="away" type="button" onclick="awayClicked()">
+
+              <h2><strong>Away</strong></h2>
+          </button>
+          <script>
+              function availableClicked() {
+                  $("#away").removeClass('hidden');
+                  $("#available").addClass('hidden');
+              };
+              function awayClicked() {
+                  $("#away").addClass('hidden');
+                  $("#available").removeClass('hidden');
+              };
+
+              var accountName = localStorage.getItem("accountName").toString();
+              var src = "";
+              var name = "";
+
+              switch(accountName) {
+                  case "george":
+                      src = "img/George-Jacobs.jpg";
+                          name ="George Jacobs";
+                      break;
+                  case "hwee":
+                      src = "img/Hwee-Leng-Toh-Heng.jpg";
+                      name ="Hwee Leng Toh Heng";
+                      break;
+                  case "nimrod":
+                      src = "img/n_delante.jpg";
+                      name ="Nimrod Delante";
+                      break;
+                  case "michael":
+                      src = "img/Michael-Joyce.jpg";
+                      name ="Michael Joyce";
+                      break;
+                  case "nicolas":
+                      src = "img/Nicolas-Greliche.jpg";
+                      name ="Nicolas Greliche";
+                      break;
+                  case "tang":
+                      src = "img/Tang-Chun-Meng.jpg";
+                      name ="Tang Chun Meng";
+                      break;
+                  default:
+                      src = "img/400x400.gif";
+                      name="Unknown"
+              }
+              document.getElementById("advisorImage").src=src;
+              document.getElementById("loggedInAs").firstChild.innerHTML=name;
+          </script>
+      </div>
+
+
+    <div class="col-sm-6 col-sm-offset-1">
+      <div class="row">
+        <div class="container"> 
+          <!-- Add an additional blue button style -->
+<style>
+.yui3-button {
+    margin:10px 0px 10px 0px;
+    color: #fff;
+    background-color: #3476b7;
+}
+</style>
+
+<div id="demo" class="yui3-skin-sam yui3-g"> <!-- You need this skin class -->
+
+  <div id="leftcolumn" class="yui3-u">
+     <!-- Container for the calendar -->
+     <div id="mycalendar"></div>
+  </div>
+  <div id="rightcolumn" class="yui3-u">
+   <div id="links" style="padding-left:20px;">
+      <h3><span id="selecteddate"></span></h3>
+      <h3 id="selectedstarttime"></h3>
+       <h3 id="selectedendtime"></h3>
+   </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
+
+    // Create a new instance of calendar, placing it in
+    // #mycalendar container, setting its width to 340px,
+    // the flags for showing previous and next month's
+    // dates in available empty cells to true, and setting
+    // the date to today's date.
+    var calendar = new Y.Calendar({
+      contentBox: "#mycalendar",
+      width:'340px',
+      showPrevMonth: true,
+      showNextMonth: true,
+      date: new Date()}).render();
+
+    // Get a reference to Y.DataType.Date
+    var dtdate = Y.DataType.Date;
+
+    // Listen to calendar's selectionChange event.
+    calendar.on("selectionChange", function (ev) {
+
+      // Get the date from the list of selected
+      // dates returned with the event (since only
+      // single selection is enabled by default,
+      // we expect there to be only one date)
+      var newDate = ev.newSelection[0];
+
+      // Format the date and output it to a DOM
+      // element.
+      Y.one("#selecteddate").setHTML("Selected Date: " + dtdate.format(newDate));
+      document.getElementById("hiddenFieldDate").value = dtdate.format(newDate).toString();
+    });
+
+
+});
+
+document.getElementById("advisorName").value = localStorage.getItem("advisorName").toString();
+    function setTime(){
+        document.getElementById('selectedstarttime').innerHTML = 'Selected Start Time: ' + document.getElementById("startHour").value.toString() + ":" + document.getElementById("startMinute").value.toString();
+        document.getElementById('selectedendtime').innerHTML = 'Selected End Time: ' + document.getElementById("endHour").value.toString() + ":" + document.getElementById("endMinute").value.toString();
+
+    }
+</script>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+            <br>
+
+            <label for="startHour">Start Time: </label>
+            <select class="form-control form-inline" id="startHour" name="startHour" onchange="setTime()">
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+            </select>
+            :
+            <select class="form-control form-inline" id="startMinute" name="startMinute" onchange="setTime()">
+                <option value="00">00</option>
+                <option value="05">05</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+                <option value="55">55</option>
+            </select>
+            <br>
+            <br>
+
+            <label for="endHour">End Time:  &nbsp; </label>
+            <select class="form-control form-inline" id="endHour" name="endHour" onchange="setTime()">
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+            </select>
+            :
+            <select class="form-control form-inline" id="endMinute" name="endMinute" onchange="setTime()">
+                <option value="00">00</option>
+                <option value="05">05</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+                <option value="55">55</option>
+            </select>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+      <div class="col-sm-4 col-sm-offset-1"></div>
+      <div class="col-sm-6 col-sm-offset-1">
+    <button class="btn btn-default center-block" type="submit" value="Submit" onclick="window.location.assign('appointmentSuccess.html');" style="padding-left:4em; padding-right:4em;">
+    <t class="text-center lead" ><strong>Submit</strong></t>
+    </button>
+          </div>
+  </div>
+  </form>
+</div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © DEB - Deutsche Entwicklerbude. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.2.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+<script src="responsive-calendar/0.9/js/jquery.js"></script>
+<script src="responsive-calendar/0.9/js/responsive-calendar.js"></script>
+<script type="text/javascript">
+      $(document).ready(function () {
+        $(".responsive-calendar").responsiveCalendar({
+          time: '2013-05',
+          events: {
+            "2013-04-30": {"number": 5, "url": "http://w3widgets.com/responsive-slider"},
+            "2013-04-26": {"number": 1, "url": "http://w3widgets.com"}, 
+            "2013-05-03":{"number": 1}, 
+            "2013-06-12": {}}
+        });
+      });
+	  
+	
+    </script>
+</body>
+</html>
