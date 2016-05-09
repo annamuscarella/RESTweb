@@ -1,5 +1,6 @@
 package de.dhbw.meetme.rest;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.AppointmentDao;
 import de.dhbw.meetme.database.dao.LecturerDao;
@@ -46,13 +47,27 @@ public class NotificationService {
 
     @GET
     @Path("/{lecturerName}")
-    // returns the DB entry of one single lecturer
-    public Lecturers findLecturer(@PathParam("lecturerName") String lecturerName){
-        log.debug("list lecturer"+ lecturerName);
+    // returns the DB entry of outstanding notifications
+    //TODO verfiication wenn mehrere nachrichten ausstehen
+    public UrgentAppointment getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
+        transaction.begin();
+        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)== null)
+        {
+            log.debug("urgent appointment" + lecturerName+ ": no urgentAppointment");
+            transaction.commit();
+            return null;
 
-        return lecturerDao.findLecturer(lecturerName);
+        }
+        else {
+        //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+
+
+        log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName));
+            urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).setProgressed(true);
+            transaction.commit();
+            return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
     }
-
+/*
     @POST
     @Path("/urgentAppointment")
         public void appReq(@FormParam("lecturerName") String lecturerName, @FormParam("studentFirstname") String studentFirstname,@FormParam("studentLastname") String studentLastname, @FormParam("topic") String topic, @FormParam("course") String course, @FormParam("studentMail") String studentMail) {
@@ -77,5 +92,5 @@ public class NotificationService {
         public boolean availability(@PathParam("lecturerName") String lecturerName){
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
         return lecturer.isLecturerAvailability();
-    }
-}
+    }*/
+}}

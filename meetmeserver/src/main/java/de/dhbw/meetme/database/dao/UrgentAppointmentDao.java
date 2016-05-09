@@ -25,10 +25,10 @@ public class UrgentAppointmentDao extends JpaDao<UuidId, UrgentAppointment> {
 
 
 
-    public Collection<UrgentAppointment> getAllAppointment(){
-        Query query = entityManager.createQuery("select t from UrgentAppointment t group by t.lecturerName order by t.date desc");
+    public UrgentAppointment getOpenUrgentAppointment(String lecturerName){
+        Query query = entityManager.createQuery("select t from UrgentAppointment t where t.processed=:false");
 
-        return (Collection<UrgentAppointment>) query.getResultList();
+        return (UrgentAppointment) query.getResultList().get(0);
     }
 
 

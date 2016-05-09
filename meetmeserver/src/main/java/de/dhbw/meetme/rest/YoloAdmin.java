@@ -24,23 +24,23 @@ import java.util.List;
 @Produces({"application/json"}) // mime type
 @Singleton
 public class YoloAdmin {
-  /*  //bullshit class
+   //bullshit class
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
     UserDao userDao;
     @Inject
-    GPSDao gpsDao;
+    LecturerDao lecturerDao;
     @Inject
     ScoreDao scoreDao;
     @Inject
-    TeamBoardDao teamBoardDao;
+    UrgentAppointmentDao urgentAppointmentDao;
     @Inject
-    FriendshipDao friendshipDao;
+    AppointmentDao appointmentDao;
 
     @Inject
     Transaction transaction;
-
+/*
     @GET
     @Path("/setNations")
     //returns list of all GPS Locations saved in the database
@@ -58,13 +58,27 @@ public class YoloAdmin {
         return "es sind bereits Nationen in der Datenbank";
 
     }
+*/
+    @GET
+    @Path("/test/{Fname}/{Lname}/{topic}/{lecturerMail}/{lecturerPw}")
+    public Lecturers getTeamboard(@PathParam("Fname")String Fname, @PathParam("Lname") String Lname,@PathParam("topic") String topic,@PathParam("lecturerMail") String lecturerMail,@PathParam("lecturerPw") String lecturerPw ){
+        transaction.begin();
+        Lecturers lecturer = new Lecturers(Fname,Lname, topic,lecturerMail,lecturerPw, true);
+        lecturerDao.persist(lecturer);
+        transaction.commit();
+
+        return lecturer;
+    }
 
     @GET
-    @Path("/test/{nation}")
-    public Collection<TeamBoard> getTeamboard(@PathParam("nation")String nation){
+    @Path("/login/{email}/{password}")
+    //verify the lecturer by checking mail and password
+    public boolean login(@PathParam("email") String mail, @PathParam("password") String pw){
+        Lecturers lecturer = lecturerDao.findLecturerMail(mail);
+        if (lecturer.getLecturerPw().equals(pw)){
+            return true;
+        }
+        else return false;
 
-        return teamBoardDao.leaderTeamBoard();
-    }*/
-
-
+    }
 }
