@@ -14,8 +14,45 @@ public class Appointment extends PersistentObject {
   private String lecturerName;
   private String date;
   private String proposedTime;
-  private String studentName;
+  private String studentFName;
+  private String studenLName;
   private String studentMail;
+  private String course;
+  private String topic;
+
+  public String getStudentFName() {
+    return studentFName;
+  }
+
+  public void setStudentFName(String studentFName) {
+    this.studentFName = studentFName;
+  }
+
+  public String getStudenLName() {
+    return studenLName;
+  }
+
+  public void setStudenLName(String studenLName) {
+    this.studenLName = studenLName;
+  }
+
+  public String getCourse() {
+    return course;
+  }
+
+  public void setCourse(String course) {
+    this.course = course;
+  }
+
+  public String getTopic() {
+    return topic;
+  }
+
+  public void setTopic(String topic) {
+    this.topic = topic;
+  }
+
+
 
   public String getLecturerName() {
     return lecturerName;
@@ -42,11 +79,11 @@ public class Appointment extends PersistentObject {
   }
 
   public String getStudentName() {
-    return studentName;
+    return studentFName;
   }
 
   public void setStudentName(String studentName) {
-    this.studentName = studentName;
+    this.studentFName = studentFName;
   }
 
   public String getStudentMail() {
@@ -58,12 +95,15 @@ public class Appointment extends PersistentObject {
   }
 
 
-  public Appointment(String lecturerName, String date, String proposedTime, String studentName, String studentMail) {
+  public Appointment(String lecturerName, String date, String proposedTime, String studentFName,String studenLName, String studentMail, String course, String topic) {
     this.lecturerName = lecturerName;
     this.date = date;
     this.proposedTime = proposedTime;
-    this.studentName = studentName;
+    this.studentFName = studentFName;
+    this.studenLName=studenLName;
     this.studentMail = studentMail;
+    this.course=course;
+    this.topic=topic;
   }
 
 

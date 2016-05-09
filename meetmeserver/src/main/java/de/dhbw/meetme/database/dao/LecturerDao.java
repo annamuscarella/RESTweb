@@ -25,5 +25,10 @@ public class LecturerDao extends JpaDao<UuidId, Lecturers> {
         query.setParameter("name", name);
         return (Lecturers) query.getResultList().get(0);
     }
+    public Lecturers findLecturerMail(String mail) {
+        Query query = entityManager.createQuery("SELECT u from Lecturers u where u.lecturerMail = :mail");
+        query.setParameter("mail", mail);
+        return (Lecturers) query.getResultList().get(0);
+    }
 
 }
