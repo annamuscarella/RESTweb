@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/js/moment.js"></script>
+<script type="text/javascript" src="js/transition.js"></script>
+<script type="text/javascript" src="js/collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<link href="responsive-calendar/0.9/css/responsive-calendar.css" rel="stylesheet">
+<link rel="icon" href="img/symbol.png">
+<title>Virtual Lobby</title>
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<style>
+  .hidden{
+    visibility: hidden;
+  }
+</style>
+<nav class="navbar navbar-inverse">
+  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myDefaultNavbar1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#"><img style="height:inherit; padding:0px; margin-top:-20px;" src="img/jcuslogo.png" /></a> </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="myDefaultNavbar1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="https://www.jcu.edu.sg/student-life/student-support-services/learning-support">Learning Support</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <h2 class="text-left">Please fill in additional information in order to make an appointment:</h2>
+    </div>
+  </div>
+</div>
+<br>
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h3 class="text-left"><strong>Contact details:</strong></h3>
+    </div>
+  </div>
+  <hr>
+  <form role="form" action="meetmeserver/api/lecturer/appointment" method="post">
+  <div class="row">
+
+    <div class="col-sm-6 col-sm-offset-3">
+
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="name" class="form-control" id="name" name="name">
+          <label for="email">Email address:</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="course">Course:</label>
+          <input type="name" class="form-control" id="course" name="course">
+        </div>
+        <label for="name" id="topic">Topic:</label>
+        <br>
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: APA Referencing'; document.getElementById('hiddenFieldTopic').value = 'APA Referencing';">
+        <t class="text-center lead"><strong>APA Referencing</strong></t>
+        </button>
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Statistics/Analysis';document.getElementById('hiddenFieldTopic').value = 'Statistics/Analysis';">
+        <t class="text-center lead"><strong>Statistics/Analysis</strong></t>
+        </button>
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: English language issues';document.getElementById('hiddenFieldTopic').value = 'English language issues';">
+        <t class="text-center lead"><strong>English language issues</strong></t>
+        </button>
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Writing Skills';document.getElementById('hiddenFieldTopic').value = 'Writing Skills';">
+        <t class="text-center lead"><strong>Writing Skills</strong></t>
+        </button>
+        <button type="button" class="btn btn-default"
+        onClick="document.getElementById('topic').innerHTML = 'Topic: Other';document.getElementById('hiddenFieldTopic').value = 'Other';">
+        <t class="text-center lead"><strong>Other</strong></t>
+        </button>
+      <div class="hidden">
+        <input type="text" class="form-control" id="hiddenFieldTopic" name="topic">
+        <input type="text" class="form-control" id="hiddenFieldDate" name="date">
+        <input type="text" class="form-control" id="hiddenFieldTime" name="time">
+          <input type="text" class="form-control" id="advisorName" name="advisor">
+      </div>
+
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <button class="btn btn-default center-block" type="submit" value="Submit" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
+    <t class="text-center lead" ><strong>Submit</strong></t>
+    </button>
+  </div>
+  </form>
+</div>
+<hr>
+<footer class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Copyright © DEB - Deutsche Entwicklerbude. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.2.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+<script src="responsive-calendar/0.9/js/jquery.js"></script>
+<script src="responsive-calendar/0.9/js/responsive-calendar.js"></script>
+</body>
+</html>
