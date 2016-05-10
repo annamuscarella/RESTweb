@@ -44,23 +44,16 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
-      <h1 class="text-center"><strong>Choose an appointment type</strong></h1>
+      <h1 class="text-center"><strong>Thank You!</strong></h1>
     </div>
   </div>
 
   <div class="jumbotron">
-    <div class="row"> <img class="img-responsive img-rounded center-block" style="max-height:200px;" src="img/Nicolas-Greliche.jpg"/> </div>
+    <div class="row"> <img class="img-responsive img-rounded center-block" id="advisorImage" style="max-height:200px;" /> </div>
     <br>
     <div class="row">
-    <div class="col-xs-5 col-xs-offset-1"> 
-    <button type="button" class="btn btn-default btn-block" onClick="window.location='Waiting.html';"><span class="glyphicon glyphicon-circle-arrow-up btn-block"></span><br>
-        <t class="text-center lead"><strong>See Learning Advisor immediately</strong></t>
-        </button>
-    </div>
-    <div class="col-xs-5"> 
-    <button type="button" onClick="window.location='MakeAppointment.html';" class="btn btn-default btn-block"><span class="glyphicon glyphicon-education center-block"></span><br>
-        <t class="text-center lead"><strong>Make an appointment</strong></t>
-        </button>
+    <div class="col-xs-6 col-xs-offset-3 text-center">
+    <h3 id="message"></h3>
     </div>
     </div>
   </div>
@@ -78,9 +71,45 @@
 <hr>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="js/jquery-1.11.2.min.js"></script>
+
 <script>
-  localStorage.setItem("advisorName", "Nicolas");
+  $( document ).ready(function() {
+    $("#message").html("Thank you for contacting Learning Support.<br> " + capitalizeFirstLetter(localStorage.getItem("advisorName").toString()) + " will contact you as soon as possible.");
+
+  });
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  var advisorName = localStorage.getItem("advisorName").toString();
+  var src = "";
+
+  switch(advisorName) {
+    case "george":
+      src = "img/George-Jacobs.jpg";
+      break;
+    case "hwee":
+      src = "img/Hwee-Leng-Toh-Heng.jpg";
+      break;
+    case "nimrod":
+      src = "img/n_delante.jpg";
+      break;
+    case "michael":
+      src = "img/Michael-Joyce.jpg";
+      break;
+    case "nicolas":
+      src = "img/Nicolas-Greliche.jpg";
+      break;
+    case "tang":
+      src = "img/Tang-Chun-Meng.jpg";
+      break;
+    default:
+    src = "img/400x400.gif";
+  }
+  document.getElementById("advisorImage").src=src;
 </script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="js/bootstrap.js"></script>
 </body>

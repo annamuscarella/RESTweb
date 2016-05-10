@@ -56,7 +56,7 @@
     </div>
   </div>
     <hr>
-    <form role="form">
+    <form role="form" action="advisorInterface.html">
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
 
@@ -66,7 +66,7 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
 
                 <br>
-                <button type="submit" class="btn btn-default btn-block"><strong>Submit</strong></button>
+                <button type="submit" class="btn btn-default btn-block" onclick="submitFunction()"><strong>Submit</strong></button>
                 </div>
 
 
@@ -85,6 +85,30 @@
   </div>
 </footer>
 
+<script>
+    function  stringContains(string1, string2){
+        var result = string1.indexOf(string2) > -1;
+        return result;
+    }
+    function submitFunction()
+    {
+
+        if(stringContains(document.getElementById("email").value.toString().toLowerCase(), "nimrod"))
+        {localStorage.setItem("accountName", "nimrod");}
+        else if(stringContains(document.getElementById("email").value.toString().toLowerCase(), "hwee"))
+        {localStorage.setItem("accountName", "hwee");}
+        else if(stringContains(document.getElementById("email").value.toString().toLowerCase(), "nicolas"))
+        {localStorage.setItem("accountName", "nicolas");}
+        else if(stringContains(document.getElementById("email").value.toString().toLowerCase(), "george"))
+        {localStorage.setItem("accountName", "george");}
+        else if(stringContains(document.getElementById("email").value.toString().toLowerCase(), "tang"))
+        {localStorage.setItem("accountName", "tang");}
+        else if(stringContains(document.getElementById("email").value.toString().toLowerCase(), "michael"))
+        {localStorage.setItem("accountName", "michael");}
+    }
+
+
+</script>
 
 </body>
 </html>

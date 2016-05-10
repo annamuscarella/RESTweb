@@ -66,7 +66,8 @@
     </div>
   </div>
   <hr>
-  <form role="form" action="meetmeserver/api/lecturer/appointment" method="post">
+  <!--<form role="form" action="meetmeserver/api/lecturer/appointment" method="post">-->
+    <form role="form" action="appointmentSuccess.html">
   <div class="row">
 
     <div class="col-sm-4 col-sm-offset-1">
@@ -177,12 +178,7 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
 
 document.getElementById("advisorName").value = localStorage.getItem("advisorName").toString();
 </script>
-<script>
 
-	function showWaitingPage() {
-    window.location.assign("Waiting.html");
-}
-</script>
         </div>
       </div>
       <div class="row">
@@ -209,7 +205,7 @@ document.getElementById("advisorName").value = localStorage.getItem("advisorName
   </div>
   <hr>
   <div class="row">
-    <button class="btn btn-default center-block" type="submit" value="Submit" onClick="showWaitingPage()" style="padding-left:4em; padding-right:4em;">
+    <button class="btn btn-default center-block" type="submit" value="Submit" onclick="window.location.assign('appointmentSuccess.html');" style="padding-left:4em; padding-right:4em;">
     <t class="text-center lead" ><strong>Submit</strong></t>
     </button>
   </div>
