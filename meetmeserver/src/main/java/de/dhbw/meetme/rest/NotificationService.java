@@ -2,9 +2,11 @@ package de.dhbw.meetme.rest;
 
 import com.sun.xml.internal.bind.v2.TODO;
 import de.dhbw.meetme.database.Transaction;
+import de.dhbw.meetme.database.dao.AppReplyDao;
 import de.dhbw.meetme.database.dao.AppointmentDao;
 import de.dhbw.meetme.database.dao.LecturerDao;
 import de.dhbw.meetme.database.dao.UrgentAppointmentDao;
+import de.dhbw.meetme.domain.AppReply;
 import de.dhbw.meetme.domain.Appointment;
 import de.dhbw.meetme.domain.Lecturers;
 import de.dhbw.meetme.domain.UrgentAppointment;
@@ -31,6 +33,8 @@ public class NotificationService {
     AppointmentDao appointmentDao;
     @Inject
     UrgentAppointmentDao urgentAppointmentDao;
+    @Inject
+    AppReplyDao appReplyDao;
 
     @Inject
     Transaction transaction;
@@ -53,7 +57,7 @@ public class NotificationService {
         transaction.begin();
         if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)== null)
         {
-            log.debug("urgent appointment" + lecturerName+ ": no urgentAppointment");
+            log.debug("urgent appointment" + lecturerName + ": no urgentAppointment");
             transaction.commit();
             return null;
 
@@ -63,9 +67,29 @@ public class NotificationService {
 
 
         log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName));
-            urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).setProgressed(true);
+
             transaction.commit();
             return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+    }}
+
+     @POST
+     @Path("/urgentApp")
+     public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
+            transaction.begin();
+            UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
+            log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
+            transaction.commit();
+         return true;
+        }
+
+    @POST
+    @Path("/AppReply")
+    public boolean replyToRequest(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
+        transaction.begin();
+        AppReply appReply= new AppReply(lecturerName,message,pmessage,reply,false);
+        urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).setProgressed(true);
+        transaction.commit();
+        return true;
     }
 /*
     @POST
@@ -93,4 +117,4 @@ public class NotificationService {
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
         return lecturer.isLecturerAvailability();
     }*/
-}}
+}
