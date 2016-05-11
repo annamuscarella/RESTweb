@@ -102,14 +102,8 @@
               <h2><strong>Away</strong></h2>
           </button>
           <script>
-              function availableClicked() {
-                  $("#away").removeClass('hidden');
-                  $("#available").addClass('hidden');
-              };
-              function awayClicked() {
-                  $("#away").addClass('hidden');
-                  $("#available").removeClass('hidden');
-              };
+              var url = 'availability/' + name + '/';
+             var client = new XMLHttpRequest();
 
               var accountName = localStorage.getItem("accountName").toString();
               var src = "";
@@ -146,6 +140,35 @@
               }
               document.getElementById("advisorImage").src=src;
               document.getElementById("loggedInAs").firstChild.innerHTML=name;
+
+              function availableClicked() {
+                  $("#away").removeClass('hidden');
+                  $("#available").addClass('hidden');
+
+                  client.open("POST", url + 'false', true);
+                  client.send(null);
+              };
+              function awayClicked() {
+                  $("#away").addClass('hidden');
+                  $("#available").removeClass('hidden');
+                  client.open("POST", url + 'true', true);
+                  client.send(null);
+              };
+
+              $(document).ready(function() {
+                  client.onreadystatechange = function() {
+                      if (client.readyState == XMLHttpRequest.DONE) {
+                          if(client.responseText == "true"){
+                              availableClicked();
+                          }
+                          else {
+                           awayClicked();
+                          }
+                      }
+                  }
+                  client.open("GET", url);
+                  client.send();
+              });
           </script>
       </div>
 
