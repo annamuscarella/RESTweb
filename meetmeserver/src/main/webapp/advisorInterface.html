@@ -110,31 +110,38 @@
               var accountName = localStorage.getItem("accountName").toString();
               var src = "";
               var name = "";
+              var lastname = "";
 
               switch(accountName) {
                   case "george":
                       src = "img/George-Jacobs.jpg";
                           name ="George Jacobs";
+                          lastname="Jacobs";
                       break;
                   case "hwee":
                       src = "img/Hwee-Leng-Toh-Heng.jpg";
                       name ="Hwee Leng Toh Heng";
+                          lastname="Leng Toh Heng"
                       break;
                   case "nimrod":
                       src = "img/n_delante.jpg";
                       name ="Nimrod Delante";
+                          lastname="Delante";
                       break;
                   case "michael":
                       src = "img/Michael-Joyce.jpg";
                       name ="Michael Joyce";
+                          lastname = "Joyce";
                       break;
                   case "nicolas":
                       src = "img/Nicolas-Greliche.jpg";
                       name ="Nicolas Greliche";
+                          lastname="Greliche";
                       break;
                   case "tang":
                       src = "img/Tang-Chun-Meng.jpg";
                       name ="Tang Chun Meng";
+                          lastname="Chun Meng";
                       break;
                   default:
                       src = "img/400x400.gif";
@@ -146,42 +153,50 @@
               function availableClicked() {
                   $("#away").removeClass('hidden');
                   $("#available").addClass('hidden');
-                  alert("Alert6");
-                  availabilityClient.open("POST", url + '/true/' + "Delante");
-                  alert("Alert5");
+                  availabilityClient.open("POST", url + 'false/' + lastname);
                   availabilityClient.send(null);
               };
               function awayClicked() {
                   $("#away").addClass('hidden');
                   $("#available").removeClass('hidden');
-                  availabilityClient.open("POST", url + '/false/' + "Delante");
+                  availabilityClient.open("POST", url + 'true/' + lastname);
                   availabilityClient.send(null);
               };
 
-              $(document).ready(function() {
-                  setInterval(getUrgentAppointments(), 1000);
-                  docReadyClient.onreadystatechange = function() {
-                      alert("Alert1");
-                      if (docReadyClient.readyState == XMLHttpRequest.DONE) {
-                          alert(docReadyClient.responseText.toString());
-                          if(docReadyClient.responseText == true){
+              //setInterval(getUrgentAppointments(), 2000);
+              function worker() {
+                  intervalClient.open("GET", 'api/notification/' + lastname);
+                  intervalClient.send();
+                  if(intervalClient.readyState != XMLHttpRequest.DONE){
+                      setTimeout(worker, 5000);
+                  }
 
+                 };
+              $(document).ready(function() {
+
+                  setInterval(worker(), 5000);
+                  docReadyClient.onreadystatechange = function() {
+                                           if (
+                              //docReadyClient.readyState == XMLHttpRequest.DONE ||
+                      docReadyClient.status == 200) {
+
+                          if(docReadyClient.responseType == "text" || docReadyClient.response){
+
+                              alert(docReadyClient.response.toString() + "hallo");
                               availableClicked();
                           }
                           else {
                            awayClicked();
                           }
                       }
-                  }
-                  docReadyClient.open("GET", url + '/' + "Delante");
+                  };
+                  docReadyClient.open("GET", url  + lastname);
                   docReadyClient.send();
               });
 
               function getUrgentAppointments() {
-                  alert("Alert2");
-                  intervalClient.open("GET", '/api/notification/' + "Delante");
+                  intervalClient.open("GET", '/api/notification/' + lastname);
                   intervalClient.send();
-                  alert("Alert3");
               }
           </script>
       </div>
