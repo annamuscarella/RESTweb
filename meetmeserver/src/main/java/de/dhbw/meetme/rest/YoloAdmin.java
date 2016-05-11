@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,5 +77,16 @@ public class YoloAdmin {
         }
         else return false;
 
+    }
+
+    @GET
+    @Path("/availability/{setAvailability}/{lecturerName}")
+    //set the availability ...boolean true for availabale or false for unavailable
+    public boolean setAvailability(@PathParam("setAvailability") boolean availability,@PathParam("lecturerName") String lecturerName){
+        transaction.begin();
+        Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
+        lecturer.setLecturerAvailability(availability);
+        transaction.commit();
+        return true;
     }
 }
