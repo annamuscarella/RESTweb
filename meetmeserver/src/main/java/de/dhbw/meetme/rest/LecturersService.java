@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.*;
+import java.net.URI;
 
 /**
  *this class handles all the interaction with the lecturer
@@ -65,7 +67,7 @@ public class LecturersService {
     @POST
     @Path("/appointment")
     //to schedule an appointment in advance
-        public String appointment(@FormParam("advisor") String lecturerName, @FormParam("name") String studentFName,@FormParam("surname") String studentLName, @FormParam("email") String studentMail, @FormParam("topic") String topic, @FormParam("date") String date, @FormParam("time") String proposedTime,@FormParam("course") String course){
+        public Response appointment(@FormParam("advisor") String lecturerName, @FormParam("name") String studentFName,@FormParam("surname") String studentLName, @FormParam("email") String studentMail, @FormParam("topic") String topic, @FormParam("date") String date, @FormParam("time") String proposedTime,@FormParam("course") String course){
         transaction.begin();
         if (course.equals("") || course == null){
             course = "N/A";
@@ -74,7 +76,15 @@ public class LecturersService {
         appointmentDao.persist(appointment);
         log.debug("Save appoinment " + appointment);
         transaction.commit();
-        return "save appointment";
+
+        URI location = null;
+        try {
+            location = new java.net.URI("appointmentSuccess.html");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new WebApplicationException(Response.temporaryRedirect(location).build());
         }
 
     @GET
@@ -105,14 +115,31 @@ public class LecturersService {
     @GET
     @Path("/login")
     //verify the lecturer by checking mail and password
-    public boolean login(@FormParam("email") String mail, @FormParam("password") String pw){
-        Lecturers lecturer = lecturerDao.findLecturerMail(mail);
+    public Response login(@FormParam("email") String mail, @FormParam("password") String pw){
+        URI location = null;
+        Lecturers lecturer = null;
+
+        lecturer = lecturerDao.findLecturerMail(mail);
+
         log.debug("lecturer find by mail: "+lecturerDao.findLecturerMail(mail));
         log.debug("pw von lect: "+lecturerDao.findLecturerMail(mail).getLecturerPw());
         if (lecturer.getLecturerPw().equals(pw)){
-            return true;
-        }
-        else return false;
+            try {
+                location = new java.net.URI("advisorInterface.html");
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        else {
+            try {
+                location = new java.net.URI("loginPage.html");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+
+        throw new WebApplicationException(Response.temporaryRedirect(location).build());
     }
 }
