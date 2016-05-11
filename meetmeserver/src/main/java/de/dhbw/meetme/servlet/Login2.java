@@ -64,8 +64,8 @@ public class Login2 extends HttpServlet {
                     log.debug(angemeldet.getName());
                     //session.setAttribute("email", angemeldet.getEmail());
 
-                    response.sendRedirect("index.html");
-                }else {response.sendRedirect("LogIn2.html");}
+                    response.sendRedirect("advisorInterface.html");
+                }else {response.sendRedirect("loginPage.html");}
             }}
         // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
