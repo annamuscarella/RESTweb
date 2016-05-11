@@ -102,8 +102,10 @@
               <h2><strong>Away</strong></h2>
           </button>
           <script>
-              var url = 'availability/' + name + '/';
-             var client = new XMLHttpRequest();
+              var url = '/api/lecturer/availability/' + name + '/';
+             var availabilityClient = new XMLHttpRequest();
+              var docReadyClient = new XMLHttpRequest();
+              var intervalClient = new XMLHttpRequest();
 
               var accountName = localStorage.getItem("accountName").toString();
               var src = "";
@@ -145,20 +147,21 @@
                   $("#away").removeClass('hidden');
                   $("#available").addClass('hidden');
 
-                  client.open("POST", url + 'false', true);
-                  client.send(null);
+                  availabilityClient.open("POST", url + 'false', true);
+                  availabilityClient.send(null);
               };
               function awayClicked() {
                   $("#away").addClass('hidden');
                   $("#available").removeClass('hidden');
-                  client.open("POST", url + 'true', true);
-                  client.send(null);
+                  availabilityClient.open("POST", url + 'true', true);
+                  availabilityClient.send(null);
               };
 
               $(document).ready(function() {
-                  client.onreadystatechange = function() {
-                      if (client.readyState == XMLHttpRequest.DONE) {
-                          if(client.responseText == "true"){
+                  setInterval(getUrgentAppointments(), 1000);
+                  docReadyClient.onreadystatechange = function() {
+                      if (docReadyClient.readyState == XMLHttpRequest.DONE) {
+                          if(docReadyClient.responseText == "true"){
                               availableClicked();
                           }
                           else {
@@ -166,9 +169,14 @@
                           }
                       }
                   }
-                  client.open("GET", url);
-                  client.send();
+                  docReadyClient.open("GET", url);
+                  docReadyClient.send();
               });
+
+              function getUrgentAppointments() {
+                  intervalClient.open("GET", '/api/notification/' + advisorName);
+                  intervalClient.send();
+              }
           </script>
       </div>
 

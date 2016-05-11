@@ -121,7 +121,8 @@ var curSelectedPlayer = "img/faces/george.png";
 var lastSelectedPlayer = "george";
 
 $(document).ready(function() {
-	
+
+	setInterval(getResponse(), 1000);
 
 	
     $(".tictacbutton").click(function(event) {
@@ -202,7 +203,10 @@ $(document).ready(function() {
 		 });
 });
 
-
+function getResponse() {
+	var client = new XMLHttpRequest();
+	client.open("GET", "")
+}
 
 </script> 
 </div>
