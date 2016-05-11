@@ -71,6 +71,28 @@ public class NotificationService {
             transaction.commit();
             return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
     }}
+    @GET
+    @Path("/AppReply")
+    // returns the DB entry of outstanding AppReplys
+    //TODO ok button um processed auf true zu setzen
+    public AppReply getOpenAppReply(@PathParam("lecturerName") String lecturerName){
+        transaction.begin();
+        if (appReplyDao.getOpenAppReply(lecturerName)== null)
+        {
+            log.debug("AppReply" + lecturerName + ": no AppReply");
+            transaction.commit();
+            return null;
+
+        }
+        else {
+            //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+
+
+            log.debug("AppReply" + lecturerName );
+
+            transaction.commit();
+            return appReplyDao.getOpenAppReply(lecturerName);
+        }}
 
      @POST
      @Path("/urgentApp")

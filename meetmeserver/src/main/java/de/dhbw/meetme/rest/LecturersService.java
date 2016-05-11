@@ -95,19 +95,21 @@ public class LecturersService {
     @POST
     @Path("/availability/{setAvailability}/{lecturerName}")
     //set the availability ...boolean true for availabale or false for unavailable
-    public void setAvailability(@PathParam("setAvailability") boolean availability,@PathParam("lecturerName") String lecturerName){
+    public boolean setAvailability(@PathParam("setAvailability") boolean availability,@PathParam("lecturerName") String lecturerName){
         transaction.begin();
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
         lecturer.setLecturerAvailability(availability);
         transaction.commit();
-        return;
+        return true;
     }
     @GET
     @Path("/login")
     //verify the lecturer by checking mail and password
     public boolean login(@FormParam("email") String mail, @FormParam("password") String pw){
         Lecturers lecturer = lecturerDao.findLecturerMail(mail);
-        if (lecturer.getLecturerPw()==pw){
+        log.debug("lecturer find by mail: "+lecturerDao.findLecturerMail(mail));
+        log.debug("pw von lect: "+lecturerDao.findLecturerMail(mail).getLecturerPw());
+        if (lecturer.getLecturerPw().equals(pw)){
             return true;
         }
         else return false;
