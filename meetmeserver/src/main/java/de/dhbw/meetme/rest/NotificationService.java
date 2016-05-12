@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.Collection;
 
 /**
@@ -72,6 +74,41 @@ public class NotificationService {
             return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
     }}
     @GET
+    @Path("/AppReply/redirect")
+    // returns the DB entry of outstanding AppReplys
+    //TODO ok button um processed auf true zu setzen
+    public AppReply getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
+        URI location = null;
+        transaction.begin();
+        if (appReplyDao.getOpenAppReply(lecturerName)== null)
+        {
+            log.debug("AppReply" + lecturerName + ": no AppReply");
+            transaction.commit();
+            try {
+                location = new java.net.URI("advisorInterface.html");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        else {
+            //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+
+
+            log.debug("AppReply" + lecturerName );
+
+            transaction.commit();
+            try {
+                location = null;// new java.net.URI("loginPage.html");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        throw new WebApplicationException(Response.temporaryRedirect(location).build());
+    }
+    @GET
     @Path("/AppReply")
     // returns the DB entry of outstanding AppReplys
     //TODO ok button um processed auf true zu setzen
@@ -89,11 +126,10 @@ public class NotificationService {
 
 
             log.debug("AppReply" + lecturerName );
-
+            appReplyDao.getOpenAppReply(lecturerName).setProcessed(true);
             transaction.commit();
             return appReplyDao.getOpenAppReply(lecturerName);
         }}
-
      @POST
      @Path("/urgentApp")
      public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){

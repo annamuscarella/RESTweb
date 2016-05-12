@@ -89,4 +89,38 @@ public class YoloAdmin {
         transaction.commit();
         return true;
     }
+
+    @GET
+    @Path("/{lecturerName}")
+    // returns the DB entry of outstanding notifications
+    //TODO verfiication wenn mehrere nachrichten ausstehen
+    public UrgentAppointment getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
+        transaction.begin();
+        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)== null)
+        {
+            log.debug("urgent appointment" + lecturerName + ": no urgentAppointment");
+            transaction.commit();
+            return null;
+
+        }
+        else {
+            //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+
+
+            log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName));
+
+            transaction.commit();
+            return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+        }}
+
+    @GET
+    @Path("/urgentApp/{studentName}/{lecturerName}/{topic}/{studentName}")
+    public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
+        transaction.begin();
+        UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
+        log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
+        transaction.commit();
+        return true;
+    }
+
 }
