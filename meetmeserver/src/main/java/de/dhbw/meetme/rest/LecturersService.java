@@ -91,13 +91,13 @@ public class LecturersService {
     @Path("/appointment/{lecturerName}")
     //provide all requests for scheduled appointments
     public Collection<Appointment> listLecturers(@PathParam("lecturerName") String lecturerName) {
-        log.debug("list all appoiintments of "+lecturerName);
+        log.debug("list all appointments of "+lecturerName);
         return appointmentDao.getLecturerAppointment(lecturerName);
     }
 
     @GET
     @Path("/availability/{lecturerName}")
-    //to fetch the availabailty of the lecturer
+    //to fetch the availability of the lecturer
         public boolean availability(@PathParam("lecturerName") String lecturerName){
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
         return lecturer.isLecturerAvailability();
