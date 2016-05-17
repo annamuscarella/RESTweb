@@ -41,13 +41,7 @@ public class NotificationService {
     @Inject
     Transaction transaction;
 
-    @GET
-    @Path("/list")
-    //returns list of all lecturers saved in the database
-    public Collection<Lecturers> listLecturers() {
-        log.debug("list all lecturers");
-        return lecturerDao.list();
-    }
+
 
 
 
@@ -134,6 +128,7 @@ public class NotificationService {
      public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
             transaction.begin();
             UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
+             urgentAppointmentDao.persist(urgentAppointment);
             log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
             transaction.commit();
          return true;
