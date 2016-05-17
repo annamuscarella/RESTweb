@@ -16,14 +16,14 @@ public class UrgentAppointment extends PersistentObject {
   private String studentMail;
   private String course;
   private String topic;
-  private boolean progressed;
+  private boolean processed;
 
   public boolean isProgressed() {
-    return progressed;
+    return processed;
   }
 
-  public void setProgressed(boolean progressed) {
-    this.progressed = progressed;
+  public void setProgressed(boolean processed) {
+    this.processed = processed;
   }
 
   public String getTopic() {
@@ -75,13 +75,13 @@ public class UrgentAppointment extends PersistentObject {
   }
 
 
-  public UrgentAppointment(String lecturerName, String studentName, String studentMail, String course, String topic, boolean progressed) {
+  public UrgentAppointment(String lecturerName, String studentName, String studentMail, String course, String topic, boolean processed) {
     this.lecturerName = lecturerName;
     this.course = course;
     this.studentName = studentName;
     this.studentMail = studentMail;
     this.topic = topic;
-    this.progressed = progressed;
+    this.processed = processed;
   }
 
 
