@@ -50,7 +50,7 @@ public class NotificationService {
     // returns the DB entry of outstanding notifications
     //TODO verfiication wenn mehrere nachrichten ausstehen
     //tested
-    public UrgentAppointment getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
+    public Response getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
         transaction.begin();
         if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).isEmpty())
         {
@@ -60,13 +60,20 @@ public class NotificationService {
 
         }
         else {
-        //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
 
-
-        log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName));
+            /*log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName));
 
             transaction.commit();
             return urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName);
+            */
+            URI location = null;
+            try {
+                location = new java.net.URI("showAppointments.html");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            throw new WebApplicationException(Response.temporaryRedirect(location).build());
     }}
 
     @GET
@@ -138,9 +145,11 @@ public class NotificationService {
 
     @POST
     @Path("/AppReply")
+    //tested
     public boolean replyToRequest(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
         transaction.begin();
         AppReply appReply= new AppReply(lecturerName,message,pmessage,reply,false);
+        appReplyDao.persist(appReply);
         urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName).setProgressed(true);
         transaction.commit();
         return true;

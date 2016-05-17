@@ -36,6 +36,8 @@ public class YoloAdmin {
     UrgentAppointmentDao urgentAppointmentDao;
     @Inject
     AppointmentDao appointmentDao;
+    @Inject
+    AppReplyDao appReplyDao;
 
     @Inject
     Transaction transaction;
@@ -151,6 +153,16 @@ public class YoloAdmin {
         UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
         urgentAppointmentDao.persist(urgentAppointment);
         log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
+        transaction.commit();
+        return true;
+    }
+    @GET
+    @Path("/AppReply/{studentName}/{lecturerName}/{reply}/{message}/{personalMessage}")
+    public boolean replyToRequest(@PathParam("studentName") String studentName, @PathParam("lecturerName") String lecturerName, @PathParam("reply") String reply, @PathParam("message")String message,@PathParam("personalMessage")String pmessage){
+        transaction.begin();
+        AppReply appReply= new AppReply(lecturerName,message,pmessage,reply,false);
+        appReplyDao.persist(appReply);
+        urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName).setProgressed(true);
         transaction.commit();
         return true;
     }
