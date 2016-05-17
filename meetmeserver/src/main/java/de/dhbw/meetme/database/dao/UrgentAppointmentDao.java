@@ -26,7 +26,7 @@ public class UrgentAppointmentDao extends JpaDao<UuidId, UrgentAppointment> {
 
 
     public UrgentAppointment getOpenUrgentAppointment(String lecturerName){
-        Query query = entityManager.createQuery("select t from UrgentAppointment t where t.processed=:false");
+        Query query = entityManager.createQuery("select t from UrgentAppointment t where t.processed=FALSE");
 
         return (UrgentAppointment) query.getResultList().get(0);
     }
