@@ -63,7 +63,7 @@
     </div>
   </div>
   <hr>
-  <form role="form" action="urgentApp" method="post">
+  <form role="form" action="api/notification/urgentApp" method="post">
   <div class="row">
 
     <div class="col-sm-6 col-sm-offset-3">
@@ -104,7 +104,7 @@
         <input type="text" class="form-control" id="hiddenFieldTopic" name="topic">
         <input type="text" class="form-control" id="hiddenFieldDate" name="date">
         <input type="text" class="form-control" id="hiddenFieldTime" name="time">
-          <input type="text" class="form-control" id="advisorName" name="advisor">
+          <input type="text" class="form-control" id="advisorName" name="lecturerName">
       </div>
 
     </div>
@@ -132,6 +132,49 @@
     function showWaitingPage() {
         window.location.assign("Waiting.html");
     }
+
+    var accountName = localStorage.getItem("accountName").toString();
+    var src = "";
+    var name = "";
+    var lastname = "";
+
+    switch(accountName) {
+        case "george":
+            src = "img/George-Jacobs.jpg";
+            name ="George Jacobs";
+            lastname="Jacobs";
+            break;
+        case "hwee":
+            src = "img/Hwee-Leng-Toh-Heng.jpg";
+            name ="Hwee Leng Toh Heng";
+            lastname="Leng Toh Heng"
+            break;
+        case "nimrod":
+            src = "img/n_delante.jpg";
+            name ="Nimrod Delante";
+            lastname="Delante";
+            break;
+        case "michael":
+            src = "img/Michael-Joyce.jpg";
+            name ="Michael Joyce";
+            lastname = "Joyce";
+            break;
+        case "nicolas":
+            src = "img/Nicolas-Greliche.jpg";
+            name ="Nicolas Greliche";
+            lastname="Greliche";
+            break;
+        case "tang":
+            src = "img/Tang-Chun-Meng.jpg";
+            name ="Tang Chun Meng";
+            lastname="Chun Meng";
+            break;
+        default:
+            src = "img/400x400.gif";
+            name="Unknown"
+    }
+
+    document.getElementById("advisorName").value = lastname;
 </script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
