@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -65,6 +67,29 @@ public class YoloAdmin {
         transaction.commit();
 
         return lecturer;
+    }
+
+    @GET
+    @Path("/appointment/{advisor}/{name}/{surname}/{email}/{topic}/{date}/{time}/{course}")
+    //to schedule an appointment in advance
+    public Response appointment(@PathParam("advisor") String lecturerName, @PathParam("name") String studentFName,@PathParam("surname") String studentLName, @PathParam("email") String studentMail, @PathParam("topic") String topic, @PathParam("date") String date, @PathParam("time") String proposedTime,@PathParam("course") String course){
+        transaction.begin();
+        if (course.equals("") || course == null){
+            course = "N/A";
+        }
+        Appointment appointment = new Appointment(lecturerName, date, proposedTime, studentFName,studentLName, studentMail,course,topic);
+        appointmentDao.persist(appointment);
+        log.debug("Save appoinment " + appointment);
+        transaction.commit();
+
+        URI location = null;
+        try {
+            location = new java.net.URI("appointmentSuccess.html");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new WebApplicationException(Response.temporaryRedirect(location).build());
     }
 
     @GET
