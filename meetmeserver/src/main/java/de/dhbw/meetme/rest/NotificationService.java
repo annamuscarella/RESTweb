@@ -66,6 +66,7 @@ public class NotificationService {
             transaction.commit();
             return urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName);
             */
+            log.debug("Es gibt urgent appointments: " + lecturerName );
             URI location = null;
             try {
                 location = new java.net.URI("showAppointments.html");
