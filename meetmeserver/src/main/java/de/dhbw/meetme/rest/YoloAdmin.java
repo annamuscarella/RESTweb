@@ -72,6 +72,7 @@ public class YoloAdmin {
     @GET
     @Path("/appointment/{advisor}/{name}/{surname}/{email}/{topic}/{date}/{time}/{course}")
     //to schedule an appointment in advance
+    //course muss angegeben werden
     public Response appointment(@PathParam("advisor") String lecturerName, @PathParam("name") String studentFName,@PathParam("surname") String studentLName, @PathParam("email") String studentMail, @PathParam("topic") String topic, @PathParam("date") String date, @PathParam("time") String proposedTime,@PathParam("course") String course){
         transaction.begin();
         if (course.equals("") || course == null){
@@ -109,10 +110,14 @@ public class YoloAdmin {
     //set the availability ...boolean true for availabale or false for unavailable
     public boolean setAvailability(@PathParam("setAvailability") boolean availability,@PathParam("lecturerName") String lecturerName){
         transaction.begin();
+        log.debug("Test1: " + availability);
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
+        log.debug("Test2: " + lecturerName);
+        log.debug("Test3: " + lecturer.getLecturerLastname());
         lecturer.setLecturerAvailability(availability);
+        log.debug("Test4: " + lecturer.isLecturerAvailability());
         transaction.commit();
-        return true;
+        return lecturer.isLecturerAvailability();
     }
 
     @GET
@@ -121,7 +126,8 @@ public class YoloAdmin {
     //TODO verfiication wenn mehrere nachrichten ausstehen
     public UrgentAppointment getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
         transaction.begin();
-        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)== null)
+        log.debug("Test1: " + lecturerName );
+        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).isEmpty())
         {
             log.debug("urgent appointment" + lecturerName + ": no urgentAppointment");
             transaction.commit();
@@ -132,17 +138,18 @@ public class YoloAdmin {
             //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
 
 
-            log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName));
+            log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName));
 
             transaction.commit();
-            return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+            return urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName);
         }}
 
     @GET
-    @Path("/urgentApp/{studentName}/{lecturerName}/{topic}/{studentName}")
-    public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
+    @Path("/urgentApp/{studentName}/{lecturerName}/{topic}/{studentMail}/{course}")
+    public boolean requestUrgentApp(@PathParam("studentName") String studentName, @PathParam("lecturerName") String lecturerName, @PathParam("topic") String topic, @PathParam("studentMail")String studentMail, @PathParam("course")String course){
         transaction.begin();
         UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
+        urgentAppointmentDao.persist(urgentAppointment);
         log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
         transaction.commit();
         return true;

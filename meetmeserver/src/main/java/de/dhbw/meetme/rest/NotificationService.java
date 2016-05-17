@@ -49,9 +49,10 @@ public class NotificationService {
     @Path("/{lecturerName}")
     // returns the DB entry of outstanding notifications
     //TODO verfiication wenn mehrere nachrichten ausstehen
+    //tested
     public UrgentAppointment getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
         transaction.begin();
-        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)== null)
+        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).isEmpty())
         {
             log.debug("urgent appointment" + lecturerName + ": no urgentAppointment");
             transaction.commit();
@@ -62,10 +63,10 @@ public class NotificationService {
         //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
 
 
-        log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName));
+        log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName));
 
             transaction.commit();
-            return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
+            return urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName);
     }}
 
     @GET
@@ -125,6 +126,7 @@ public class NotificationService {
         }}
      @POST
      @Path("/urgentApp")
+     //tested
      public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
             transaction.begin();
             UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
@@ -139,7 +141,7 @@ public class NotificationService {
     public boolean replyToRequest(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
         transaction.begin();
         AppReply appReply= new AppReply(lecturerName,message,pmessage,reply,false);
-        urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).setProgressed(true);
+        urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName).setProgressed(true);
         transaction.commit();
         return true;
     }
