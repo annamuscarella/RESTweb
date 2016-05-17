@@ -39,7 +39,7 @@ public class Lecturers extends PersistentObject {
   }
 
   public void setLecturerFirstname(String lecturerFirstname) {
-    lecturerFirstname = lecturerFirstname;
+    this.lecturerFirstname = lecturerFirstname;
   }
 
   public String getLecturerLastname() {
@@ -47,7 +47,7 @@ public class Lecturers extends PersistentObject {
   }
 
   public void setLecturerLastname(String lecturerLastname) {
-    lecturerLastname = lecturerLastname;
+    this.lecturerLastname = lecturerLastname;
   }
 
   public String getLecturerTopic() {
@@ -55,7 +55,7 @@ public class Lecturers extends PersistentObject {
   }
 
   public void setLecturerTopic(String lecturerTopic) {
-    lecturerTopic = lecturerTopic;
+    this.lecturerTopic = lecturerTopic;
   }
 
   public boolean isLecturerAvailability() {
@@ -63,7 +63,7 @@ public class Lecturers extends PersistentObject {
   }
 
   public void setLecturerAvailability(boolean lecturerAvailability) {
-    lecturerAvailability = lecturerAvailability;
+    this.lecturerAvailability = lecturerAvailability;
   }
 
 
