@@ -35,6 +35,7 @@ public class LecturersService {
     @GET
     @Path("/list")
     //returns list of all lecturers saved in the database
+    //tested
     public Collection<Lecturers> listLecturers() {
         log.debug("list all lecturers");
         return lecturerDao.list();
@@ -45,6 +46,7 @@ public class LecturersService {
     @GET
     @Path("/{lecturerName}")
     // returns the DB entry of one single lecturer
+    //tested
     public Lecturers findLecturer(@PathParam("lecturerName") String lecturerName){
         log.debug("list lecturer"+ lecturerName);
 
@@ -54,6 +56,7 @@ public class LecturersService {
     @POST
     @Path("/save")
     //to add new lecturers to the DB
+    //tested
         public String save(@FormParam("lecturerFirstname") String lecturerFirstname, @FormParam("lecturerLastname") String lecturerLastname, @FormParam("lecturerTopic") String lecturerTopic,@FormParam("lecturerMail")String lecturerMail, @FormParam("lecturerPw")String lecturerPw) {
         transaction.begin();
         Lecturers lecturer = new Lecturers(lecturerFirstname, lecturerLastname, lecturerTopic,lecturerMail,lecturerPw, true);
@@ -67,6 +70,7 @@ public class LecturersService {
     @POST
     @Path("/appointment")
     //to schedule an appointment in advance
+    //tested
         public Response appointment(@FormParam("advisor") String lecturerName, @FormParam("name") String studentFName,@FormParam("surname") String studentLName, @FormParam("email") String studentMail, @FormParam("topic") String topic, @FormParam("date") String date, @FormParam("time") String proposedTime,@FormParam("course") String course){
         transaction.begin();
         if (course.equals("") || course == null){
@@ -90,6 +94,7 @@ public class LecturersService {
     @GET
     @Path("/appointment/{lecturerName}")
     //provide all requests for scheduled appointments
+    //tested
     public Collection<Appointment> listLecturers(@PathParam("lecturerName") String lecturerName) {
         log.debug("list all appointments of "+lecturerName);
         return appointmentDao.getLecturerAppointment(lecturerName);
