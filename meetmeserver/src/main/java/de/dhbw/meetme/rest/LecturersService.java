@@ -103,6 +103,7 @@ public class LecturersService {
     @GET
     @Path("/availability/{lecturerName}")
     //to fetch the availability of the lecturer
+    //tested
         public boolean availability(@PathParam("lecturerName") String lecturerName){
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
         return lecturer.isLecturerAvailability();
@@ -110,6 +111,7 @@ public class LecturersService {
     @POST
     @Path("/availability/{setAvailability}/{lecturerName}")
     //set the availability ...boolean true for availabale or false for unavailable
+    //tested
     public boolean setAvailability(@PathParam("setAvailability") boolean availability,@PathParam("lecturerName") String lecturerName){
         transaction.begin();
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
