@@ -73,9 +73,10 @@ public class NotificationService {
             transaction.commit();
             return urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
     }}
+
     @GET
     @Path("/AppReply/redirect")
-    // returns the DB entry of outstanding AppReplys
+    // returns the redirect to the website so see the lecturers reply
     //TODO ok button um processed auf true zu setzen
     public AppReply getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
         URI location = null;
@@ -93,14 +94,11 @@ public class NotificationService {
 
         }
         else {
-            //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
-
-
             log.debug("AppReply" + lecturerName );
 
             transaction.commit();
             try {
-                location = null;// new java.net.URI("loginPage.html");
+                location = null; // new java.net.URI("loginPage.html");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -108,6 +106,7 @@ public class NotificationService {
 
         throw new WebApplicationException(Response.temporaryRedirect(location).build());
     }
+
     @GET
     @Path("/AppReply")
     // returns the DB entry of outstanding AppReplys
