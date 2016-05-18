@@ -120,56 +120,19 @@ var tictacfields = ["r1c1", "r1c2", "r1c3", "r2c1", "r2c2", "r2c3", "r3c1", "r3c
 var curSelectedPlayer = "img/faces/george.png";
 var lastSelectedPlayer = "george";
 
+
+
 $(document).ready(function() {
 
+
 	setInterval(worker(), 5000);
-
-	var accountName = localStorage.getItem("advisorName").toString();
-	var src = "";
-	var name = "";
-	var lastname = "";
-
-	switch(accountName) {
-		case "george":
-			src = "img/George-Jacobs.jpg";
-			name ="George Jacobs";
-			lastname="Jacobs";
-			break;
-		case "hwee":
-			src = "img/Hwee-Leng-Toh-Heng.jpg";
-			name ="Hwee Leng Toh Heng";
-			lastname="Leng Toh Heng"
-			break;
-		case "nimrod":
-			src = "img/n_delante.jpg";
-			name ="Nimrod Delante";
-			lastname="Delante";
-			break;
-		case "michael":
-			src = "img/Michael-Joyce.jpg";
-			name ="Michael Joyce";
-			lastname = "Joyce";
-			break;
-		case "nicolas":
-			src = "img/Nicolas-Greliche.jpg";
-			name ="Nicolas Greliche";
-			lastname="Greliche";
-			break;
-		case "tang":
-			src = "img/Tang-Chun-Meng.jpg";
-			name ="Tang Chun Meng";
-			lastname="Chun Meng";
-			break;
-		default:
-			src = "img/400x400.gif";
-			name="Unknown"
-	}
+});
 
 	
     $(".tictacbutton").click(function(event) {
 		
 		if (continueGame){
-		index = tictacfields.indexOf(event.target.id.toString());
+		var index = tictacfields.indexOf(event.target.id.toString());
 
 		
 				if (index > -1) {
@@ -242,9 +205,10 @@ $(document).ready(function() {
 			curSelectedPlayer=document.getElementById(event.target.id).src.toString();
 			lastSelectedPlayer = event.target.id.toString();
 		 });
-});
+
 
 function worker() {
+	alert("Worker");
 	intervalClient.open("GET", 'api/notification/AppReply/redirect/' + lastname);
 	intervalClient.onreadystatechange = function() {
 		if (this.readyState === this.DONE) {
@@ -257,10 +221,51 @@ function worker() {
 	}
 
 };
-function getResponse() {
-	var client = new XMLHttpRequest();
-	client.open("GET", "")
-}
+
+
+
+var accountName = localStorage.getItem("advisorName").toString();
+var src = "";
+var name = "";
+var lastname = "";
+var intervalClient = new XMLHttpRequest();
+
+switch(accountName) {
+	case "george":
+		src = "img/George-Jacobs.jpg";
+		name ="George Jacobs";
+		lastname="Jacobs";
+		break;
+	case "hwee":
+		src = "img/Hwee-Leng-Toh-Heng.jpg";
+		name ="Hwee Leng Toh Heng";
+		lastname="Leng Toh Heng"
+		break;
+	case "nimrod":
+		src = "img/n_delante.jpg";
+		name ="Nimrod Delante";
+		lastname="Delante";
+		break;
+	case "michael":
+		src = "img/Michael-Joyce.jpg";
+		name ="Michael Joyce";
+		lastname = "Joyce";
+		break;
+	case "nicolas":
+		src = "img/Nicolas-Greliche.jpg";
+		name ="Nicolas Greliche";
+		lastname="Greliche";
+		break;
+	case "tang":
+		src = "img/Tang-Chun-Meng.jpg";
+		name ="Tang Chun Meng";
+		lastname="Chun Meng";
+		break;
+	default:
+		src = "img/400x400.gif";
+		name="Unknown"
+};
+
 
 </script> 
 </div>
@@ -284,6 +289,8 @@ function getResponse() {
 <br>
 <br>
 <hr>
+</div>
+</div>
 <footer class="text-center">
   <div class="container">
     <div class="row">
@@ -299,21 +306,6 @@ function getResponse() {
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="js/bootstrap.js"></script>
-<script src="responsive-calendar/0.9/js/jquery.js"></script>
-<script src="responsive-calendar/0.9/js/responsive-calendar.js"></script>
-<script type="text/javascript">
-      $(document).ready(function () {
-        $(".responsive-calendar").responsiveCalendar({
-          time: '2013-05',
-          events: {
-            "2013-04-30": {"number": 5, "url": "http://w3widgets.com/responsive-slider"},
-            "2013-04-26": {"number": 1, "url": "http://w3widgets.com"}, 
-            "2013-05-03":{"number": 1}, 
-            "2013-06-12": {}}
-        });
-      });
-	  
-	
-    </script>
+
 </body>
 </html>

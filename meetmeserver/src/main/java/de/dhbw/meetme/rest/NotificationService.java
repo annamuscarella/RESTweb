@@ -212,7 +212,7 @@ public class NotificationService {
     @POST
     @Path("/AppReply")
     //tested
-    public Response replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage)throws IOException{
+    public Response replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage)throws javax.transaction.NotSupportedException {
 
         URI location = null;
         log.debug( "AppReplay beginn "+ lecturerName);
