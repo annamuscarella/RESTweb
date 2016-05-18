@@ -105,11 +105,12 @@ public class NotificationService {
     //
     public AppReply getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
         URI location = null;
-        transaction.begin();
+
+        log.debug("1: " + lecturerName);
         if (appReplyDao.getOpenAppReply(lecturerName)== null)
         {
             log.debug("AppReply" + lecturerName + ": no AppReply");
-            transaction.commit();
+
             try {
                 location = null;
 
@@ -121,7 +122,9 @@ public class NotificationService {
         else {
             log.debug("AppReply" + lecturerName );
 
-            transaction.commit();
+
+            log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
+            log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
             try {
                 location = new java.net.URI("urgentAppReplyDecline.html");   // new java.net.URI("loginPage.html");
             } catch (Exception e) {
