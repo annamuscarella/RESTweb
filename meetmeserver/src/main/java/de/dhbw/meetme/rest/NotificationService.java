@@ -137,7 +137,7 @@ public class NotificationService {
     // returns the DB entry of outstanding AppReplys
     //TODO ok button um processed auf true zu setzen
     //tested
-    public AppReply getOpenAppReply(@PathParam("lecturerName") String lecturerName){
+    public String getOpenAppReply(@PathParam("lecturerName") String lecturerName){
         transaction.begin();
         if (appReplyDao.getOpenAppReply(lecturerName)== null)
         {
@@ -152,10 +152,41 @@ public class NotificationService {
 
             log.debug("AppReply" + lecturerName );
             AppReply myAppReply = appReplyDao.getOpenAppReply(lecturerName);
+            String answer = null;
+            if (myAppReply.getReply().equals("accept"))
+            {
+                answer= "Come in please!";
+            }
+            if (myAppReply.getReply().equals("decline"))
+            {
+                if ( myAppReply.getMessage().equals("In 10 minutes") )
+                {
+                    log.debug( " \"In 10 minutes\"");
+                    answer= "Please come in 10 minutes";
+                }
+                else if ( myAppReply.getMessage().equals("In 1 h") )
+                {
+                    log.debug( "AppReplay  \"In 1 h\"  ");
+                    answer= "In 1 h";
+                }
+                else if (myAppReply.getMessage().equals("This afternoon") )
+                {
+                    log.debug( "AppReplay  \"This afternoon\"  ");
+                    answer= "I'm busy at the moment. Try it in the afternoon";
+                }
+                else if (myAppReply.getMessage().equals("The student should make an appointment")) {
+                    log.debug( "AppReplay  \"The student should make an appointment\"  ");
+                    answer= "Sorry I'm very busy! Please go to another advisor";
+                }
+                else if (myAppReply.getMessage().equals("message5"))
+                {
+                    answer = myAppReply.getPersonalMessage();
+                }
+            }
             appReplyDao.getOpenAppReply(lecturerName).setProcessed(true);
-            log.debug( "Test1: "+ lecturerName+ " : "); //+appReplyDao.getOpenAppReply(lecturerName).isProcessed() );
+            log.debug( "Test1: "+ lecturerName+ " : ");
             transaction.commit();
-            return myAppReply;
+            return answer;
         }}
      @POST
      @Path("/urgentApp")
