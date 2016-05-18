@@ -172,15 +172,15 @@ public class NotificationService {
     @POST
     @Path("/AppReply")
     //tested
-    public boolean replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
-
+    public Response replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
+        URI location = null;
         log.debug( "AppReplay beginn "+ lecturerName);
         log.debug( "LecturerName: "+ lecturerName + ", reply: "+ reply+", message: "+message+", pmessage: "+pmessage);
 
         if (lecturerName ==null )
         {
             log.debug( "AppReplay hat kein oder falschen lecturer");
-            return false;
+            return null;
         }
         if ( reply ==null )
         {
@@ -222,8 +222,17 @@ public class NotificationService {
         appReplyDao.persist(appReply);
         urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName).setProgressed(true);
         log.debug( "AppReplay erfolgreich");
+        lecturerDao.findLecturer(lecturerName).setLecturerAvailability(false);
         transaction.commit();
-        return true;
+
+        try {
+            location = new java.net.URI("advisorInterface.html");   // new java.net.URI("loginPage.html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    throw new WebApplicationException(Response.temporaryRedirect(location).build());
     }
 /*
     @POST
