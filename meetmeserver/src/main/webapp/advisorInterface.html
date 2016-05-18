@@ -173,7 +173,7 @@
                   intervalClient.open("GET", 'api/notification/' + lastname);
                   intervalClient.onreadystatechange = function() {
                       if (this.readyState === this.DONE) {
-                          window.location.assign(intervalClient.response.toString());
+                          window.location.assign(intervalClient.responseURL);
                       }
                   };
                   intervalClient.send();
