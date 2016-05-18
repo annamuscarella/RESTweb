@@ -160,26 +160,7 @@ public class NotificationService {
      //tested
      public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
             transaction.begin();
-            if (studentName.isEmpty() || studentName ==null || studentName.equals(""))
-            {
-                studentName = null;
-            }
-            if (lecturerName.isEmpty() || lecturerName ==null || lecturerName.equals(""))
-             {
-                 lecturerName = null;
-             }
-             if (topic.isEmpty() || topic ==null || topic.equals(""))
-             {
-                 topic = null;
-             }
-             if (studentMail.isEmpty() || studentMail ==null || studentMail.equals(""))
-             {
-                 studentMail = null;
-             }
-             if (course.isEmpty() || course ==null || course.equals(""))
-             {
-                 course = null;
-             }
+
 
             UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
              urgentAppointmentDao.persist(urgentAppointment);
@@ -191,11 +172,57 @@ public class NotificationService {
     @POST
     @Path("/AppReply")
     //tested
-    public boolean replyToRequest(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
+    public boolean replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
+
+        log.debug( "AppReplay beginn "+ lecturerName);
+        log.debug( "LecturerName: "+ lecturerName + ", reply: "+ reply+", message: "+message+", pmessage: "+pmessage);
+
+        if (lecturerName ==null )
+        {
+            log.debug( "AppReplay lecturerName wurde null gesetzt ");
+            lecturerName = "Jacobs";
+        }
+        if ( reply ==null )
+        {
+            log.debug( "AppReplay reply wurde null gesetzt ");
+            reply = null;
+        }
+        if ( message ==null )
+        {
+            log.debug( "AppReplay message wurde null gesetzt ");
+            message = null;
+        }
+        else if ( message.equals("message1") )
+        {
+            log.debug( "AppReplay message wurde \"In 10 minutes\" gesetzt ");
+            message = "In 10 minutes";
+        }
+        else if ( message.equals("message2") )
+        {
+            log.debug( "AppReplay message wurde \"In 1 h\" gesetzt ");
+            message = "In 1 h";
+        }
+        else if ( message.equals("message3") )
+        {
+            log.debug( "AppReplay message wurde \"This afternoon\" gesetzt ");
+            message = "This afternoon";
+        }
+        else if ( message.equals("message4") )
+        {
+            log.debug( "AppReplay message wurde \"The student should make an appointment\" gesetzt ");
+            message = "The student should make an appointment";
+        }
+        else if ( message.equals("message5") )
+        {
+            if (pmessage==null){
+            log.debug( "AppReplay pmessage wurde null gesetzt ");
+            pmessage = null;}
+        }
         transaction.begin();
         AppReply appReply= new AppReply(lecturerName,message,pmessage,reply,false);
         appReplyDao.persist(appReply);
         urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName).setProgressed(true);
+        log.debug( "AppReplay erfolgreich");
         transaction.commit();
         return true;
     }
