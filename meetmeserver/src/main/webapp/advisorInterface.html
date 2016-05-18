@@ -93,11 +93,11 @@
       <div class="col-sm-4 col-sm-offset-1 text-center">
           <img class="img-responsive img-rounded center-block" id="advisorImage" style="max-height:200px;" /><br>
           <h3 id="loggedInAs"><strong></strong></h3><br>
-          <button class="btn btn-block btn-success center-block" id="available" type="button" onclick="availableClicked()">
+          <button class="btn btn-block btn-success center-block" id="available" type="button" onclick="if (!sent){availableClicked();}">
 
              <h2><strong>Available</strong></h2>
           </button>
-          <button class="btn btn-block btn-danger center-block hidden" id="away" type="button" onclick="awayClicked()">
+          <button class="btn btn-block btn-danger center-block hidden" id="away" type="button" onclick="if(!sent) {awayClicked();}">
 
               <h2><strong>Away</strong></h2>
           </button>
@@ -111,6 +111,7 @@
               var src = "";
               var name = "";
               var lastname = "";
+              var sent = false;
 
               switch(accountName) {
                   case "george":
@@ -151,21 +152,30 @@
               document.getElementById("loggedInAs").firstChild.innerHTML=name;
 
               function availableClicked() {
+                  sent = true;
                   $("#away").removeClass('hidden');
                   $("#available").addClass('hidden');
                   availabilityClient.open("POST", url + 'false/' + lastname);
                   availabilityClient.send(null);
+                  sent = false;
               };
               function awayClicked() {
+                  sent = true;
                   $("#away").addClass('hidden');
                   $("#available").removeClass('hidden');
                   availabilityClient.open("POST", url + 'true/' + lastname);
                   availabilityClient.send(null);
+                  sent = false;
               };
 
               //setInterval(getUrgentAppointments(), 2000);
               function worker() {
                   intervalClient.open("GET", 'api/notification/' + lastname);
+                  intervalClient.onreadystatechange = function() {
+                      if (this.readyState === this.DONE) {
+                          window.location.assign(intervalClient.response.toString());
+                      }
+                  };
                   intervalClient.send();
                   if(intervalClient.readyState != XMLHttpRequest.DONE){
                       setTimeout(worker, 5000);
@@ -178,15 +188,16 @@
                   docReadyClient.onreadystatechange = function() {
                                            if (
                               //docReadyClient.readyState == XMLHttpRequest.DONE ||
-                      docReadyClient.status == 200) {
+                      docReadyClient.status == 200 && !sent) {
 
-                          if(docReadyClient.responseType == "text" || docReadyClient.response){
+                          if(docReadyClient.responseType == "text" && docReadyClient.response == "true"){
 
-                              alert(docReadyClient.response.toString() + "hallo");
                               availableClicked();
+
                           }
                           else {
                            awayClicked();
+
                           }
                       }
                   };
@@ -196,6 +207,11 @@
 
               function getUrgentAppointments() {
                   intervalClient.open("GET", '/api/notification/' + lastname);
+                  intervalClient.onreadystatechange = function() {
+                      if (this.readyState === this.DONE) {
+                          window.location.assign(intervalClient.response.toString());
+                      }
+                  };
                   intervalClient.send();
               }
           </script>
@@ -278,7 +294,7 @@ YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <br>
 
             <label for="startHour">Start Time: </label>

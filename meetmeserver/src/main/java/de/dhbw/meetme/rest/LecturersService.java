@@ -8,10 +8,25 @@ import de.dhbw.meetme.domain.Lecturers;
 import groovy.lang.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.css.CSSRule;
+import org.w3c.dom.css.CSSStyleDeclaration;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.net.URI;
 
@@ -116,7 +131,64 @@ public class LecturersService {
         transaction.begin();
         Lecturers lecturer = lecturerDao.findLecturer(lecturerName);
         lecturer.setLecturerAvailability(availability);
+
+
+        log.debug("availability set to: " + availability);
         transaction.commit();
+        try {
+            File inputFile = new File("/Users/pinkprincess/VirtualLobby/meetme/meetmeserver/target/apache-tomee/webapps/meetmeserver/index.html");
+            log.debug("File found");
+            DocumentBuilderFactory dbFactory
+                    = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+
+            NodeList divElem = doc.getElementsByTagName("div");
+            for (int i = 0; i < divElem.getLength(); i++){
+                Element a = (Element)divElem.item(i);
+                log.debug("i is currently: " + i);
+                a.setIdAttribute("id", true);
+
+            }
+            log.debug("element lecString: " + lecturerName);
+            XPath xpath = XPathFactory.newInstance().newXPath();
+            String expression = "//*[@id='Greliche']";
+
+            Element lec = (Element) xpath.evaluate(expression, doc, XPathConstants.NODE);
+            lec = doc.getElementById("Greliche");
+            log.debug("element lec: " + lec);
+            log.debug("SecondLog");
+            if(availability){
+                log.debug("Availability true ifelse");
+            lec.setAttribute("class", "jumbotron text-center hidden");
+            log.debug("Class was hidden");
+            }
+            else {
+                log.debug("Availability false ifelse");
+                lec.setAttribute("class", "jumbotron text-center");
+                log.debug("Class was set visible");
+            }
+
+            BufferedWriter output = null;
+            try {
+                File file = new File("/Users/pinkprincess/VirtualLobby/meetme/meetmeserver/target/apache-tomee/webapps/meetmeserver/index.html");
+                output = new BufferedWriter(new FileWriter(file));
+                output.write(doc.toString());
+                log.debug("File saved");
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            } finally {
+                if ( output != null ) {
+                    output.close();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         return true;
     }
     @GET
