@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 
@@ -172,7 +173,8 @@ public class NotificationService {
     @POST
     @Path("/AppReply")
     //tested
-    public Response replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage){
+    public Response replyToRequest( @FormParam("lecturerName") String lecturerName, @FormParam("reply") String reply, @FormParam("message")String message,@FormParam("personalMessage")String pmessage)throws IOException{
+
         URI location = null;
         log.debug( "AppReplay beginn "+ lecturerName);
         log.debug( "LecturerName: "+ lecturerName + ", reply: "+ reply+", message: "+message+", pmessage: "+pmessage);
