@@ -76,9 +76,27 @@ public class NotificationService {
             }
             throw new WebApplicationException(Response.temporaryRedirect(location).build());
     }}
+    @GET
+    @Path("/urgentApp/{lecturerName}")
+    // returns the DB entry of outstanding notifications
+    //TODO verfiication wenn mehrere nachrichten ausstehen
+    //tested
+    public UrgentAppointment getOpenUrgentAppointmentsData(@PathParam("lecturerName") String lecturerName){
+        transaction.begin();
+        if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).isEmpty())
+        {
+            log.debug("urgent appointment" + lecturerName + ": no urgentAppointment");
+            transaction.commit();
+            return null;
+        }
+        else {
+            log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName));
+            transaction.commit();
+            return urgentAppointmentDao.getOpenUrgentAppointment2(lecturerName);
+        }}
 
     @GET
-    @Path("/AppReply/redirect")
+    @Path("/AppReply/redirect/{lecturerName}")
     // returns the redirect to the website so see the lecturers reply
     //TODO ok button um processed auf true zu setzen
     public AppReply getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
@@ -111,9 +129,10 @@ public class NotificationService {
     }
 
     @GET
-    @Path("/AppReply")
+    @Path("/AppReply/{lecturerName}")
     // returns the DB entry of outstanding AppReplys
     //TODO ok button um processed auf true zu setzen
+    //tested
     public AppReply getOpenAppReply(@PathParam("lecturerName") String lecturerName){
         transaction.begin();
         if (appReplyDao.getOpenAppReply(lecturerName)== null)
@@ -128,9 +147,11 @@ public class NotificationService {
 
 
             log.debug("AppReply" + lecturerName );
+            AppReply myAppReply = appReplyDao.getOpenAppReply(lecturerName);
             appReplyDao.getOpenAppReply(lecturerName).setProcessed(true);
+            log.debug( "Test1: "+ lecturerName+ " : "); //+appReplyDao.getOpenAppReply(lecturerName).isProcessed() );
             transaction.commit();
-            return appReplyDao.getOpenAppReply(lecturerName);
+            return myAppReply;
         }}
      @POST
      @Path("/urgentApp")
