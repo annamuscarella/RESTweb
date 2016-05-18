@@ -212,12 +212,11 @@ public class NotificationService {
             log.debug( "AppReplay message wurde \"The student should make an appointment\" gesetzt ");
             message = "The student should make an appointment";
         }
-        else if ( message.equals("message5") )
-        {
-            if (pmessage==null){
-            log.debug( "AppReplay pmessage wurde null gesetzt ");
-            pmessage = null;}
-        }
+
+        if (pmessage==null){
+          log.debug( "AppReplay pmessage wurde null gesetzt ");
+          pmessage = null;}
+
         transaction.begin();
         AppReply appReply= new AppReply(lecturerName,message,pmessage,reply,false);
         appReplyDao.persist(appReply);
