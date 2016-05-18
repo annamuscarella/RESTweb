@@ -135,58 +135,6 @@ public class LecturersService {
 
         log.debug("availability set to: " + availability);
         transaction.commit();
-        try {
-            File inputFile = new File("/Users/pinkprincess/VirtualLobby/meetme/meetmeserver/target/apache-tomee/webapps/meetmeserver/index.html");
-            log.debug("File found");
-            DocumentBuilderFactory dbFactory
-                    = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-
-            NodeList divElem = doc.getElementsByTagName("div");
-            for (int i = 0; i < divElem.getLength(); i++){
-                Element a = (Element)divElem.item(i);
-                log.debug("i is currently: " + i);
-                a.setIdAttribute("id", true);
-
-            }
-            log.debug("element lecString: " + lecturerName);
-            XPath xpath = XPathFactory.newInstance().newXPath();
-            String expression = "//*[@id='Greliche']";
-
-            Element lec = (Element) xpath.evaluate(expression, doc, XPathConstants.NODE);
-            lec = doc.getElementById("Greliche");
-            log.debug("element lec: " + lec);
-            log.debug("SecondLog");
-            if(availability){
-                log.debug("Availability true ifelse");
-            lec.setAttribute("class", "jumbotron text-center hidden");
-            log.debug("Class was hidden");
-            }
-            else {
-                log.debug("Availability false ifelse");
-                lec.setAttribute("class", "jumbotron text-center");
-                log.debug("Class was set visible");
-            }
-
-            BufferedWriter output = null;
-            try {
-                File file = new File("/Users/pinkprincess/VirtualLobby/meetme/meetmeserver/target/apache-tomee/webapps/meetmeserver/index.html");
-                output = new BufferedWriter(new FileWriter(file));
-                output.write(doc.toString());
-                log.debug("File saved");
-            } catch ( IOException e ) {
-                e.printStackTrace();
-            } finally {
-                if ( output != null ) {
-                    output.close();
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
         return true;
