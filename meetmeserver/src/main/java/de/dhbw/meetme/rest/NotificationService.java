@@ -123,7 +123,7 @@ public class NotificationService {
 
             transaction.commit();
             try {
-                location = new java.net.URI("advisorInterface.html");   // new java.net.URI("loginPage.html");
+                location = new java.net.URI("urgentAppReplyDecline.html");   // new java.net.URI("loginPage.html");
             } catch (Exception e) {
                 e.printStackTrace();
             }
