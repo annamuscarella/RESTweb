@@ -86,7 +86,7 @@
   </div>
 </div>
 <br>
-<form class="form-control" action="api/notification/AppReply" method="post">
+<form class="form-control" action="api/notification/AppReply" method="post" onsubmit="return checkForm()">
 <div class="jumbotron">
     <div role="form">
   <div class="row">
@@ -252,6 +252,14 @@
       }
 
       document.getElementById("hiddenFieldLecturer").value = lastname;
+
+    function checkForm(){
+        if(document.getElementById("personalMessage").value == null)
+        {
+            document.getElementById("personalMessage").value = "test";
+        }
+        return true;
+    }
 
 
     </script>
