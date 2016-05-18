@@ -122,7 +122,48 @@ var lastSelectedPlayer = "george";
 
 $(document).ready(function() {
 
-	setInterval(getResponse(), 1000);
+	setInterval(worker(), 5000);
+
+	var accountName = localStorage.getItem("advisorName").toString();
+	var src = "";
+	var name = "";
+	var lastname = "";
+
+	switch(accountName) {
+		case "george":
+			src = "img/George-Jacobs.jpg";
+			name ="George Jacobs";
+			lastname="Jacobs";
+			break;
+		case "hwee":
+			src = "img/Hwee-Leng-Toh-Heng.jpg";
+			name ="Hwee Leng Toh Heng";
+			lastname="Leng Toh Heng"
+			break;
+		case "nimrod":
+			src = "img/n_delante.jpg";
+			name ="Nimrod Delante";
+			lastname="Delante";
+			break;
+		case "michael":
+			src = "img/Michael-Joyce.jpg";
+			name ="Michael Joyce";
+			lastname = "Joyce";
+			break;
+		case "nicolas":
+			src = "img/Nicolas-Greliche.jpg";
+			name ="Nicolas Greliche";
+			lastname="Greliche";
+			break;
+		case "tang":
+			src = "img/Tang-Chun-Meng.jpg";
+			name ="Tang Chun Meng";
+			lastname="Chun Meng";
+			break;
+		default:
+			src = "img/400x400.gif";
+			name="Unknown"
+	}
 
 	
     $(".tictacbutton").click(function(event) {
@@ -203,6 +244,19 @@ $(document).ready(function() {
 		 });
 });
 
+function worker() {
+	intervalClient.open("GET", 'api/notification/AppReply/redirect' + lastname);
+	intervalClient.onreadystatechange = function() {
+		if (this.readyState === this.DONE) {
+			window.location.assign(intervalClient.responseURL);
+		}
+	};
+	intervalClient.send();
+	if(intervalClient.readyState != XMLHttpRequest.DONE){
+		setTimeout(worker, 5000);
+	}
+
+};
 function getResponse() {
 	var client = new XMLHttpRequest();
 	client.open("GET", "")
