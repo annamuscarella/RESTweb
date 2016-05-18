@@ -245,7 +245,7 @@ $(document).ready(function() {
 });
 
 function worker() {
-	intervalClient.open("GET", 'api/notification/AppReply/redirect' + lastname);
+	intervalClient.open("GET", 'api/notification/AppReply/redirect/' + lastname);
 	intervalClient.onreadystatechange = function() {
 		if (this.readyState === this.DONE) {
 			window.location.assign(intervalClient.responseURL);
