@@ -47,7 +47,7 @@ public class NotificationService {
 
     @GET
     @Path("/{lecturerName}")
-    // returns the DB entry of outstanding notifications
+    // returns a redirect if the DB has a entry of outstanding notification
     //TODO verfiication wenn mehrere nachrichten ausstehen
     //tested
     public Response getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
@@ -99,6 +99,7 @@ public class NotificationService {
     @Path("/AppReply/redirect/{lecturerName}")
     // returns the redirect to the website so see the lecturers reply
     //TODO ok button um processed auf true zu setzen
+    //
     public AppReply getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
         URI location = null;
         transaction.begin();
@@ -107,7 +108,7 @@ public class NotificationService {
             log.debug("AppReply" + lecturerName + ": no AppReply");
             transaction.commit();
             try {
-                location = new java.net.URI("advisorInterface.html");
+                location = null;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -119,7 +120,7 @@ public class NotificationService {
 
             transaction.commit();
             try {
-                location = null; // new java.net.URI("loginPage.html");
+                location = new java.net.URI("advisorInterface.html");   // new java.net.URI("loginPage.html");
             } catch (Exception e) {
                 e.printStackTrace();
             }
