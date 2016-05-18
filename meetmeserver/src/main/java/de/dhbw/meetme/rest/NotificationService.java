@@ -179,8 +179,8 @@ public class NotificationService {
 
         if (lecturerName ==null )
         {
-            log.debug( "AppReplay lecturerName wurde null gesetzt ");
-            lecturerName = "Jacobs";
+            log.debug( "AppReplay hat kein oder falschen lecturer");
+            return false;
         }
         if ( reply ==null )
         {
