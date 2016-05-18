@@ -160,15 +160,22 @@ public class NotificationService {
      @POST
      @Path("/urgentApp")
      //tested
-     public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
+     public Response requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
             transaction.begin();
-
+            URI location = null;
 
             UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
              urgentAppointmentDao.persist(urgentAppointment);
             log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
             transaction.commit();
-         return true;
+         try {
+             location = new java.net.URI("Waiting.html");
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+
+
+            throw new WebApplicationException(Response.temporaryRedirect(location).build());
         }
 
     @POST
