@@ -51,6 +51,7 @@ public class NotificationService {
     //TODO verfiication wenn mehrere nachrichten ausstehen
     //tested
     public Response getOpenUrgentAppointments(@PathParam("lecturerName") String lecturerName){
+        log.debug("Test1: " + lecturerName);
         transaction.begin();
         if (urgentAppointmentDao.getOpenUrgentAppointment(lecturerName).isEmpty())
         {
@@ -159,6 +160,27 @@ public class NotificationService {
      //tested
      public boolean requestUrgentApp(@FormParam("studentName") String studentName, @FormParam("lecturerName") String lecturerName, @FormParam("topic") String topic, @FormParam("studentMail")String studentMail, @FormParam("course")String course){
             transaction.begin();
+            if (studentName.isEmpty() || studentName ==null || studentName.equals(""))
+            {
+                studentName = null;
+            }
+            if (lecturerName.isEmpty() || lecturerName ==null || lecturerName.equals(""))
+             {
+                 lecturerName = null;
+             }
+             if (topic.isEmpty() || topic ==null || topic.equals(""))
+             {
+                 topic = null;
+             }
+             if (studentMail.isEmpty() || studentMail ==null || studentMail.equals(""))
+             {
+                 studentMail = null;
+             }
+             if (course.isEmpty() || course ==null || course.equals(""))
+             {
+                 course = null;
+             }
+
             UrgentAppointment urgentAppointment = new UrgentAppointment(lecturerName,studentName,studentMail,course,topic,false);
              urgentAppointmentDao.persist(urgentAppointment);
             log.debug("urgent appointment" + lecturerName+ " :" +urgentAppointmentDao.getOpenUrgentAppointment(lecturerName)+ "wurde gespeichert");
