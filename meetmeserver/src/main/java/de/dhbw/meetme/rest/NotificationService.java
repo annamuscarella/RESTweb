@@ -107,6 +107,7 @@ public class NotificationService {
         URI location = null;
 
         log.debug("1: " + lecturerName);
+        log.debug("1.1: " + appReplyDao.getOpenAppReply2(lecturerName).isEmpty());
         if (appReplyDao.getOpenAppReply2(lecturerName).isEmpty())
         {
             log.debug("AppReply" + lecturerName + ": no AppReply");
@@ -119,7 +120,7 @@ public class NotificationService {
             }
 
         }
-        else {
+        else if(appReplyDao.getOpenAppReply(lecturerName).getReply().equals("decline")) {
             log.debug("AppReply" + lecturerName );
 
 
@@ -127,6 +128,27 @@ public class NotificationService {
             log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
             try {
                 location = new java.net.URI("urgentAppReplyDecline.html");   // new java.net.URI("loginPage.html");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if(appReplyDao.getOpenAppReply(lecturerName).getReply().equals("accept")) {
+            log.debug("AppReply" + lecturerName );
+
+
+            log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
+            log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
+            try {
+                location = new java.net.URI("urgentAppReplyAccept.html");   // new java.net.URI("loginPage.html");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            log.debug("das istjetzt komisch " );
+            try {
+                location = null;
             } catch (Exception e) {
                 e.printStackTrace();
             }
