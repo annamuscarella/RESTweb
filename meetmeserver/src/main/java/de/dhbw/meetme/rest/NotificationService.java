@@ -107,7 +107,7 @@ public class NotificationService {
         URI location = null;
 
         log.debug("1: " + lecturerName);
-        if (appReplyDao.getOpenAppReply(lecturerName)== null)
+        if (appReplyDao.getOpenAppReply2(lecturerName).isEmpty())
         {
             log.debug("AppReply" + lecturerName + ": no AppReply");
 

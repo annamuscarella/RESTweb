@@ -32,7 +32,11 @@ public class AppReplyDao extends JpaDao<UuidId, AppReply> {
 
         return (AppReply) query.getResultList().get(0);
     }
-
+    public Collection<AppReply> getOpenAppReply2(String lecturerName){
+        Query query = entityManager.createQuery("select t from AppReply t where  t.lecturerName=:lecturerName AND t.processed=FALSE");
+        query.setParameter("lecturerName", lecturerName);
+        return (Collection <AppReply>) query.getResultList();
+    }
 
 
 /*
