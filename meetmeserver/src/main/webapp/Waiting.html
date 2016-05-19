@@ -208,10 +208,9 @@ $(document).ready(function() {
 
 
 function worker() {
-	alert("Worker");
 	intervalClient.open("GET", 'api/notification/AppReply/redirect/' + lastname);
 	intervalClient.onreadystatechange = function() {
-		if (this.readyState === this.DONE) {
+		if (this.readyState === this.DONE && this.responseURL.toString() != "http://localhost:8087/meetmeserver/error") {
 			window.location.assign(intervalClient.responseURL);
 		}
 	};

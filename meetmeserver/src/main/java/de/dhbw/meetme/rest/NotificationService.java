@@ -103,56 +103,85 @@ public class NotificationService {
     // returns the redirect to the website so see the lecturers reply
     //TODO ok button um processed auf true zu setzen
     //
-    public AppReply getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
+    public Response getOpenAppReplyRedirect(@PathParam("lecturerName") String lecturerName){
         URI location = null;
-
+        transaction.begin();
         log.debug("1: " + lecturerName);
         log.debug("1.1: " + appReplyDao.getOpenAppReply2(lecturerName).isEmpty());
-        //log.debug("1.2: " + appReplyDao.getOpenAppReply2(lecturerName) == null);
-        if (appReplyDao.getOpenAppReply(lecturerName)== null)
-        {
-            log.debug("AppReply" + lecturerName + ": no AppReply");
+        //log.debug("1.2: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
 
-            try {
-                location = null;
+        try {
 
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            if (appReplyDao.getOpenAppReply2(lecturerName).isEmpty())
+            {
+                log.debug("AppReply" + lecturerName + ": no AppReply");
+                transaction.commit();
+
+                try {
+                    location = new URI("error"); //new java.net.URI("Waiting.html");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+            }
+            else if(appReplyDao.getOpenAppReply(lecturerName).isProcessed() == true) {
+                log.debug("AppReply " + lecturerName + " wurde schon gesendet" );
+
+
+                log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
+                log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
+                transaction.commit();
+                try {
+                    location = new URI("error");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
-        }
-        else if(appReplyDao.getOpenAppReply(lecturerName).getReply().equals("decline")) {
-            log.debug("AppReply" + lecturerName );
+            else if(appReplyDao.getOpenAppReply(lecturerName).getReply().equals("decline")) {
+                log.debug("AppReply" + lecturerName );
 
 
-            log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
-            log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
-            try {
-                location = new java.net.URI("urgentAppReplyDecline.html");   // new java.net.URI("loginPage.html");
-            } catch (Exception e) {
-                e.printStackTrace();
+                log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
+                log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
+                transaction.commit();
+                try {
+                    location = new java.net.URI("urgentAppReplyDecline.html");   // new java.net.URI("loginPage.html");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        else if(appReplyDao.getOpenAppReply(lecturerName).getReply().equals("accept")) {
-            log.debug("AppReply" + lecturerName );
+            else if(appReplyDao.getOpenAppReply(lecturerName).getReply().equals("accept")) {
+                log.debug("AppReply" + lecturerName );
 
 
-            log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
-            log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
-            try {
-                location = new java.net.URI("urgentAppReplyAccept.html");   // new java.net.URI("loginPage.html");
-            } catch (Exception e) {
-                e.printStackTrace();
+                log.debug("2: " + appReplyDao.getOpenAppReply(lecturerName));
+                log.debug("3: " + appReplyDao.getOpenAppReply(lecturerName).getReply());
+                appReplyDao.getOpenAppReply(lecturerName).setProcessed(true);
+                transaction.commit();
+                try {
+                    location = new java.net.URI("urgentAppReplyAccept.html");   // new java.net.URI("loginPage.html");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        else
-        {
-            log.debug("das istjetzt komisch " );
-            try {
-                location = null;
-            } catch (Exception e) {
-                e.printStackTrace();
+            else {
+                log.debug("das istjetzt komisch ");
+                transaction.commit();
+                try {
+                    location = new URI("error");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
 
         throw new WebApplicationException(Response.temporaryRedirect(location).build());
@@ -165,9 +194,9 @@ public class NotificationService {
     //tested
     public String getOpenAppReply(@PathParam("lecturerName") String lecturerName){
         transaction.begin();
-        if (appReplyDao.getOpenAppReply(lecturerName)== null)
+        if (appReplyDao.getOpenAppReply(lecturerName).isProcessed()== true)
         {
-            log.debug("AppReply" + lecturerName + ": no AppReply");
+            log.debug("APPReply Data " + lecturerName + ": no AppReply");
             transaction.commit();
             return null;
 
@@ -176,7 +205,7 @@ public class NotificationService {
             //UrgentAppointment myUrgentAppointment =  urgentAppointmentDao.getOpenUrgentAppointment(lecturerName);
 
 
-            log.debug("AppReply" + lecturerName );
+            log.debug("APPReply Data: " + lecturerName );
             AppReply myAppReply = appReplyDao.getOpenAppReply(lecturerName);
             String answer = null;
             if (myAppReply.getReply().equals("accept"))
@@ -210,7 +239,7 @@ public class NotificationService {
                 }
             }
             appReplyDao.getOpenAppReply(lecturerName).setProcessed(true);
-            log.debug( "Test1: "+ lecturerName+ " : ");
+            log.debug( "Alles fertig! "+ lecturerName+ " : ");
             transaction.commit();
             return answer;
         }}
