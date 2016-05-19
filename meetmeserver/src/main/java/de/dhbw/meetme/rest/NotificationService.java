@@ -108,7 +108,8 @@ public class NotificationService {
 
         log.debug("1: " + lecturerName);
         log.debug("1.1: " + appReplyDao.getOpenAppReply2(lecturerName).isEmpty());
-        if (appReplyDao.getOpenAppReply2(lecturerName).isEmpty())
+        //log.debug("1.2: " + appReplyDao.getOpenAppReply2(lecturerName) == null);
+        if (appReplyDao.getOpenAppReply(lecturerName)== null)
         {
             log.debug("AppReply" + lecturerName + ": no AppReply");
 
