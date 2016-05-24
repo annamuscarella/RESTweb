@@ -2,7 +2,6 @@ package de.dhbw.meetme.database.dao;
 
 
 import de.dhbw.meetme.domain.Appointment;
-import de.dhbw.meetme.domain.TeamBoard;
 import de.dhbw.meetme.domain.UuidId;
 import de.dhbw.meetme.rest.UserService;
 import org.slf4j.Logger;

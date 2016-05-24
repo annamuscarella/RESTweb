@@ -10,15 +10,10 @@
     <class>de.dhbw.meetme.domain.User</class>
     <class>de.dhbw.meetme.domain.UuidId</class>
     <class>de.dhbw.meetme.domain.PersistentObject</class>
-    <class>de.dhbw.meetme.domain.UserPosition</class>
     <class>de.dhbw.meetme.domain.Appointment</class>
     <class>de.dhbw.meetme.domain.Lecturers</class>
       <class>de.dhbw.meetme.domain.AppReply</class>
-      <class>de.dhbw.meetme.domain.TopPlayer</class>
       <class>de.dhbw.meetme.domain.UrgentAppointment</class>
-      <class>de.dhbw.meetme.domain.TeamBoard</class>
-    <class>de.dhbw.meetme.domain.TopTeamList</class>
-    <class>de.dhbw.meetme.domain.VerificationCode</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>

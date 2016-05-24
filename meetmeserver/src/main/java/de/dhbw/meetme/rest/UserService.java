@@ -4,31 +4,15 @@ import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.UserDao;
 import de.dhbw.meetme.domain.User;
 import de.dhbw.meetme.domain.UuidId;
-import de.dhbw.meetme.servlet.DomParser;
 import groovy.lang.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.lang.reflect.Array;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
-import de.dhbw.meetme.database.dao.UserDao;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  *
