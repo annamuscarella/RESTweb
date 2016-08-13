@@ -33,7 +33,7 @@ import java.net.URI;
 /**
  *this class handles all the interaction with the lecturer
  */
-@Path("api/lecturer")
+@Path("api/lights")
 @Produces({"application/json"}) // mime type
 @Singleton
 public class LecturersService {

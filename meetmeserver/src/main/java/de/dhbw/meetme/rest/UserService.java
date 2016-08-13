@@ -17,7 +17,7 @@ import java.util.Collection;
 /**
  *
  */
-@Path("/api/user")
+@Path("/api/screens")
 @Produces({"application/json"}) // mime type
 @Singleton
 public class UserService {
@@ -34,29 +34,11 @@ public class UserService {
     return userDao.list();
   }
 
-  @Path("/get/{id}")
+  @Path("/lightTest")
   @GET
-  public User get(@PathParam("id") String id) {
-    log.debug("Get user " + id);
-    return userDao.get(UuidId.fromString(id));
-  }
-
-  @Path("/delete/{id}")
-  @DELETE
-  public void delete(@PathParam("id") String id) {
-    log.debug("Delete user " + id);
-    userDao.delete(UuidId.fromString(id));
-  }
-
-  @Path("/save")
-  @POST
-  public String save(@FormParam("regEmail") String email, @FormParam("userName") String username, @FormParam("password") String password, @FormParam("nation") String nation, @FormParam("description") String description) {
-    User user = new User();
-    user.setName(username);
-
-    userDao.persist(user);
+  public String lightTest() {
     //log.debug("Save user " + user);
-    return "TEST";
+    return "lightTest";
   }
 
   @Path("/login")
