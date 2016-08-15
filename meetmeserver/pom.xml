@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>meetmeserver</artifactId>
-  <version>1.7.0-SNAPSHOT</version>
+  <version>1.0.6.2-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>MeetMeServer</name> <!-- Visible name -->
@@ -12,7 +12,7 @@
   <parent>
     <groupId>de.dhbw</groupId>
     <artifactId>meetme</artifactId>
-    <version>1.7.0-SNAPSHOT</version>
+    <version>1.0.6.2-SNAPSHOT</version>
   </parent>
 
 
