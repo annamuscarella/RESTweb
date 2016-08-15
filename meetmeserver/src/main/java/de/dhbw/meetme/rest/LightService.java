@@ -31,6 +31,7 @@ public class LightService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
+    LecturerDao lecturerDao;
     @Path("/list")
     @GET
     public String list() {
@@ -55,8 +56,26 @@ public class LightService {
 
     @Path("/setPower/{id}/{state}")
     @POST
-    public String save(@PathParam("id") Integer id, @PathParam("state") String state) {
+    public String setPower(@PathParam("id") Integer id, @PathParam("state") String state) {
         return ("You set the power state for light " + id.toString() + "to " + state);
+    }
+
+    @Path("/setHue/{id}/{value}")
+    @POST
+    public String setHue(@PathParam("id") Integer id, @PathParam("value") Integer value) {
+        return ("You set the Hue for light " + id.toString() + "to " + value.toString());
+    }
+
+    @Path("/setSaturation/{id}/{value}")
+    @POST
+    public String setSaturation(@PathParam("id") Integer id, @PathParam("value") Integer value) {
+        return ("You set the Saturation value for light " + id.toString() + "to " + value.toString());
+    }
+
+    @Path("/setBrightness/{id}/{value}")
+    @POST
+    public String setBrightness(@PathParam("id") Integer id, @PathParam("value") Integer value) {
+        return ("You set the Brightness value for light " + id.toString() + "to " + value.toString());
     }
 
 
