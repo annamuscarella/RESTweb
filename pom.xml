@@ -185,8 +185,6 @@
 
   <modules>
     <module>meetmeserver</module>
-    <module>meetme-app</module>
-    <module>meetme-client</module>
   </modules>
 
 </project>
