@@ -1,4 +1,4 @@
-package de.dhbw.meetme.rest;
+/*package de.dhbw.meetme.rest;
 
 import de.dhbw.meetme.database.Transaction;
 import de.dhbw.meetme.database.dao.UserDao;
@@ -14,9 +14,6 @@ import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.Collection;
 
-/**
- *
- */
 @Path("/api/screens")
 @Produces({"application/json"}) // mime type
 @Singleton
@@ -77,3 +74,4 @@ public class UserService {
 
 
 }
+*/
